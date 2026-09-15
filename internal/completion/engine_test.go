@@ -333,7 +333,7 @@ func aiEngine(t *testing.T, baseURL string) *Engine {
 	cfg.DebounceMS = 50
 	cfg.AI.BaseURL = baseURL
 	cfg.AI.Model = "mock"
-	client := ai.New(baseURL, "sk-mock", "mock", 2*time.Second)
+	client := ai.New(baseURL, "mock-key", "mock", 2*time.Second)
 	e := newTestEngine(t, nil, cfg)
 	e.AI = client
 	return e
@@ -411,7 +411,7 @@ func TestAISanitizesHistory(t *testing.T) {
 	e := aiEngine(t, srv.URL)
 	hist := []string{
 		"git status",
-		"export API_KEY=sk-supersecret123",
+		"export API_KEY=supersecretvalue123",
 		"curl -H \"Authorization: Bearer abc.def\" https://x",
 	}
 	resp, _ := e.Complete(Request{Input: "git s", Shell: "ps", CWD: "/p", History: hist, WaitAIMS: 2000})
@@ -431,7 +431,7 @@ func TestAISanitizesHistory(t *testing.T) {
 			userContent = mm["content"].(string)
 		}
 	}
-	if strings.Contains(userContent, "sk-supersecret123") || strings.Contains(userContent, "Bearer abc.def") {
+	if strings.Contains(userContent, "supersecretvalue123") || strings.Contains(userContent, "Bearer abc.def") {
 		t.Fatalf("secret leaked into AI prompt: %s", userContent)
 	}
 	if !strings.Contains(userContent, "git status") {

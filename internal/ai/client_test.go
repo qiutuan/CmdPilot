@@ -119,7 +119,7 @@ func TestCompleteIntegration(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	c := New(srv.URL, "sk-test", "m-test", 2*time.Second)
+	c := New(srv.URL, "fake-key-value", "m-test", 2*time.Second)
 	resp, err := c.Complete(context.Background(), Request{
 		Model: "m-test", Temperature: 0.2, MaxTokens: 64,
 		Messages: []Message{{Role: "user", Content: "hi"}},
@@ -133,7 +133,7 @@ func TestCompleteIntegration(t *testing.T) {
 	if gotPath != "/v1/chat/completions" {
 		t.Errorf("path = %q", gotPath)
 	}
-	if gotAuth != "Bearer sk-test" {
+	if gotAuth != "Bearer fake-key-value" {
 		t.Errorf("auth = %q", gotAuth)
 	}
 	if !strings.Contains(gotBody, `"model":"m-test"`) || !strings.Contains(gotBody, `"max_tokens":64`) {
