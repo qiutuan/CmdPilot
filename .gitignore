@@ -37,3 +37,6 @@ Thumbs.db
 *.swp
 adapters/powershell/CmdPilot/bin/*
 !adapters/powershell/CmdPilot/bin/.gitkeep
+
+# eval tool binary
+eval
