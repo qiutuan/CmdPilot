@@ -57,12 +57,12 @@ func BuildPrompt(in PromptInput) string {
 // Rules: no newlines (blocks multi-line injection), hard length cap, and no
 // duplicate leading space when the input already ends with one.
 func ValidateSuffix(input, suffix string) string {
+	if strings.ContainsAny(suffix, "\r\n") {
+		return "" // never allow multi-line injection (checked on raw input)
+	}
 	s := strings.TrimSpace(suffix)
 	if s == "" {
 		return ""
-	}
-	if strings.ContainsAny(s, "\r\n") {
-		return "" // never allow multi-line injection
 	}
 	if len(s) > 512 {
 		s = s[:512] // hard cap
