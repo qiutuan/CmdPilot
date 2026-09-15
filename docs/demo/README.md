@@ -1,8 +1,14 @@
 # CmdPilot 演示脚本（60 秒 GIF / 录屏）
 
-本目录提供在 Windows 真机上一键录制 60 秒演示的脚本，覆盖需求要求的
-6 个场景。开发环境为 Linux，无法直接录制 Windows 终端画面，故交付脚本
-而非 GIF 成品。
+本目录提供：
+
+1. **`cmdpilot-demo.gif`（62 秒，390 帧）**：Linux 环境用真实命令输出渲染的
+   终端演示动画（本地补全 / 收藏参与补全 / 频率推荐 / 自检网络声明）。
+   已入库，可直接在浏览器查看。
+2. **Windows 真机录制脚本**（`demo.ps1` + 本说明）：覆盖需求要求的
+   6 个场景（幽灵文本 / Clink Tab / AI / 收藏 / 高频 / 断网降级）。
+   开发环境为 Linux 无法直接录制 Windows 终端画面，故同时交付
+   真机录制指引。
 
 ## 演示内容（对应需求）
 
@@ -15,7 +21,17 @@
 | 45–52s | 高频推荐（执行同一命令多次后，空输入显示 Top 推荐） |
 | 52–60s | 断网降级（停掉 AI → 输入前缀仍得到本地建议，终端无卡顿） |
 
-## 用法
+## GIF 说明
+
+`cmdpilot-demo.gif` 演示内容（对应真实命令输出）：
+
+1. `cmdpilot complete --input "git st"` → 本地引擎 Top 建议（git stash/status/...）
+2. `cmdpilot complete --input ""` → 频率推荐
+3. `cmdpilot favorite add` → 收藏命令
+4. `cmdpilot complete --input "deploy"` → 收藏参与补全（来源 favorite）
+5. `cmdpilot self-check` → 自检 + 网络声明
+
+## 真机 60 秒录制（Windows）
 
 ```powershell
 # 1. 安装（见 README），然后：
