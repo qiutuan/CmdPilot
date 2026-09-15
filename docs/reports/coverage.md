@@ -1,6 +1,6 @@
 # 单元测试覆盖率报告
 
-执行时间：2026-09-15 19:29:33
+执行时间：2026-09-15 19:43:14
 口径：`go test -count=1 -cover ./internal/... ./cmd/...`（官方 per-package 语句覆盖率）
 
 ## 核心包覆盖率
@@ -18,7 +18,7 @@
 | github.com/qiutuan/CmdPilot/internal/client | 91.9% | 官方 go test -cover |
 | github.com/qiutuan/CmdPilot/internal/server | 70.9% | 官方 go test -cover |
 | github.com/qiutuan/CmdPilot/internal/daemonstate | 85.2% | 官方 go test -cover |
-| github.com/qiutuan/CmdPilot/internal/cli | 56.9% | 官方 go test -cover |
+| github.com/qiutuan/CmdPilot/internal/cli | 56.8% | 官方 go test -cover |
 | github.com/qiutuan/CmdPilot/internal/knowledge | 83.9% | 官方 go test -cover |
 | github.com/qiutuan/CmdPilot/internal/logx | 77.5% | 官方 go test -cover |
 | github.com/qiutuan/CmdPilot/internal/version | 100.0% | 官方 go test -cover |

@@ -1,12 +1,12 @@
 {
   "ai_pct": 86.9,
-  "core_pct": 85.16666666666667,
-  "date": "2026-09-15T19:29:33+08:00",
+  "core_pct": 85.16,
+  "date": "2026-09-15T19:43:14+08:00",
   "pkgs": {
     "github.com/qiutuan/CmdPilot/cmd/cmdpilot": 0,
     "github.com/qiutuan/CmdPilot/cmd/cmdpilot-clink": 19.3,
     "github.com/qiutuan/CmdPilot/internal/ai": 86.9,
-    "github.com/qiutuan/CmdPilot/internal/cli": 56.9,
+    "github.com/qiutuan/CmdPilot/internal/cli": 56.8,
     "github.com/qiutuan/CmdPilot/internal/client": 91.9,
     "github.com/qiutuan/CmdPilot/internal/completion": 83.1,
     "github.com/qiutuan/CmdPilot/internal/config": 80.3,

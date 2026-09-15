@@ -1633,7 +1633,7 @@
       ]
     }
   ],
-  "date": "2026-09-15T19:29:26+08:00",
+  "date": "2026-09-15T19:43:07+08:00",
   "pass": 231,
   "results": [
     {
@@ -1650,9 +1650,9 @@
         "dir ",
         "driverquery",
         "diskpart",
-        "mkdir",
+        "rmdir",
         "chdir",
-        "rmdir"
+        "mkdir"
       ],
       "Top1Hit": true
     },
@@ -1684,8 +1684,8 @@
         "ping ",
         "pathping",
         "snippingtool",
-        "find",
-        "print"
+        "print",
+        "find"
       ],
       "Top1Hit": true
     },
@@ -1695,10 +1695,10 @@
         "cls ",
         "cacls",
         "docker logs",
-        "secpol.msc",
         "kubectl logs",
-        "icacls",
-        "kubectl describe"
+        "secpol.msc",
+        "kubectl describe",
+        "icacls"
       ],
       "Top1Hit": true
     },
@@ -1707,12 +1707,12 @@
       "Got": [
         "tree ",
         "git reset",
-        "git remote",
         "git rebase",
+        "git remote",
         "git revert",
-        "eventcreate",
         "git worktree",
-        "rem"
+        "eventcreate",
+        "time"
       ],
       "Top1Hit": true
     },
@@ -1744,10 +1744,10 @@
       "Hit": true,
       "Got": [
         "sort ",
-        "more",
-        "set",
+        "for",
         "start",
-        "for"
+        "set",
+        "more"
       ],
       "Top1Hit": true
     },
@@ -1755,11 +1755,11 @@
       "Hit": true,
       "Got": [
         "more ",
-        "move",
         "mode",
-        "msra",
-        "make",
+        "move",
         "sort",
+        "make",
+        "msra",
         "for"
       ],
       "Top1Hit": true
@@ -1827,11 +1827,11 @@
         "ver ",
         "verify",
         "verifier",
-        "eventvwr",
-        "git revert",
-        "convert",
         "eventcreate",
-        "winver"
+        "convert",
+        "eventvwr",
+        "driverquery",
+        "git revert"
       ],
       "Top1Hit": true
     },
@@ -1905,7 +1905,7 @@
         "ssh-copy-id",
         "services.msc",
         "git switch",
-        "setlocal"
+        "secpol.msc"
       ],
       "Top1Hit": true
     },
@@ -1914,10 +1914,10 @@
       "Got": [
         "copy ",
         "ssh-copy-id",
-        "robocopy",
         "xcopy",
-        "comp",
-        "popd"
+        "robocopy",
+        "popd",
+        "comp"
       ],
       "Top1Hit": true
     },
@@ -1925,8 +1925,8 @@
       "Hit": true,
       "Got": [
         "move ",
-        "mode",
         "more",
+        "mode",
         "make",
         "mvn"
       ],
@@ -1976,8 +1976,8 @@
       "Hit": true,
       "Got": [
         "chcp ",
-        "scp",
         "comp",
+        "scp",
         "clip"
       ],
       "Top1Hit": true
@@ -1986,8 +1986,8 @@
       "Hit": true,
       "Got": [
         "clip ",
-        "cls",
         "chcp",
+        "cls",
         "comp"
       ],
       "Top1Hit": true
@@ -2126,9 +2126,9 @@
       "Got": [
         "cacls ",
         "icacls",
+        "cls",
         "call",
-        "calc",
-        "cls"
+        "calc"
       ],
       "Top1Hit": true
     },
@@ -2381,8 +2381,8 @@
       "Got": [
         "call ",
         "calc",
-        "cls",
         "cacls",
+        "cls",
         "curl"
       ],
       "Top1Hit": true
@@ -2426,13 +2426,13 @@
       "Hit": true,
       "Got": [
         "cd ",
-        "ssh-copy-id",
         "kubectl describe",
         "cmd",
-        "chkdsk",
+        "conda",
         "chdir",
         "kubectl delete",
-        "conda"
+        "ssh-copy-id",
+        "chkdsk"
       ],
       "Top1Hit": true
     },
@@ -2443,10 +2443,10 @@
         "mode",
         "mkdir",
         "go mod",
-        "git submodule",
+        "rmdir",
+        "npm update",
         "cmd",
-        "npm audit",
-        "npm update"
+        "npm audit"
       ],
       "Top1Hit": true
     },
@@ -2454,11 +2454,11 @@
       "Hit": true,
       "Got": [
         "rd ",
-        "rmdir",
         "regedit",
-        "gradle",
+        "rmdir",
         "kubectl port-forward",
-        "docker build"
+        "docker build",
+        "gradle"
       ],
       "Top1Hit": true
     },
@@ -2467,9 +2467,9 @@
       "Got": [
         "del ",
         "docker logs",
+        "docker pull",
         "docker build",
-        "kubectl delete",
-        "docker pull"
+        "kubectl delete"
       ],
       "Top1Hit": true
     },
@@ -2556,8 +2556,8 @@
       "Hit": true,
       "Got": [
         "Move-Item ",
-        "Remove-ItemProperty",
-        "Remove-Item"
+        "Remove-Item",
+        "Remove-ItemProperty"
       ],
       "Top1Hit": true
     },
@@ -2619,9 +2619,9 @@
       "Hit": true,
       "Got": [
         "Get-Date ",
+        "Get-NetAdapter",
         "Get-WindowsOptionalFeature",
         "Get-AuthenticodeSignature",
-        "Get-NetAdapter",
         "Set-Date"
       ],
       "Top1Hit": true
@@ -2872,8 +2872,8 @@
       "Got": [
         "git config",
         "git commit",
-        "git checkout",
-        "git clone"
+        "git clone",
+        "git checkout"
       ],
       "Top1Hit": false
     },
@@ -2895,8 +2895,8 @@
       "Hit": true,
       "Got": [
         "git log",
-        "git clone",
-        "git reflog"
+        "git reflog",
+        "git clone"
       ],
       "Top1Hit": true
     },
@@ -2951,13 +2951,13 @@
       "Hit": true,
       "Got": [
         "git reset",
-        "git revert",
         "git remote",
         "git reflog",
+        "git revert",
         "git rebase",
-        "git archive",
-        "git grep",
-        "git merge"
+        "git merge",
+        "git worktree",
+        "git archive"
       ],
       "Top1Hit": true
     },
@@ -3075,10 +3075,10 @@
       "Got": [
         "npm init",
         "npm install",
-        "npm publish",
-        "npm ci",
         "npm uninstall",
-        "npm audit"
+        "npm publish",
+        "npm audit",
+        "npm ci"
       ],
       "Top1Hit": false
     },
@@ -3218,8 +3218,8 @@
     {
       "Hit": true,
       "Got": [
-        "docker push",
-        "docker pull"
+        "docker pull",
+        "docker push"
       ],
       "Top1Hit": true
     },
@@ -3387,9 +3387,9 @@
         "Remove-NetIPAddress",
         "Remove-NetFirewallRule",
         "Remove-EnvironmentVariable",
-        "Remove-CimSession",
+        "Remove-PSSession",
         "Remove-PSReadLineKeyHandler",
-        "Remove-PSSession"
+        "Remove-CimSession"
       ],
       "Top1Hit": true
     },
@@ -3421,12 +3421,12 @@
       "Got": [
         "gh ",
         "Get-History",
-        "Get-Help",
         "Get-Host",
-        "git show",
-        "git stash",
-        "Get-PhysicalDisk",
-        "git fetch"
+        "Get-Help",
+        "git push",
+        "Get-DnsClientCache",
+        "Get-SmbShare",
+        "Get-FileHash"
       ],
       "Top1Hit": true
     },
@@ -3475,11 +3475,11 @@
         "rg ",
         "Register-PSRepository",
         "Register-ScheduledTask",
-        "Remove-AppxPackage",
         "git reflog",
+        "Remove-AppxPackage",
         "git merge",
-        "Unregister-ScheduledTask",
-        "Unregister-PSRepository"
+        "Clear-EventLog",
+        "ConvertFrom-SecureString"
       ],
       "Top1Hit": true
     },
@@ -3487,8 +3487,8 @@
       "Hit": true,
       "Got": [
         "fd ",
-        "find",
         "kubectl port-forward",
+        "find",
         "findstr"
       ],
       "Top1Hit": true
