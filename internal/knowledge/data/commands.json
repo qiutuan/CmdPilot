@@ -159,6 +159,18 @@
       ]
     },
     {
+      "name": "calc",
+      "params": [],
+      "desc": "计算器",
+      "examples": [
+        "calc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "call",
       "params": [],
       "desc": "调用另一个批处理或标签",
@@ -189,6 +201,18 @@
       ]
     },
     {
+      "name": "certmgr.msc",
+      "params": [],
+      "desc": "证书管理器",
+      "examples": [
+        "certmgr.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "certutil",
       "params": [
         "-hashfile",
@@ -206,6 +230,18 @@
       "shell": "cmd",
       "tags": [
         "安全"
+      ]
+    },
+    {
+      "name": "charmap",
+      "params": [],
+      "desc": "字符映射表",
+      "examples": [
+        "charmap"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -467,6 +503,22 @@
       "shell": "cmd",
       "tags": [
         "文件系统"
+      ]
+    },
+    {
+      "name": "cscript",
+      "params": [
+        "//nologo",
+        "//e:",
+        "//t:"
+      ],
+      "desc": "运行脚本（VBS/JS）",
+      "examples": [
+        "cscript //nologo script.vbs"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -786,6 +838,22 @@
       "shell": "cmd",
       "tags": [
         "压缩"
+      ]
+    },
+    {
+      "name": "explorer",
+      "params": [
+        "/n",
+        "/e",
+        "/select"
+      ],
+      "desc": "打开文件资源管理器或指定路径",
+      "examples": [
+        "explorer /select,C:\\file.txt"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -1177,6 +1245,18 @@
       ]
     },
     {
+      "name": "magnify",
+      "params": [],
+      "desc": "放大镜",
+      "examples": [
+        "magnify"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "md",
       "params": [],
       "desc": "创建目录",
@@ -1216,6 +1296,18 @@
       "shell": "cmd",
       "tags": [
         "文件系统"
+      ]
+    },
+    {
+      "name": "mobsync",
+      "params": [],
+      "desc": "同步中心",
+      "examples": [
+        "mobsync"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -1332,6 +1424,18 @@
       ]
     },
     {
+      "name": "mspaint",
+      "params": [],
+      "desc": "画图",
+      "examples": [
+        "mspaint image.png"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "msra",
       "params": [
         "/offerra"
@@ -1362,6 +1466,18 @@
       "shell": "cmd",
       "tags": [
         "远程"
+      ]
+    },
+    {
+      "name": "narrator",
+      "params": [],
+      "desc": "讲述人（屏幕阅读）",
+      "examples": [
+        "narrator"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -1463,6 +1579,20 @@
       ]
     },
     {
+      "name": "notepad",
+      "params": [
+        "/a"
+      ],
+      "desc": "打开记事本",
+      "examples": [
+        "notepad C:\\temp\\note.txt"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "nslookup",
       "params": [
         "-type",
@@ -1493,6 +1623,18 @@
       "shell": "cmd",
       "tags": [
         "系统"
+      ]
+    },
+    {
+      "name": "osk",
+      "params": [],
+      "desc": "屏幕键盘",
+      "examples": [
+        "osk"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -1623,6 +1765,18 @@
       ]
     },
     {
+      "name": "powershell_ise",
+      "params": [],
+      "desc": "PowerShell ISE",
+      "examples": [
+        "powershell_ise"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "print",
       "params": [
         "/d:"
@@ -1730,8 +1884,7 @@
       ],
       "desc": "注册/注销 COM DLL",
       "examples": [
-        "regsvr32 /s mycom.dll",
-        "regsvr32 /u /s mycom.dll"
+        "regsvr32 /s my.dll"
       ],
       "shell": "cmd",
       "tags": [
@@ -1791,6 +1944,18 @@
       "shell": "cmd",
       "tags": [
         "文件系统"
+      ]
+    },
+    {
+      "name": "resmon",
+      "params": [],
+      "desc": "资源监视器",
+      "examples": [
+        "resmon"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -1866,7 +2031,7 @@
       ],
       "desc": "以其他用户身份运行程序",
       "examples": [
-        "runas /user:Administrator cmd"
+        "runas /user:admin cmd"
       ],
       "shell": "cmd",
       "tags": [
@@ -2097,6 +2262,18 @@
       ]
     },
     {
+      "name": "snippingtool",
+      "params": [],
+      "desc": "截图工具",
+      "examples": [
+        "snippingtool"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "sort",
       "params": [
         "/r",
@@ -2165,6 +2342,18 @@
       "shell": "cmd",
       "tags": [
         "文件系统"
+      ]
+    },
+    {
+      "name": "sysdm.cpl",
+      "params": [],
+      "desc": "系统属性",
+      "examples": [
+        "sysdm.cpl"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -2409,6 +2598,34 @@
       ]
     },
     {
+      "name": "tzutil",
+      "params": [
+        "/g",
+        "/s",
+        "/l"
+      ],
+      "desc": "时区工具",
+      "examples": [
+        "tzutil /g"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
+      "name": "utilman",
+      "params": [],
+      "desc": "轻松使用（辅助功能）",
+      "examples": [
+        "utilman"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "ver",
       "params": [],
       "desc": "显示 Windows 版本",
@@ -2418,6 +2635,18 @@
       "shell": "cmd",
       "tags": [
         "系统"
+      ]
+    },
+    {
+      "name": "verifier",
+      "params": [],
+      "desc": "驱动程序验证器",
+      "examples": [
+        "verifier /standard"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {
@@ -2532,6 +2761,20 @@
       ]
     },
     {
+      "name": "winmgmt",
+      "params": [
+        "/?"
+      ],
+      "desc": "WMI 服务管理",
+      "examples": [
+        "winmgmt /?"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "winver",
       "params": [],
       "desc": "显示 Windows 版本信息窗口",
@@ -2563,6 +2806,22 @@
       "shell": "cmd",
       "tags": [
         "系统"
+      ]
+    },
+    {
+      "name": "wscript",
+      "params": [
+        "//nologo",
+        "//e:",
+        "//t:"
+      ],
+      "desc": "Windows 脚本宿主（GUI）",
+      "examples": [
+        "wscript //nologo script.vbs"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
       ]
     },
     {

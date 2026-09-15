@@ -1,2610 +1,2869 @@
 {
-  "version": 1,
-  "commands": [
-    {
-      "name": "dir",
-      "params": [
-        "/a",
-        "/b",
-        "/c",
-        "/d",
-        "/l",
-        "/o",
-        "/p",
-        "/q",
-        "/r",
-        "/s",
-        "/t",
-        "/w",
-        "/x",
-        "/4"
-      ],
-      "desc": "显示目录中的文件和子目录列表",
-      "examples": [
-        "dir /s /b *.txt",
-        "dir /a:d"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "cd",
-      "params": [
-        "/d",
-        "..",
-        "\\"
-      ],
-      "desc": "显示或更改当前目录",
-      "examples": [
-        "cd /d D:\\project",
-        "cd .."
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "chdir",
-      "params": [
-        "/d"
-      ],
-      "desc": "cd 的别名，显示或更改当前目录",
-      "examples": [
-        "chdir /d C:\\Windows"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "md",
-      "params": [],
-      "desc": "创建目录",
-      "examples": [
-        "md logs\\2026",
-        "md a b c"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "mkdir",
-      "params": [],
-      "desc": "创建目录（md 的别名）",
-      "examples": [
-        "mkdir build\\dist"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "rd",
-      "params": [
-        "/s",
-        "/q"
-      ],
-      "desc": "删除目录",
-      "examples": [
-        "rd /s /q node_modules"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "rmdir",
-      "params": [
-        "/s",
-        "/q"
-      ],
-      "desc": "删除目录（rd 的别名）",
-      "examples": [
-        "rmdir /s /q dist"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "del",
-      "params": [
-        "/f",
-        "/q",
-        "/s",
-        "/a"
-      ],
-      "desc": "删除一个或多个文件",
-      "examples": [
-        "del /f /q *.tmp",
-        "del /s *.log"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "erase",
-      "params": [
-        "/f",
-        "/q",
-        "/s"
-      ],
-      "desc": "删除文件（del 的别名）",
-      "examples": [
-        "erase /q old.txt"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "copy",
-      "params": [
-        "/y",
-        "/-y",
-        "/v",
-        "/d",
-        "/b",
-        "/a"
-      ],
-      "desc": "复制一个或多个文件",
-      "examples": [
-        "copy config.ini config.bak",
-        "copy /y *.dll bin\\"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "xcopy",
-      "params": [
-        "/s",
-        "/e",
-        "/i",
-        "/y",
-        "/d",
-        "/h",
-        "/r",
-        "/q",
-        "/f",
-        "/c",
-        "/exclude"
-      ],
-      "desc": "复制文件和目录树（已弃用，推荐 robocopy）",
-      "examples": [
-        "xcopy src dist /s /e /i /y"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "robocopy",
-      "params": [
-        "/s",
-        "/e",
-        "/mir",
-        "/move",
-        "/purge",
-        "/njh",
-        "/njs",
-        "/ndl",
-        "/np",
-        "/mt",
-        "/r",
-        "/w",
-        "/log",
-        "/xf",
-        "/xd"
-      ],
-      "desc": "高级文件复制工具，支持镜像、多线程",
-      "examples": [
-        "robocopy D:\\data E:\\backup /mir /mt:8",
-        "robocopy src dst /e /xf *.tmp"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "move",
-      "params": [
-        "/y",
-        "/-y"
-      ],
-      "desc": "移动或重命名文件/目录",
-      "examples": [
-        "move old.txt new.txt",
-        "move *.log logs\\"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "ren",
-      "params": [],
-      "desc": "重命名文件或目录",
-      "examples": [
-        "ren report.txt report_2026.txt"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "rename",
-      "params": [],
-      "desc": "重命名文件或目录（ren 的别名）",
-      "examples": [
-        "rename a.jpg b.jpg"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "type",
-      "params": [],
-      "desc": "显示文本文件内容",
-      "examples": [
-        "type README.md",
-        "type app.log | more"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "more",
-      "params": [
-        "/e",
-        "/c",
-        "/p",
-        "/s",
-        "/t",
-        "+n"
-      ],
-      "desc": "分页显示文件内容",
-      "examples": [
-        "more big.log",
-        "dir | more"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "find",
-      "params": [
-        "/v",
-        "/c",
-        "/n",
-        "/i",
-        "/off"
-      ],
-      "desc": "在文件中搜索字符串",
-      "examples": [
-        "find /i \"error\" app.log"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文本处理"
-      ]
-    },
-    {
-      "name": "findstr",
-      "params": [
-        "/i",
-        "/s",
-        "/r",
-        "/n",
-        "/c",
-        "/v",
-        "/m",
-        "/l",
-        "/g"
-      ],
-      "desc": "在文件中搜索字符串（支持正则）",
-      "examples": [
-        "findstr /s /i \"TODO\" *.go",
-        "findstr /r \"^ERROR\" *.log"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文本处理"
-      ]
-    },
-    {
-      "name": "fc",
-      "params": [
-        "/a",
-        "/b",
-        "/c",
-        "/l",
-        "/n",
-        "/u"
-      ],
-      "desc": "比较两个文件并显示差异",
-      "examples": [
-        "fc /n a.txt b.txt",
-        "fc /b img1.bin img2.bin"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文本处理"
-      ]
-    },
-    {
-      "name": "comp",
-      "params": [
-        "/d",
-        "/a",
-        "/l",
-        "/n"
-      ],
-      "desc": "逐字节比较两个文件",
-      "examples": [
-        "comp file1.dat file2.dat"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文本处理"
-      ]
-    },
-    {
-      "name": "attrib",
-      "params": [
-        "+r",
-        "-r",
-        "+a",
-        "-a",
-        "+s",
-        "-s",
-        "+h",
-        "-h",
-        "/s",
-        "/d"
-      ],
-      "desc": "显示或更改文件属性",
-      "examples": [
-        "attrib +h secret.txt",
-        "attrib -r -s -h file"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "tree",
-      "params": [
-        "/f",
-        "/a"
-      ],
-      "desc": "以图形方式显示目录结构",
-      "examples": [
-        "tree /f"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "sort",
-      "params": [
-        "/r",
-        "/+n"
-      ],
-      "desc": "对输入排序",
-      "examples": [
-        "sort list.txt",
-        "dir /b | sort /r"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文本处理"
-      ]
-    },
-    {
-      "name": "subst",
-      "params": [
-        "/d"
-      ],
-      "desc": "将路径关联到驱动器号",
-      "examples": [
-        "subst X: D:\\dev\\projects",
-        "subst X: /d"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "pushd",
-      "params": [],
-      "desc": "保存当前目录并切换到目标目录",
-      "examples": [
-        "pushd D:\\temp"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "popd",
-      "params": [],
-      "desc": "恢复到 pushd 保存的目录",
-      "examples": [
-        "popd"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "mklink",
-      "params": [
-        "/d",
-        "/j",
-        "/h"
-      ],
-      "desc": "创建符号链接",
-      "examples": [
-        "mklink /d C:\\link D:\\target",
-        "mklink /j junction target"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "icacls",
-      "params": [
-        "/grant",
-        "/deny",
-        "/remove",
-        "/setowner",
-        "/t",
-        "/c",
-        "/q",
-        "/inheritance"
-      ],
-      "desc": "显示或修改文件 ACL 权限",
-      "examples": [
-        "icacls file.txt /grant user:(F)",
-        "icacls dir /t /inheritance:r"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "权限"
-      ]
-    },
-    {
-      "name": "cacls",
-      "params": [
-        "/g",
-        "/r",
-        "/p",
-        "/d",
-        "/t",
-        "/e",
-        "/c"
-      ],
-      "desc": "显示或修改文件 ACL（已弃用，用 icacls）",
-      "examples": [
-        "cacls file /g user:F"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "权限"
-      ]
-    },
-    {
-      "name": "takeown",
-      "params": [
-        "/f",
-        "/r",
-        "/d"
-      ],
-      "desc": "以管理员身份取得文件所有权",
-      "examples": [
-        "takeown /f C:\\Windows\\System32\\x /r"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "权限"
-      ]
-    },
-    {
-      "name": "expand",
-      "params": [
-        "/f",
-        "/r",
-        "/d"
-      ],
-      "desc": "解压 CAB 文件",
-      "examples": [
-        "expand -F:* update.cab C:\\temp"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "压缩"
-      ]
-    },
-    {
-      "name": "compact",
-      "params": [
-        "/c",
-        "/u",
-        "/s",
-        "/i",
-        "/q"
-      ],
-      "desc": "显示或更改 NTFS 压缩",
-      "examples": [
-        "compact /c /s:D:\\data"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "cipher",
-      "params": [
-        "/e",
-        "/d",
-        "/w",
-        "/k"
-      ],
-      "desc": "显示或更改 NTFS 加密",
-      "examples": [
-        "cipher /e secret.txt",
-        "cipher /w:C:\\"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "安全"
-      ]
-    },
-    {
-      "name": "replace",
-      "params": [
-        "/a",
-        "/p",
-        "/r",
-        "/w",
-        "/s",
-        "/u"
-      ],
-      "desc": "替换文件",
-      "examples": [
-        "replace new.exe C:\\bin /s"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "where",
-      "params": [
-        "/r",
-        "/q",
-        "/f",
-        "/t"
-      ],
-      "desc": "定位可执行文件所在路径",
-      "examples": [
-        "where git",
-        "where /r C:\\ *.dll"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "wmic",
-      "params": [
-        "process",
-        "cpu",
-        "logicaldisk",
-        "os",
-        "service",
-        "get",
-        "call",
-        "delete"
-      ],
-      "desc": "WMI 命令行工具（已弃用，推荐 PowerShell Get-CimInstance）",
-      "examples": [
-        "wmic process list brief",
-        "wmic cpu get name,NumberOfCores"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "fsutil",
-      "params": [
-        "file",
-        "volume",
-        "dirty",
-        "quota",
-        "usn",
-        "reparsepoint",
-        "hardlink"
-      ],
-      "desc": "文件系统管理工具",
-      "examples": [
-        "fsutil file createnew test.bin 1048576"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "cls",
-      "params": [],
-      "desc": "清空屏幕",
-      "examples": [
-        "cls"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "echo",
-      "params": [
-        "on",
-        "off"
-      ],
-      "desc": "显示消息或开关命令回显",
-      "examples": [
-        "echo hello",
-        "echo %PATH%",
-        "@echo off"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "set",
-      "params": [
-        "/a",
-        "/p"
-      ],
-      "desc": "显示或设置环境变量",
-      "examples": [
-        "set PATH=C:\\bin;%PATH%",
-        "set /p name=输入名字:"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "环境"
-      ]
-    },
-    {
-      "name": "setx",
-      "params": [
-        "/m",
-        "/u",
-        "/s"
-      ],
-      "desc": "永久设置环境变量（不影响当前窗口）",
-      "examples": [
-        "setx JAVA_HOME \"C:\\Program Files\\Java\\jdk17\"",
-        "setx PATH \"%PATH%;D:\\tools\" /m"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "环境"
-      ]
-    },
-    {
-      "name": "path",
-      "params": [],
-      "desc": "显示或设置 PATH 环境变量",
-      "examples": [
-        "path %PATH%;C:\\tools"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "环境"
-      ]
-    },
-    {
-      "name": "prompt",
-      "params": [
-        "$P$G",
-        "$d",
-        "$t",
-        "$_"
-      ],
-      "desc": "更改命令提示符",
-      "examples": [
-        "prompt $P$G",
-        "prompt [$USER]$_$P$G"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "环境"
-      ]
-    },
-    {
-      "name": "title",
-      "params": [],
-      "desc": "设置窗口标题",
-      "examples": [
-        "title build-2026"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "color",
-      "params": [
-        "0a",
-        "1b",
-        "07"
-      ],
-      "desc": "设置默认前景/背景色",
-      "examples": [
-        "color 0a"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "date",
-      "params": [
-        "/t"
-      ],
-      "desc": "显示或设置日期",
-      "examples": [
-        "date /t"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "time",
-      "params": [
-        "/t"
-      ],
-      "desc": "显示或设置时间",
-      "examples": [
-        "time /t"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "ver",
-      "params": [],
-      "desc": "显示 Windows 版本",
-      "examples": [
-        "ver"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "vol",
-      "params": [],
-      "desc": "显示磁盘卷标和序列号",
-      "examples": [
-        "vol C:"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "label",
-      "params": [],
-      "desc": "创建/更改/删除磁盘卷标",
-      "examples": [
-        "label C: DATA"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "chkdsk",
-      "params": [
-        "/f",
-        "/r",
-        "/x",
-        "/scan"
-      ],
-      "desc": "检查磁盘错误",
-      "examples": [
-        "chkdsk C: /f",
-        "chkdsk D: /r"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "chkntfs",
-      "params": [
-        "/c",
-        "/d",
-        "/x"
-      ],
-      "desc": "显示或修改开机自动检查磁盘",
-      "examples": [
-        "chkntfs /d"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "convert",
-      "params": [
-        "/fs:ntfs",
-        "/cvtarea",
-        "/nosecurity"
-      ],
-      "desc": "将 FAT 卷转换为 NTFS",
-      "examples": [
-        "convert D: /fs:ntfs"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "defrag",
-      "params": [
-        "/c",
-        "/d",
-        "/h",
-        "/u",
-        "/v",
-        "/x"
-      ],
-      "desc": "磁盘碎片整理",
-      "examples": [
-        "defrag C: /d /h"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "format",
-      "params": [
-        "/fs:ntfs",
-        "/q",
-        "/y",
-        "/v"
-      ],
-      "desc": "格式化磁盘（危险操作）",
-      "examples": [
-        "format E: /fs:exfat /q"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "diskpart",
-      "params": [
-        "list disk",
-        "select disk",
-        "list volume",
-        "clean",
-        "create partition"
-      ],
-      "desc": "磁盘分区管理工具",
-      "examples": [
-        "diskpart"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "mountvol",
-      "params": [
-        "/s",
-        "/e"
-      ],
-      "desc": "创建/删除卷挂载点",
-      "examples": [
-        "mountvol C:\\mount /s"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "磁盘"
-      ]
-    },
-    {
-      "name": "dism",
-      "params": [
-        "/online",
-        "/image",
-        "/cleanup-image",
-        "/restorehealth",
-        "/add-package",
-        "/get-packages",
-        "/export-image"
-      ],
-      "desc": "部署映像服务与管理",
-      "examples": [
-        "dism /online /cleanup-image /restorehealth",
-        "dism /online /get-packages"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "sfc",
-      "params": [
-        "/scannow",
-        "/verifyonly",
-        "/scanfile",
-        "/offbootdir"
-      ],
-      "desc": "系统文件检查器",
-      "examples": [
-        "sfc /scannow"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "shutdown",
-      "params": [
-        "/s",
-        "/r",
-        "/t",
-        "/a",
-        "/h",
-        "/f"
-      ],
-      "desc": "关机/重启/注销",
-      "examples": [
-        "shutdown /s /t 60",
-        "shutdown /r /t 0",
-        "shutdown /a"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "tasklist",
-      "params": [
-        "/fi",
-        "/fo",
-        "/nh",
-        "/svc",
-        "/m",
-        "/v"
-      ],
-      "desc": "显示运行中的进程列表",
-      "examples": [
-        "tasklist /fi \"imagename eq node.exe\"",
-        "tasklist /svc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "进程"
-      ]
-    },
-    {
-      "name": "taskkill",
-      "params": [
-        "/f",
-        "/pid",
-        "/im",
-        "/t"
-      ],
-      "desc": "结束进程",
-      "examples": [
-        "taskkill /f /im node.exe",
-        "taskkill /pid 1234 /f"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "进程"
-      ]
-    },
-    {
-      "name": "schtasks",
-      "params": [
-        "/create",
-        "/run",
-        "/end",
-        "/delete",
-        "/query",
-        "/change",
-        "/tn",
-        "/sc",
-        "/tr"
-      ],
-      "desc": "计划任务管理",
-      "examples": [
-        "schtasks /create /tn backup /tr backup.bat /sc daily /st 02:00",
-        "schtasks /query /tn backup"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "计划任务"
-      ]
-    },
-    {
-      "name": "msconfig",
-      "params": [],
-      "desc": "系统配置工具（启动项/服务）",
-      "examples": [
-        "msconfig"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "systeminfo",
-      "params": [
-        "/fo",
-        "/s"
-      ],
-      "desc": "显示系统详细信息",
-      "examples": [
-        "systeminfo",
-        "systeminfo /fo csv"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "driverquery",
-      "params": [
-        "/v",
-        "/fo",
-        "/si"
-      ],
-      "desc": "显示已安装驱动程序列表",
-      "examples": [
-        "driverquery /v"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "powercfg",
-      "params": [
-        "/a",
-        "/h",
-        "/energy",
-        "/batteryreport",
-        "/sleepstudy",
-        "/devicequery"
-      ],
-      "desc": "电源配置管理",
-      "examples": [
-        "powercfg /batteryreport",
-        "powercfg /energy"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "电源"
-      ]
-    },
-    {
-      "name": "eventvwr",
-      "params": [],
-      "desc": "打开事件查看器",
-      "examples": [
-        "eventvwr"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "perfmon",
-      "params": [
-        "/rel",
-        "/report"
-      ],
-      "desc": "打开性能监视器",
-      "examples": [
-        "perfmon /rel"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "dxdiag",
-      "params": [
-        "/x"
-      ],
-      "desc": "DirectX 诊断工具",
-      "examples": [
-        "dxdiag /x output.xml"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "msinfo32",
-      "params": [
-        "/report"
-      ],
-      "desc": "系统信息工具",
-      "examples": [
-        "msinfo32"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "bcdedit",
-      "params": [
-        "/enum",
-        "/set",
-        "/default",
-        "/timeout"
-      ],
-      "desc": "启动配置数据编辑器",
-      "examples": [
-        "bcdedit /enum"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "bootrec",
-      "params": [
-        "/fixmbr",
-        "/fixboot",
-        "/scanos",
-        "/rebuildbcd"
-      ],
-      "desc": "修复启动记录",
-      "examples": [
-        "bootrec /fixmbr"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "certutil",
-      "params": [
-        "-hashfile",
-        "-addstore",
-        "-delstore",
-        "-urlcache",
-        "-encode",
-        "-decode"
-      ],
-      "desc": "证书管理与哈希工具",
-      "examples": [
-        "certutil -hashfile file.exe SHA256",
-        "certutil -urlcache * delete"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "安全"
-      ]
-    },
-    {
-      "name": "wusa",
-      "params": [
-        "/quiet",
-        "/norestart",
-        "/uninstall",
-        "/kb"
-      ],
-      "desc": "Windows 更新独立安装程序",
-      "examples": [
-        "wusa WindowsUpdate-KB123.msu /quiet"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "msiexec",
-      "params": [
-        "/i",
-        "/x",
-        "/a",
-        "/qn",
-        "/qb",
-        "/l*v"
-      ],
-      "desc": "Windows Installer 命令行",
-      "examples": [
-        "msiexec /i app.msi /qn",
-        "msiexec /x {GUID} /qn"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "安装"
-      ]
-    },
-    {
-      "name": "reg",
-      "params": [
-        "add",
-        "delete",
-        "query",
-        "copy",
-        "save",
-        "restore",
-        "load",
-        "unload",
-        "/v",
-        "/d",
-        "/f"
-      ],
-      "desc": "注册表命令行操作",
-      "examples": [
-        "reg query HKLM\\SOFTWARE\\Microsoft",
-        "reg add HKCU\\Env /v TEST /d 1 /f"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "注册表"
-      ]
-    },
-    {
-      "name": "regedit",
-      "params": [
-        "/s",
-        "/e"
-      ],
-      "desc": "注册表编辑器",
-      "examples": [
-        "regedit /e backup.reg HKCU\\Software"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "注册表"
-      ]
-    },
-    {
-      "name": "regsvr32",
-      "params": [
-        "/s",
-        "/u",
-        "/i"
-      ],
-      "desc": "注册/注销 COM DLL",
-      "examples": [
-        "regsvr32 /s mycom.dll",
-        "regsvr32 /u /s mycom.dll"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "注册表"
-      ]
-    },
-    {
-      "name": "sc",
-      "params": [
-        "query",
-        "start",
-        "stop",
-        "config",
-        "create",
-        "delete",
-        "failure",
-        "qc"
-      ],
-      "desc": "服务控制管理器命令行",
-      "examples": [
-        "sc query wuauserv",
-        "sc config X start= disabled",
-        "sc stop Spooler"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "服务"
-      ]
-    },
-    {
-      "name": "net",
-      "params": [
-        "use",
-        "user",
-        "localgroup",
-        "share",
-        "view",
-        "start",
-        "stop",
-        "statistics",
-        "accounts"
-      ],
-      "desc": "网络/用户/服务管理",
-      "examples": [
-        "net use Z: \\\\server\\share",
-        "net user administrator",
-        "net localgroup administrators"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "gpupdate",
-      "params": [
-        "/force",
-        "/target",
-        "/boot"
-      ],
-      "desc": "刷新组策略",
-      "examples": [
-        "gpupdate /force"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "gpedit",
-      "params": [],
-      "desc": "组策略编辑器",
-      "examples": [
-        "gpedit"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "control",
-      "params": [
-        "panel",
-        "keyboard",
-        "mouse",
-        "printers"
-      ],
-      "desc": "打开控制面板项目",
-      "examples": [
-        "control panel"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "runas",
-      "params": [
-        "/user",
-        "/profile",
-        "/env",
-        "/netonly"
-      ],
-      "desc": "以其他用户身份运行程序",
-      "examples": [
-        "runas /user:Administrator cmd"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "whoami",
-      "params": [
-        "/all",
-        "/user",
-        "/groups",
-        "/priv"
-      ],
-      "desc": "显示当前用户信息",
-      "examples": [
-        "whoami /all"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "hostname",
-      "params": [],
-      "desc": "显示主机名",
-      "examples": [
-        "hostname"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "logoff",
-      "params": [],
-      "desc": "注销当前会话",
-      "examples": [
-        "logoff"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "openfiles",
-      "params": [
-        "/query",
-        "/disconnect"
-      ],
-      "desc": "显示/断开共享文件",
-      "examples": [
-        "openfiles /query"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "wbadmin",
-      "params": [
-        "start backup",
-        "get versions",
-        "start recovery",
-        "enable backup"
-      ],
-      "desc": "Windows 备份命令行",
-      "examples": [
-        "wbadmin start backup -backupTarget:E:"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "备份"
-      ]
-    },
-    {
-      "name": "vssadmin",
-      "params": [
-        "list shadows",
-        "delete shadows",
-        "list providers",
-        "list volumes"
-      ],
-      "desc": "卷影复制管理",
-      "examples": [
-        "vssadmin list shadows"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "备份"
-      ]
-    },
-    {
-      "name": "bitsadmin",
-      "params": [
-        "/transfer",
-        "/create",
-        "/addfile",
-        "/resume",
-        "/complete",
-        "/list",
-        "/cancel"
-      ],
-      "desc": "后台智能传输服务",
-      "examples": [
-        "bitsadmin /transfer job http://host/file C:\\file"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "typeperf",
-      "params": [
-        "-f",
-        "-sc",
-        "-si",
-        "-o"
-      ],
-      "desc": "性能计数器实时输出",
-      "examples": [
-        "typeperf \"\\Processor(_Total)\\% Processor Time\" -sc 5"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "tracerpt",
-      "params": [
-        "-o",
-        "-f",
-        "-summary"
-      ],
-      "desc": "ETL 跟踪日志处理",
-      "examples": [
-        "tracerpt trace.etl -o report.xml"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "ipconfig",
-      "params": [
-        "/all",
-        "/release",
-        "/renew",
-        "/flushdns",
-        "/displaydns",
-        "/registerdns"
-      ],
-      "desc": "显示/管理 IP 配置",
-      "examples": [
-        "ipconfig /all",
-        "ipconfig /flushdns"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "ping",
-      "params": [
-        "-t",
-        "-a",
-        "-n",
-        "-l",
-        "-f",
-        "-w"
-      ],
-      "desc": "测试网络连通性",
-      "examples": [
-        "ping -n 4 google.com",
-        "ping -t 192.168.1.1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "tracert",
-      "params": [
-        "-d",
-        "-h",
-        "-w",
-        "-j"
-      ],
-      "desc": "追踪路由",
-      "examples": [
-        "tracert -d 8.8.8.8"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "pathping",
-      "params": [
-        "-n",
-        "-h",
-        "-q",
-        "-w"
-      ],
-      "desc": "结合 ping 与 tracert 的路由分析",
-      "examples": [
-        "pathping -n 8.8.8.8"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "nslookup",
-      "params": [
-        "-type",
-        "-server",
-        "-timeout",
-        "-port"
-      ],
-      "desc": "DNS 查询",
-      "examples": [
-        "nslookup example.com",
-        "nslookup -type=mx gmail.com"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "netstat",
-      "params": [
-        "-a",
-        "-n",
-        "-o",
-        "-b",
-        "-e",
-        "-r",
-        "-s",
-        "-p"
-      ],
-      "desc": "显示网络连接/端口",
-      "examples": [
-        "netstat -ano | findstr :8080",
-        "netstat -b"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "netsh",
-      "params": [
-        "wlan show profiles",
-        "interface",
-        "advfirewall",
-        "winhttp",
-        "http",
-        "trace",
-        "add",
-        "delete"
-      ],
-      "desc": "网络配置命令行",
-      "examples": [
-        "netsh wlan show profiles",
-        "netsh advfirewall set allprofiles state off"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "route",
-      "params": [
-        "print",
-        "add",
-        "delete",
-        "change",
-        "-p"
-      ],
-      "desc": "操作路由表",
-      "examples": [
-        "route print",
-        "route add 10.0.0.0 mask 255.0.0.0 192.168.1.1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "arp",
-      "params": [
-        "-a",
-        "-d",
-        "-s"
-      ],
-      "desc": "ARP 缓存管理",
-      "examples": [
-        "arp -a"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "getmac",
-      "params": [
-        "/v",
-        "/fo"
-      ],
-      "desc": "显示网卡 MAC 地址",
-      "examples": [
-        "getmac /v"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "nbtstat",
-      "params": [
-        "-a",
-        "-n",
-        "-r",
-        "-c",
-        "-s"
-      ],
-      "desc": "NetBIOS 统计",
-      "examples": [
-        "nbtstat -n"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "ftp",
-      "params": [
-        "open",
-        "get",
-        "put",
-        "mget",
-        "mput",
-        "ls",
-        "bye"
-      ],
-      "desc": "FTP 客户端",
-      "examples": [
-        "ftp ftp.example.com"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "telnet",
-      "params": [],
-      "desc": "Telnet 客户端",
-      "examples": [
-        "telnet 192.168.1.1 23"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "ssh",
-      "params": [
-        "-p",
-        "-i",
-        "-L",
-        "-R",
-        "-D",
-        "-v",
-        "-o"
-      ],
-      "desc": "SSH 远程登录",
-      "examples": [
-        "ssh -i key.pem user@host",
-        "ssh -L 8080:localhost:80 user@host"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "scp",
-      "params": [
-        "-r",
-        "-P",
-        "-i",
-        "-C"
-      ],
-      "desc": "基于 SSH 的安全复制",
-      "examples": [
-        "scp -r build/ user@host:/var/www"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "sftp",
-      "params": [
-        "get",
-        "put",
-        "ls",
-        "cd",
-        "rm"
-      ],
-      "desc": "基于 SSH 的文件传输",
-      "examples": [
-        "sftp user@host"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "curl",
-      "params": [
-        "-X",
-        "-H",
-        "-d",
-        "-o",
-        "-O",
-        "-L",
-        "-k",
-        "-u",
-        "-s",
-        "-i"
-      ],
-      "desc": "HTTP 请求工具",
-      "examples": [
-        "curl -X POST -H \"Content-Type: application/json\" -d @body.json http://api",
-        "curl -O https://example.com/file.zip"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "tftp",
-      "params": [
-        "-i",
-        "get",
-        "put"
-      ],
-      "desc": "TFTP 客户端",
-      "examples": [
-        "tftp -i host get file"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "for",
-      "params": [
-        "%d in (set) do command",
-        "/d",
-        "/r",
-        "/l",
-        "/f"
-      ],
-      "desc": "循环命令",
-      "examples": [
-        "for %f in (*.txt) do echo %f",
-        "for /f \"tokens=*\" %i in (list.txt) do echo %i"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "if",
-      "params": [
-        "exist",
-        "not",
-        "==",
-        "errorlevel",
-        "defined"
-      ],
-      "desc": "条件判断",
-      "examples": [
-        "if exist file.txt echo found",
-        "if \"%1\"==\"\" echo no args"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "goto",
-      "params": [
-        "label",
-        ":eof"
-      ],
-      "desc": "跳转到标签",
-      "examples": [
-        "goto :eof"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "call",
-      "params": [],
-      "desc": "调用另一个批处理或标签",
-      "examples": [
-        "call setup.bat",
-        "call :sub"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "exit",
-      "params": [
-        "/b",
-        "code"
-      ],
-      "desc": "退出 CMD 或批处理",
-      "examples": [
-        "exit /b 1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "setlocal",
-      "params": [
-        "enabledelayedexpansion",
-        "enableextensions"
-      ],
-      "desc": "开始局部环境变量",
-      "examples": [
-        "setlocal enabledelayedexpansion"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "endlocal",
-      "params": [],
-      "desc": "结束局部环境变量",
-      "examples": [
-        "endlocal"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "shift",
-      "params": [],
-      "desc": "移动批处理参数",
-      "examples": [
-        "shift"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "rem",
-      "params": [],
-      "desc": "批处理注释",
-      "examples": [
-        "rem this is a comment"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "start",
-      "params": [
-        "/min",
-        "/max",
-        "/wait",
-        "/d",
-        "/b"
-      ],
-      "desc": "启动新窗口/程序",
-      "examples": [
-        "start notepad",
-        "start /wait build.bat"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "timeout",
-      "params": [
-        "/t",
-        "/nobreak"
-      ],
-      "desc": "等待指定秒数",
-      "examples": [
-        "timeout /t 5 /nobreak"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "pause",
-      "params": [],
-      "desc": "暂停并提示按键继续",
-      "examples": [
-        "pause"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "choice",
-      "params": [
-        "/c",
-        "/n",
-        "/m",
-        "/t",
-        "/d"
-      ],
-      "desc": "提供选择菜单",
-      "examples": [
-        "choice /c YN /m \"继续?\"",
-        "choice /c 123 /t 5 /d 1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "cmd",
-      "params": [
-        "/c",
-        "/k",
-        "/v:on",
-        "/q",
-        "/s"
-      ],
-      "desc": "启动新的 CMD 实例",
-      "examples": [
-        "cmd /c dir",
-        "cmd /k cd /d D:\\dev"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "powershell",
-      "params": [
-        "-Command",
-        "-File",
-        "-ExecutionPolicy",
-        "-NoProfile",
-        "-EncodedCommand"
-      ],
-      "desc": "调用 PowerShell",
-      "examples": [
-        "powershell -Command Get-Process",
-        "powershell -ExecutionPolicy Bypass -File setup.ps1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "help",
-      "params": [
-        "command"
-      ],
-      "desc": "显示命令帮助",
-      "examples": [
-        "help dir",
-        "help"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "assoc",
-      "params": [
-        ".txt=",
-        "/f"
-      ],
-      "desc": "显示或修改文件扩展名关联",
-      "examples": [
-        "assoc .txt=txtfile"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "ftype",
-      "params": [
-        "txtfile=",
-        "/f"
-      ],
-      "desc": "显示或修改文件类型关联",
-      "examples": [
-        "ftype txtfile=\"C:\\notepad.exe\" %1"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "mode",
-      "params": [
-        "con",
-        "com1",
-        "120,30"
-      ],
-      "desc": "配置系统设备",
-      "examples": [
-        "mode con cols=120 lines=40"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "verify",
-      "params": [
-        "on",
-        "off"
-      ],
-      "desc": "开关写盘校验",
-      "examples": [
-        "verify on"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "doskey",
-      "params": [
-        "/history",
-        "/macrofile",
-        "macroname"
-      ],
-      "desc": "命令行历史与宏",
-      "examples": [
-        "doskey /history",
-        "doskey ll=dir /b $*"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    },
-    {
-      "name": "mstsc",
-      "params": [
-        "/v",
-        "/f",
-        "/admin",
-        "/w",
-        "/h"
-      ],
-      "desc": "远程桌面连接",
-      "examples": [
-        "mstsc /v:192.168.1.10",
-        "mstsc /f"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "远程"
-      ]
-    },
-    {
-      "name": "msra",
-      "params": [
-        "/offerra"
-      ],
-      "desc": "Windows 远程协助",
-      "examples": [
-        "msra /offerra"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "远程"
-      ]
-    },
-    {
-      "name": "taskmgr",
-      "params": [],
-      "desc": "打开任务管理器",
-      "examples": [
-        "taskmgr"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "winver",
-      "params": [],
-      "desc": "显示 Windows 版本信息窗口",
-      "examples": [
-        "winver"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "services.msc",
-      "params": [],
-      "desc": "打开服务管理控制台",
-      "examples": [
-        "services.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "compmgmt.msc",
-      "params": [],
-      "desc": "打开计算机管理控制台",
-      "examples": [
-        "compmgmt.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "devmgmt.msc",
-      "params": [],
-      "desc": "打开设备管理器",
-      "examples": [
-        "devmgmt.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "diskmgmt.msc",
-      "params": [],
-      "desc": "打开磁盘管理",
-      "examples": [
-        "diskmgmt.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "taskschd.msc",
-      "params": [],
-      "desc": "打开任务计划程序",
-      "examples": [
-        "taskschd.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "lusrmgr.msc",
-      "params": [],
-      "desc": "打开本地用户和组",
-      "examples": [
-        "lusrmgr.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "secpol.msc",
-      "params": [],
-      "desc": "打开本地安全策略",
-      "examples": [
-        "secpol.msc"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "ncpa.cpl",
-      "params": [],
-      "desc": "打开网络连接设置",
-      "examples": [
-        "ncpa.cpl"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "appwiz.cpl",
-      "params": [],
-      "desc": "打开程序和功能",
-      "examples": [
-        "appwiz.cpl"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "管理控制台"
-      ]
-    },
-    {
-      "name": "chcp",
-      "params": [
-        "65001",
-        "936",
-        "437"
-      ],
-      "desc": "显示或设置活动代码页",
-      "examples": [
-        "chcp 65001"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "clip",
-      "params": [],
-      "desc": "将输入重定向到剪贴板",
-      "examples": [
-        "dir /b | clip",
-        "type file.txt | clip"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "forfiles",
-      "params": [
-        "/p",
-        "/m",
-        "/s",
-        "/d",
-        "/c"
-      ],
-      "desc": "批量处理文件",
-      "examples": [
-        "forfiles /p C:\\logs /s /m *.log /c \"cmd /c del @path\""
-      ],
-      "shell": "cmd",
-      "tags": [
-        "文件系统"
-      ]
-    },
-    {
-      "name": "eventcreate",
-      "params": [
-        "/l",
-        "/so",
-        "/t",
-        "/id",
-        "/d"
-      ],
-      "desc": "创建自定义事件日志",
-      "examples": [
-        "eventcreate /t information /id 100 /d \"backup ok\""
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "gpresult",
-      "params": [
-        "/r",
-        "/h",
-        "/scope",
-        "/user"
-      ],
-      "desc": "显示组策略结果",
-      "examples": [
-        "gpresult /r",
-        "gpresult /h report.html"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "auditpol",
-      "params": [
-        "/get",
-        "/set",
-        "/list"
-      ],
-      "desc": "审核策略管理",
-      "examples": [
-        "auditpol /get /category:*"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "安全"
-      ]
-    },
-    {
-      "name": "print",
-      "params": [
-        "/d:"
-      ],
-      "desc": "打印文本文件",
-      "examples": [
-        "print /d:\\\\printer file.txt"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "logman",
-      "params": [
-        "create",
-        "start",
-        "stop",
-        "query",
-        "delete"
-      ],
-      "desc": "性能计数器/事件追踪管理",
-      "examples": [
-        "logman query providers"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "slmgr",
-      "params": [
-        "/ipk",
-        "/ato",
-        "/dli",
-        "/dlv",
-        "/xpr",
-        "/rearm"
-      ],
-      "desc": "Windows 软件授权管理",
-      "examples": [
-        "slmgr /xpr",
-        "slmgr /dlv"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "系统"
-      ]
-    },
-    {
-      "name": "waitfor",
-      "params": [
-        "/t",
-        "/si"
-      ],
-      "desc": "等待信号或发送信号",
-      "examples": [
-        "waitfor /t 10 ready"
-      ],
-      "shell": "cmd",
-      "tags": [
-        "脚本"
-      ]
-    }
-  ]
+ "version": 1,
+ "commands": [
+  {
+   "name": "dir",
+   "params": [
+    "/a",
+    "/b",
+    "/c",
+    "/d",
+    "/l",
+    "/o",
+    "/p",
+    "/q",
+    "/r",
+    "/s",
+    "/t",
+    "/w",
+    "/x",
+    "/4"
+   ],
+   "desc": "显示目录中的文件和子目录列表",
+   "examples": [
+    "dir /s /b *.txt",
+    "dir /a:d"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "cd",
+   "params": [
+    "/d",
+    "..",
+    "\\"
+   ],
+   "desc": "显示或更改当前目录",
+   "examples": [
+    "cd /d D:\\project",
+    "cd .."
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "chdir",
+   "params": [
+    "/d"
+   ],
+   "desc": "cd 的别名，显示或更改当前目录",
+   "examples": [
+    "chdir /d C:\\Windows"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "md",
+   "params": [],
+   "desc": "创建目录",
+   "examples": [
+    "md logs\\2026",
+    "md a b c"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "mkdir",
+   "params": [],
+   "desc": "创建目录（md 的别名）",
+   "examples": [
+    "mkdir build\\dist"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "rd",
+   "params": [
+    "/s",
+    "/q"
+   ],
+   "desc": "删除目录",
+   "examples": [
+    "rd /s /q node_modules"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "rmdir",
+   "params": [
+    "/s",
+    "/q"
+   ],
+   "desc": "删除目录（rd 的别名）",
+   "examples": [
+    "rmdir /s /q dist"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "del",
+   "params": [
+    "/f",
+    "/q",
+    "/s",
+    "/a"
+   ],
+   "desc": "删除一个或多个文件",
+   "examples": [
+    "del /f /q *.tmp",
+    "del /s *.log"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "erase",
+   "params": [
+    "/f",
+    "/q",
+    "/s"
+   ],
+   "desc": "删除文件（del 的别名）",
+   "examples": [
+    "erase /q old.txt"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "copy",
+   "params": [
+    "/y",
+    "/-y",
+    "/v",
+    "/d",
+    "/b",
+    "/a"
+   ],
+   "desc": "复制一个或多个文件",
+   "examples": [
+    "copy config.ini config.bak",
+    "copy /y *.dll bin\\"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "xcopy",
+   "params": [
+    "/s",
+    "/e",
+    "/i",
+    "/y",
+    "/d",
+    "/h",
+    "/r",
+    "/q",
+    "/f",
+    "/c",
+    "/exclude"
+   ],
+   "desc": "复制文件和目录树（已弃用，推荐 robocopy）",
+   "examples": [
+    "xcopy src dist /s /e /i /y"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "robocopy",
+   "params": [
+    "/s",
+    "/e",
+    "/mir",
+    "/move",
+    "/purge",
+    "/njh",
+    "/njs",
+    "/ndl",
+    "/np",
+    "/mt",
+    "/r",
+    "/w",
+    "/log",
+    "/xf",
+    "/xd"
+   ],
+   "desc": "高级文件复制工具，支持镜像、多线程",
+   "examples": [
+    "robocopy D:\\data E:\\backup /mir /mt:8",
+    "robocopy src dst /e /xf *.tmp"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "move",
+   "params": [
+    "/y",
+    "/-y"
+   ],
+   "desc": "移动或重命名文件/目录",
+   "examples": [
+    "move old.txt new.txt",
+    "move *.log logs\\"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "ren",
+   "params": [],
+   "desc": "重命名文件或目录",
+   "examples": [
+    "ren report.txt report_2026.txt"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "rename",
+   "params": [],
+   "desc": "重命名文件或目录（ren 的别名）",
+   "examples": [
+    "rename a.jpg b.jpg"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "type",
+   "params": [],
+   "desc": "显示文本文件内容",
+   "examples": [
+    "type README.md",
+    "type app.log | more"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "more",
+   "params": [
+    "/e",
+    "/c",
+    "/p",
+    "/s",
+    "/t",
+    "+n"
+   ],
+   "desc": "分页显示文件内容",
+   "examples": [
+    "more big.log",
+    "dir | more"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "find",
+   "params": [
+    "/v",
+    "/c",
+    "/n",
+    "/i",
+    "/off"
+   ],
+   "desc": "在文件中搜索字符串",
+   "examples": [
+    "find /i \"error\" app.log"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文本处理"
+   ]
+  },
+  {
+   "name": "findstr",
+   "params": [
+    "/i",
+    "/s",
+    "/r",
+    "/n",
+    "/c",
+    "/v",
+    "/m",
+    "/l",
+    "/g"
+   ],
+   "desc": "在文件中搜索字符串（支持正则）",
+   "examples": [
+    "findstr /s /i \"TODO\" *.go",
+    "findstr /r \"^ERROR\" *.log"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文本处理"
+   ]
+  },
+  {
+   "name": "fc",
+   "params": [
+    "/a",
+    "/b",
+    "/c",
+    "/l",
+    "/n",
+    "/u"
+   ],
+   "desc": "比较两个文件并显示差异",
+   "examples": [
+    "fc /n a.txt b.txt",
+    "fc /b img1.bin img2.bin"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文本处理"
+   ]
+  },
+  {
+   "name": "comp",
+   "params": [
+    "/d",
+    "/a",
+    "/l",
+    "/n"
+   ],
+   "desc": "逐字节比较两个文件",
+   "examples": [
+    "comp file1.dat file2.dat"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文本处理"
+   ]
+  },
+  {
+   "name": "attrib",
+   "params": [
+    "+r",
+    "-r",
+    "+a",
+    "-a",
+    "+s",
+    "-s",
+    "+h",
+    "-h",
+    "/s",
+    "/d"
+   ],
+   "desc": "显示或更改文件属性",
+   "examples": [
+    "attrib +h secret.txt",
+    "attrib -r -s -h file"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "tree",
+   "params": [
+    "/f",
+    "/a"
+   ],
+   "desc": "以图形方式显示目录结构",
+   "examples": [
+    "tree /f"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "sort",
+   "params": [
+    "/r",
+    "/+n"
+   ],
+   "desc": "对输入排序",
+   "examples": [
+    "sort list.txt",
+    "dir /b | sort /r"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文本处理"
+   ]
+  },
+  {
+   "name": "subst",
+   "params": [
+    "/d"
+   ],
+   "desc": "将路径关联到驱动器号",
+   "examples": [
+    "subst X: D:\\dev\\projects",
+    "subst X: /d"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "pushd",
+   "params": [],
+   "desc": "保存当前目录并切换到目标目录",
+   "examples": [
+    "pushd D:\\temp"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "popd",
+   "params": [],
+   "desc": "恢复到 pushd 保存的目录",
+   "examples": [
+    "popd"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "mklink",
+   "params": [
+    "/d",
+    "/j",
+    "/h"
+   ],
+   "desc": "创建符号链接",
+   "examples": [
+    "mklink /d C:\\link D:\\target",
+    "mklink /j junction target"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "icacls",
+   "params": [
+    "/grant",
+    "/deny",
+    "/remove",
+    "/setowner",
+    "/t",
+    "/c",
+    "/q",
+    "/inheritance"
+   ],
+   "desc": "显示或修改文件 ACL 权限",
+   "examples": [
+    "icacls file.txt /grant user:(F)",
+    "icacls dir /t /inheritance:r"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "权限"
+   ]
+  },
+  {
+   "name": "cacls",
+   "params": [
+    "/g",
+    "/r",
+    "/p",
+    "/d",
+    "/t",
+    "/e",
+    "/c"
+   ],
+   "desc": "显示或修改文件 ACL（已弃用，用 icacls）",
+   "examples": [
+    "cacls file /g user:F"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "权限"
+   ]
+  },
+  {
+   "name": "takeown",
+   "params": [
+    "/f",
+    "/r",
+    "/d"
+   ],
+   "desc": "以管理员身份取得文件所有权",
+   "examples": [
+    "takeown /f C:\\Windows\\System32\\x /r"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "权限"
+   ]
+  },
+  {
+   "name": "expand",
+   "params": [
+    "/f",
+    "/r",
+    "/d"
+   ],
+   "desc": "解压 CAB 文件",
+   "examples": [
+    "expand -F:* update.cab C:\\temp"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "压缩"
+   ]
+  },
+  {
+   "name": "compact",
+   "params": [
+    "/c",
+    "/u",
+    "/s",
+    "/i",
+    "/q"
+   ],
+   "desc": "显示或更改 NTFS 压缩",
+   "examples": [
+    "compact /c /s:D:\\data"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "cipher",
+   "params": [
+    "/e",
+    "/d",
+    "/w",
+    "/k"
+   ],
+   "desc": "显示或更改 NTFS 加密",
+   "examples": [
+    "cipher /e secret.txt",
+    "cipher /w:C:\\"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "安全"
+   ]
+  },
+  {
+   "name": "replace",
+   "params": [
+    "/a",
+    "/p",
+    "/r",
+    "/w",
+    "/s",
+    "/u"
+   ],
+   "desc": "替换文件",
+   "examples": [
+    "replace new.exe C:\\bin /s"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "where",
+   "params": [
+    "/r",
+    "/q",
+    "/f",
+    "/t"
+   ],
+   "desc": "定位可执行文件所在路径",
+   "examples": [
+    "where git",
+    "where /r C:\\ *.dll"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "wmic",
+   "params": [
+    "process",
+    "cpu",
+    "logicaldisk",
+    "os",
+    "service",
+    "get",
+    "call",
+    "delete"
+   ],
+   "desc": "WMI 命令行工具（已弃用，推荐 PowerShell Get-CimInstance）",
+   "examples": [
+    "wmic process list brief",
+    "wmic cpu get name,NumberOfCores"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "fsutil",
+   "params": [
+    "file",
+    "volume",
+    "dirty",
+    "quota",
+    "usn",
+    "reparsepoint",
+    "hardlink"
+   ],
+   "desc": "文件系统管理工具",
+   "examples": [
+    "fsutil file createnew test.bin 1048576"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "cls",
+   "params": [],
+   "desc": "清空屏幕",
+   "examples": [
+    "cls"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "echo",
+   "params": [
+    "on",
+    "off"
+   ],
+   "desc": "显示消息或开关命令回显",
+   "examples": [
+    "echo hello",
+    "echo %PATH%",
+    "@echo off"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "set",
+   "params": [
+    "/a",
+    "/p"
+   ],
+   "desc": "显示或设置环境变量",
+   "examples": [
+    "set PATH=C:\\bin;%PATH%",
+    "set /p name=输入名字:"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "环境"
+   ]
+  },
+  {
+   "name": "setx",
+   "params": [
+    "/m",
+    "/u",
+    "/s"
+   ],
+   "desc": "永久设置环境变量（不影响当前窗口）",
+   "examples": [
+    "setx JAVA_HOME \"C:\\Program Files\\Java\\jdk17\"",
+    "setx PATH \"%PATH%;D:\\tools\" /m"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "环境"
+   ]
+  },
+  {
+   "name": "path",
+   "params": [],
+   "desc": "显示或设置 PATH 环境变量",
+   "examples": [
+    "path %PATH%;C:\\tools"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "环境"
+   ]
+  },
+  {
+   "name": "prompt",
+   "params": [
+    "$P$G",
+    "$d",
+    "$t",
+    "$_"
+   ],
+   "desc": "更改命令提示符",
+   "examples": [
+    "prompt $P$G",
+    "prompt [$USER]$_$P$G"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "环境"
+   ]
+  },
+  {
+   "name": "title",
+   "params": [],
+   "desc": "设置窗口标题",
+   "examples": [
+    "title build-2026"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "color",
+   "params": [
+    "0a",
+    "1b",
+    "07"
+   ],
+   "desc": "设置默认前景/背景色",
+   "examples": [
+    "color 0a"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "date",
+   "params": [
+    "/t"
+   ],
+   "desc": "显示或设置日期",
+   "examples": [
+    "date /t"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "time",
+   "params": [
+    "/t"
+   ],
+   "desc": "显示或设置时间",
+   "examples": [
+    "time /t"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "ver",
+   "params": [],
+   "desc": "显示 Windows 版本",
+   "examples": [
+    "ver"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "vol",
+   "params": [],
+   "desc": "显示磁盘卷标和序列号",
+   "examples": [
+    "vol C:"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "label",
+   "params": [],
+   "desc": "创建/更改/删除磁盘卷标",
+   "examples": [
+    "label C: DATA"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "chkdsk",
+   "params": [
+    "/f",
+    "/r",
+    "/x",
+    "/scan"
+   ],
+   "desc": "检查磁盘错误",
+   "examples": [
+    "chkdsk C: /f",
+    "chkdsk D: /r"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "chkntfs",
+   "params": [
+    "/c",
+    "/d",
+    "/x"
+   ],
+   "desc": "显示或修改开机自动检查磁盘",
+   "examples": [
+    "chkntfs /d"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "convert",
+   "params": [
+    "/fs:ntfs",
+    "/cvtarea",
+    "/nosecurity"
+   ],
+   "desc": "将 FAT 卷转换为 NTFS",
+   "examples": [
+    "convert D: /fs:ntfs"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "defrag",
+   "params": [
+    "/c",
+    "/d",
+    "/h",
+    "/u",
+    "/v",
+    "/x"
+   ],
+   "desc": "磁盘碎片整理",
+   "examples": [
+    "defrag C: /d /h"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "format",
+   "params": [
+    "/fs:ntfs",
+    "/q",
+    "/y",
+    "/v"
+   ],
+   "desc": "格式化磁盘（危险操作）",
+   "examples": [
+    "format E: /fs:exfat /q"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "diskpart",
+   "params": [
+    "list disk",
+    "select disk",
+    "list volume",
+    "clean",
+    "create partition"
+   ],
+   "desc": "磁盘分区管理工具",
+   "examples": [
+    "diskpart"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "mountvol",
+   "params": [
+    "/s",
+    "/e"
+   ],
+   "desc": "创建/删除卷挂载点",
+   "examples": [
+    "mountvol C:\\mount /s"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "磁盘"
+   ]
+  },
+  {
+   "name": "dism",
+   "params": [
+    "/online",
+    "/image",
+    "/cleanup-image",
+    "/restorehealth",
+    "/add-package",
+    "/get-packages",
+    "/export-image"
+   ],
+   "desc": "部署映像服务与管理",
+   "examples": [
+    "dism /online /cleanup-image /restorehealth",
+    "dism /online /get-packages"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "sfc",
+   "params": [
+    "/scannow",
+    "/verifyonly",
+    "/scanfile",
+    "/offbootdir"
+   ],
+   "desc": "系统文件检查器",
+   "examples": [
+    "sfc /scannow"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "shutdown",
+   "params": [
+    "/s",
+    "/r",
+    "/t",
+    "/a",
+    "/h",
+    "/f"
+   ],
+   "desc": "关机/重启/注销",
+   "examples": [
+    "shutdown /s /t 60",
+    "shutdown /r /t 0",
+    "shutdown /a"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "tasklist",
+   "params": [
+    "/fi",
+    "/fo",
+    "/nh",
+    "/svc",
+    "/m",
+    "/v"
+   ],
+   "desc": "显示运行中的进程列表",
+   "examples": [
+    "tasklist /fi \"imagename eq node.exe\"",
+    "tasklist /svc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "进程"
+   ]
+  },
+  {
+   "name": "taskkill",
+   "params": [
+    "/f",
+    "/pid",
+    "/im",
+    "/t"
+   ],
+   "desc": "结束进程",
+   "examples": [
+    "taskkill /f /im node.exe",
+    "taskkill /pid 1234 /f"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "进程"
+   ]
+  },
+  {
+   "name": "schtasks",
+   "params": [
+    "/create",
+    "/run",
+    "/end",
+    "/delete",
+    "/query",
+    "/change",
+    "/tn",
+    "/sc",
+    "/tr"
+   ],
+   "desc": "计划任务管理",
+   "examples": [
+    "schtasks /create /tn backup /tr backup.bat /sc daily /st 02:00",
+    "schtasks /query /tn backup"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "计划任务"
+   ]
+  },
+  {
+   "name": "msconfig",
+   "params": [],
+   "desc": "系统配置工具（启动项/服务）",
+   "examples": [
+    "msconfig"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "systeminfo",
+   "params": [
+    "/fo",
+    "/s"
+   ],
+   "desc": "显示系统详细信息",
+   "examples": [
+    "systeminfo",
+    "systeminfo /fo csv"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "driverquery",
+   "params": [
+    "/v",
+    "/fo",
+    "/si"
+   ],
+   "desc": "显示已安装驱动程序列表",
+   "examples": [
+    "driverquery /v"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "powercfg",
+   "params": [
+    "/a",
+    "/h",
+    "/energy",
+    "/batteryreport",
+    "/sleepstudy",
+    "/devicequery"
+   ],
+   "desc": "电源配置管理",
+   "examples": [
+    "powercfg /batteryreport",
+    "powercfg /energy"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "电源"
+   ]
+  },
+  {
+   "name": "eventvwr",
+   "params": [],
+   "desc": "打开事件查看器",
+   "examples": [
+    "eventvwr"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "perfmon",
+   "params": [
+    "/rel",
+    "/report"
+   ],
+   "desc": "打开性能监视器",
+   "examples": [
+    "perfmon /rel"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "dxdiag",
+   "params": [
+    "/x"
+   ],
+   "desc": "DirectX 诊断工具",
+   "examples": [
+    "dxdiag /x output.xml"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "msinfo32",
+   "params": [
+    "/report"
+   ],
+   "desc": "系统信息工具",
+   "examples": [
+    "msinfo32"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "bcdedit",
+   "params": [
+    "/enum",
+    "/set",
+    "/default",
+    "/timeout"
+   ],
+   "desc": "启动配置数据编辑器",
+   "examples": [
+    "bcdedit /enum"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "bootrec",
+   "params": [
+    "/fixmbr",
+    "/fixboot",
+    "/scanos",
+    "/rebuildbcd"
+   ],
+   "desc": "修复启动记录",
+   "examples": [
+    "bootrec /fixmbr"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "certutil",
+   "params": [
+    "-hashfile",
+    "-addstore",
+    "-delstore",
+    "-urlcache",
+    "-encode",
+    "-decode"
+   ],
+   "desc": "证书管理与哈希工具",
+   "examples": [
+    "certutil -hashfile file.exe SHA256",
+    "certutil -urlcache * delete"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "安全"
+   ]
+  },
+  {
+   "name": "wusa",
+   "params": [
+    "/quiet",
+    "/norestart",
+    "/uninstall",
+    "/kb"
+   ],
+   "desc": "Windows 更新独立安装程序",
+   "examples": [
+    "wusa WindowsUpdate-KB123.msu /quiet"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "msiexec",
+   "params": [
+    "/i",
+    "/x",
+    "/a",
+    "/qn",
+    "/qb",
+    "/l*v"
+   ],
+   "desc": "Windows Installer 命令行",
+   "examples": [
+    "msiexec /i app.msi /qn",
+    "msiexec /x {GUID} /qn"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "安装"
+   ]
+  },
+  {
+   "name": "reg",
+   "params": [
+    "add",
+    "delete",
+    "query",
+    "copy",
+    "save",
+    "restore",
+    "load",
+    "unload",
+    "/v",
+    "/d",
+    "/f"
+   ],
+   "desc": "注册表命令行操作",
+   "examples": [
+    "reg query HKLM\\SOFTWARE\\Microsoft",
+    "reg add HKCU\\Env /v TEST /d 1 /f"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "注册表"
+   ]
+  },
+  {
+   "name": "regedit",
+   "params": [
+    "/s",
+    "/e"
+   ],
+   "desc": "注册表编辑器",
+   "examples": [
+    "regedit /e backup.reg HKCU\\Software"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "注册表"
+   ]
+  },
+  {
+   "name": "regsvr32",
+   "params": [
+    "/s",
+    "/u",
+    "/i"
+   ],
+   "desc": "注册/注销 COM DLL",
+   "examples": [
+    "regsvr32 /s my.dll"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "注册表"
+   ]
+  },
+  {
+   "name": "sc",
+   "params": [
+    "query",
+    "start",
+    "stop",
+    "config",
+    "create",
+    "delete",
+    "failure",
+    "qc"
+   ],
+   "desc": "服务控制管理器命令行",
+   "examples": [
+    "sc query wuauserv",
+    "sc config X start= disabled",
+    "sc stop Spooler"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "服务"
+   ]
+  },
+  {
+   "name": "net",
+   "params": [
+    "use",
+    "user",
+    "localgroup",
+    "share",
+    "view",
+    "start",
+    "stop",
+    "statistics",
+    "accounts"
+   ],
+   "desc": "网络/用户/服务管理",
+   "examples": [
+    "net use Z: \\\\server\\share",
+    "net user administrator",
+    "net localgroup administrators"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "gpupdate",
+   "params": [
+    "/force",
+    "/target",
+    "/boot"
+   ],
+   "desc": "刷新组策略",
+   "examples": [
+    "gpupdate /force"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "gpedit",
+   "params": [],
+   "desc": "组策略编辑器",
+   "examples": [
+    "gpedit"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "control",
+   "params": [
+    "panel",
+    "keyboard",
+    "mouse",
+    "printers"
+   ],
+   "desc": "打开控制面板项目",
+   "examples": [
+    "control panel"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "runas",
+   "params": [
+    "/user",
+    "/profile",
+    "/env",
+    "/netonly"
+   ],
+   "desc": "以其他用户身份运行程序",
+   "examples": [
+    "runas /user:admin cmd"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "whoami",
+   "params": [
+    "/all",
+    "/user",
+    "/groups",
+    "/priv"
+   ],
+   "desc": "显示当前用户信息",
+   "examples": [
+    "whoami /all"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "hostname",
+   "params": [],
+   "desc": "显示主机名",
+   "examples": [
+    "hostname"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "logoff",
+   "params": [],
+   "desc": "注销当前会话",
+   "examples": [
+    "logoff"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "openfiles",
+   "params": [
+    "/query",
+    "/disconnect"
+   ],
+   "desc": "显示/断开共享文件",
+   "examples": [
+    "openfiles /query"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "wbadmin",
+   "params": [
+    "start backup",
+    "get versions",
+    "start recovery",
+    "enable backup"
+   ],
+   "desc": "Windows 备份命令行",
+   "examples": [
+    "wbadmin start backup -backupTarget:E:"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "备份"
+   ]
+  },
+  {
+   "name": "vssadmin",
+   "params": [
+    "list shadows",
+    "delete shadows",
+    "list providers",
+    "list volumes"
+   ],
+   "desc": "卷影复制管理",
+   "examples": [
+    "vssadmin list shadows"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "备份"
+   ]
+  },
+  {
+   "name": "bitsadmin",
+   "params": [
+    "/transfer",
+    "/create",
+    "/addfile",
+    "/resume",
+    "/complete",
+    "/list",
+    "/cancel"
+   ],
+   "desc": "后台智能传输服务",
+   "examples": [
+    "bitsadmin /transfer job http://host/file C:\\file"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "typeperf",
+   "params": [
+    "-f",
+    "-sc",
+    "-si",
+    "-o"
+   ],
+   "desc": "性能计数器实时输出",
+   "examples": [
+    "typeperf \"\\Processor(_Total)\\% Processor Time\" -sc 5"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "tracerpt",
+   "params": [
+    "-o",
+    "-f",
+    "-summary"
+   ],
+   "desc": "ETL 跟踪日志处理",
+   "examples": [
+    "tracerpt trace.etl -o report.xml"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "ipconfig",
+   "params": [
+    "/all",
+    "/release",
+    "/renew",
+    "/flushdns",
+    "/displaydns",
+    "/registerdns"
+   ],
+   "desc": "显示/管理 IP 配置",
+   "examples": [
+    "ipconfig /all",
+    "ipconfig /flushdns"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "ping",
+   "params": [
+    "-t",
+    "-a",
+    "-n",
+    "-l",
+    "-f",
+    "-w"
+   ],
+   "desc": "测试网络连通性",
+   "examples": [
+    "ping -n 4 google.com",
+    "ping -t 192.168.1.1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "tracert",
+   "params": [
+    "-d",
+    "-h",
+    "-w",
+    "-j"
+   ],
+   "desc": "追踪路由",
+   "examples": [
+    "tracert -d 8.8.8.8"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "pathping",
+   "params": [
+    "-n",
+    "-h",
+    "-q",
+    "-w"
+   ],
+   "desc": "结合 ping 与 tracert 的路由分析",
+   "examples": [
+    "pathping -n 8.8.8.8"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "nslookup",
+   "params": [
+    "-type",
+    "-server",
+    "-timeout",
+    "-port"
+   ],
+   "desc": "DNS 查询",
+   "examples": [
+    "nslookup example.com",
+    "nslookup -type=mx gmail.com"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "netstat",
+   "params": [
+    "-a",
+    "-n",
+    "-o",
+    "-b",
+    "-e",
+    "-r",
+    "-s",
+    "-p"
+   ],
+   "desc": "显示网络连接/端口",
+   "examples": [
+    "netstat -ano | findstr :8080",
+    "netstat -b"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "netsh",
+   "params": [
+    "wlan show profiles",
+    "interface",
+    "advfirewall",
+    "winhttp",
+    "http",
+    "trace",
+    "add",
+    "delete"
+   ],
+   "desc": "网络配置命令行",
+   "examples": [
+    "netsh wlan show profiles",
+    "netsh advfirewall set allprofiles state off"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "route",
+   "params": [
+    "print",
+    "add",
+    "delete",
+    "change",
+    "-p"
+   ],
+   "desc": "操作路由表",
+   "examples": [
+    "route print",
+    "route add 10.0.0.0 mask 255.0.0.0 192.168.1.1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "arp",
+   "params": [
+    "-a",
+    "-d",
+    "-s"
+   ],
+   "desc": "ARP 缓存管理",
+   "examples": [
+    "arp -a"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "getmac",
+   "params": [
+    "/v",
+    "/fo"
+   ],
+   "desc": "显示网卡 MAC 地址",
+   "examples": [
+    "getmac /v"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "nbtstat",
+   "params": [
+    "-a",
+    "-n",
+    "-r",
+    "-c",
+    "-s"
+   ],
+   "desc": "NetBIOS 统计",
+   "examples": [
+    "nbtstat -n"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "ftp",
+   "params": [
+    "open",
+    "get",
+    "put",
+    "mget",
+    "mput",
+    "ls",
+    "bye"
+   ],
+   "desc": "FTP 客户端",
+   "examples": [
+    "ftp ftp.example.com"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "telnet",
+   "params": [],
+   "desc": "Telnet 客户端",
+   "examples": [
+    "telnet 192.168.1.1 23"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "ssh",
+   "params": [
+    "-p",
+    "-i",
+    "-L",
+    "-R",
+    "-D",
+    "-v",
+    "-o"
+   ],
+   "desc": "SSH 远程登录",
+   "examples": [
+    "ssh -i key.pem user@host",
+    "ssh -L 8080:localhost:80 user@host"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "scp",
+   "params": [
+    "-r",
+    "-P",
+    "-i",
+    "-C"
+   ],
+   "desc": "基于 SSH 的安全复制",
+   "examples": [
+    "scp -r build/ user@host:/var/www"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "sftp",
+   "params": [
+    "get",
+    "put",
+    "ls",
+    "cd",
+    "rm"
+   ],
+   "desc": "基于 SSH 的文件传输",
+   "examples": [
+    "sftp user@host"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "curl",
+   "params": [
+    "-X",
+    "-H",
+    "-d",
+    "-o",
+    "-O",
+    "-L",
+    "-k",
+    "-u",
+    "-s",
+    "-i"
+   ],
+   "desc": "HTTP 请求工具",
+   "examples": [
+    "curl -X POST -H \"Content-Type: application/json\" -d @body.json http://api",
+    "curl -O https://example.com/file.zip"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "tftp",
+   "params": [
+    "-i",
+    "get",
+    "put"
+   ],
+   "desc": "TFTP 客户端",
+   "examples": [
+    "tftp -i host get file"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "for",
+   "params": [
+    "%d in (set) do command",
+    "/d",
+    "/r",
+    "/l",
+    "/f"
+   ],
+   "desc": "循环命令",
+   "examples": [
+    "for %f in (*.txt) do echo %f",
+    "for /f \"tokens=*\" %i in (list.txt) do echo %i"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "if",
+   "params": [
+    "exist",
+    "not",
+    "==",
+    "errorlevel",
+    "defined"
+   ],
+   "desc": "条件判断",
+   "examples": [
+    "if exist file.txt echo found",
+    "if \"%1\"==\"\" echo no args"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "goto",
+   "params": [
+    "label",
+    ":eof"
+   ],
+   "desc": "跳转到标签",
+   "examples": [
+    "goto :eof"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "call",
+   "params": [],
+   "desc": "调用另一个批处理或标签",
+   "examples": [
+    "call setup.bat",
+    "call :sub"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "exit",
+   "params": [
+    "/b",
+    "code"
+   ],
+   "desc": "退出 CMD 或批处理",
+   "examples": [
+    "exit /b 1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "setlocal",
+   "params": [
+    "enabledelayedexpansion",
+    "enableextensions"
+   ],
+   "desc": "开始局部环境变量",
+   "examples": [
+    "setlocal enabledelayedexpansion"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "endlocal",
+   "params": [],
+   "desc": "结束局部环境变量",
+   "examples": [
+    "endlocal"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "shift",
+   "params": [],
+   "desc": "移动批处理参数",
+   "examples": [
+    "shift"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "rem",
+   "params": [],
+   "desc": "批处理注释",
+   "examples": [
+    "rem this is a comment"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "start",
+   "params": [
+    "/min",
+    "/max",
+    "/wait",
+    "/d",
+    "/b"
+   ],
+   "desc": "启动新窗口/程序",
+   "examples": [
+    "start notepad",
+    "start /wait build.bat"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "timeout",
+   "params": [
+    "/t",
+    "/nobreak"
+   ],
+   "desc": "等待指定秒数",
+   "examples": [
+    "timeout /t 5 /nobreak"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "pause",
+   "params": [],
+   "desc": "暂停并提示按键继续",
+   "examples": [
+    "pause"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "choice",
+   "params": [
+    "/c",
+    "/n",
+    "/m",
+    "/t",
+    "/d"
+   ],
+   "desc": "提供选择菜单",
+   "examples": [
+    "choice /c YN /m \"继续?\"",
+    "choice /c 123 /t 5 /d 1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "cmd",
+   "params": [
+    "/c",
+    "/k",
+    "/v:on",
+    "/q",
+    "/s"
+   ],
+   "desc": "启动新的 CMD 实例",
+   "examples": [
+    "cmd /c dir",
+    "cmd /k cd /d D:\\dev"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "powershell",
+   "params": [
+    "-Command",
+    "-File",
+    "-ExecutionPolicy",
+    "-NoProfile",
+    "-EncodedCommand"
+   ],
+   "desc": "调用 PowerShell",
+   "examples": [
+    "powershell -Command Get-Process",
+    "powershell -ExecutionPolicy Bypass -File setup.ps1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "help",
+   "params": [
+    "command"
+   ],
+   "desc": "显示命令帮助",
+   "examples": [
+    "help dir",
+    "help"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "assoc",
+   "params": [
+    ".txt=",
+    "/f"
+   ],
+   "desc": "显示或修改文件扩展名关联",
+   "examples": [
+    "assoc .txt=txtfile"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "ftype",
+   "params": [
+    "txtfile=",
+    "/f"
+   ],
+   "desc": "显示或修改文件类型关联",
+   "examples": [
+    "ftype txtfile=\"C:\\notepad.exe\" %1"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "mode",
+   "params": [
+    "con",
+    "com1",
+    "120,30"
+   ],
+   "desc": "配置系统设备",
+   "examples": [
+    "mode con cols=120 lines=40"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "verify",
+   "params": [
+    "on",
+    "off"
+   ],
+   "desc": "开关写盘校验",
+   "examples": [
+    "verify on"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "doskey",
+   "params": [
+    "/history",
+    "/macrofile",
+    "macroname"
+   ],
+   "desc": "命令行历史与宏",
+   "examples": [
+    "doskey /history",
+    "doskey ll=dir /b $*"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "mstsc",
+   "params": [
+    "/v",
+    "/f",
+    "/admin",
+    "/w",
+    "/h"
+   ],
+   "desc": "远程桌面连接",
+   "examples": [
+    "mstsc /v:192.168.1.10",
+    "mstsc /f"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "远程"
+   ]
+  },
+  {
+   "name": "msra",
+   "params": [
+    "/offerra"
+   ],
+   "desc": "Windows 远程协助",
+   "examples": [
+    "msra /offerra"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "远程"
+   ]
+  },
+  {
+   "name": "taskmgr",
+   "params": [],
+   "desc": "打开任务管理器",
+   "examples": [
+    "taskmgr"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "winver",
+   "params": [],
+   "desc": "显示 Windows 版本信息窗口",
+   "examples": [
+    "winver"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "services.msc",
+   "params": [],
+   "desc": "打开服务管理控制台",
+   "examples": [
+    "services.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "compmgmt.msc",
+   "params": [],
+   "desc": "打开计算机管理控制台",
+   "examples": [
+    "compmgmt.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "devmgmt.msc",
+   "params": [],
+   "desc": "打开设备管理器",
+   "examples": [
+    "devmgmt.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "diskmgmt.msc",
+   "params": [],
+   "desc": "打开磁盘管理",
+   "examples": [
+    "diskmgmt.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "taskschd.msc",
+   "params": [],
+   "desc": "打开任务计划程序",
+   "examples": [
+    "taskschd.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "lusrmgr.msc",
+   "params": [],
+   "desc": "打开本地用户和组",
+   "examples": [
+    "lusrmgr.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "secpol.msc",
+   "params": [],
+   "desc": "打开本地安全策略",
+   "examples": [
+    "secpol.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "ncpa.cpl",
+   "params": [],
+   "desc": "打开网络连接设置",
+   "examples": [
+    "ncpa.cpl"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "appwiz.cpl",
+   "params": [],
+   "desc": "打开程序和功能",
+   "examples": [
+    "appwiz.cpl"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "管理控制台"
+   ]
+  },
+  {
+   "name": "chcp",
+   "params": [
+    "65001",
+    "936",
+    "437"
+   ],
+   "desc": "显示或设置活动代码页",
+   "examples": [
+    "chcp 65001"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "clip",
+   "params": [],
+   "desc": "将输入重定向到剪贴板",
+   "examples": [
+    "dir /b | clip",
+    "type file.txt | clip"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "forfiles",
+   "params": [
+    "/p",
+    "/m",
+    "/s",
+    "/d",
+    "/c"
+   ],
+   "desc": "批量处理文件",
+   "examples": [
+    "forfiles /p C:\\logs /s /m *.log /c \"cmd /c del @path\""
+   ],
+   "shell": "cmd",
+   "tags": [
+    "文件系统"
+   ]
+  },
+  {
+   "name": "eventcreate",
+   "params": [
+    "/l",
+    "/so",
+    "/t",
+    "/id",
+    "/d"
+   ],
+   "desc": "创建自定义事件日志",
+   "examples": [
+    "eventcreate /t information /id 100 /d \"backup ok\""
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "gpresult",
+   "params": [
+    "/r",
+    "/h",
+    "/scope",
+    "/user"
+   ],
+   "desc": "显示组策略结果",
+   "examples": [
+    "gpresult /r",
+    "gpresult /h report.html"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "auditpol",
+   "params": [
+    "/get",
+    "/set",
+    "/list"
+   ],
+   "desc": "审核策略管理",
+   "examples": [
+    "auditpol /get /category:*"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "安全"
+   ]
+  },
+  {
+   "name": "print",
+   "params": [
+    "/d:"
+   ],
+   "desc": "打印文本文件",
+   "examples": [
+    "print /d:\\\\printer file.txt"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "logman",
+   "params": [
+    "create",
+    "start",
+    "stop",
+    "query",
+    "delete"
+   ],
+   "desc": "性能计数器/事件追踪管理",
+   "examples": [
+    "logman query providers"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "slmgr",
+   "params": [
+    "/ipk",
+    "/ato",
+    "/dli",
+    "/dlv",
+    "/xpr",
+    "/rearm"
+   ],
+   "desc": "Windows 软件授权管理",
+   "examples": [
+    "slmgr /xpr",
+    "slmgr /dlv"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统"
+   ]
+  },
+  {
+   "name": "waitfor",
+   "params": [
+    "/t",
+    "/si"
+   ],
+   "desc": "等待信号或发送信号",
+   "examples": [
+    "waitfor /t 10 ready"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "脚本"
+   ]
+  },
+  {
+   "name": "notepad",
+   "params": [
+    "/a"
+   ],
+   "desc": "打开记事本",
+   "examples": [
+    "notepad C:\\temp\\note.txt"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "explorer",
+   "params": [
+    "/n",
+    "/e",
+    "/select"
+   ],
+   "desc": "打开文件资源管理器或指定路径",
+   "examples": [
+    "explorer /select,C:\\file.txt"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "certmgr.msc",
+   "params": [],
+   "desc": "证书管理器",
+   "examples": [
+    "certmgr.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "resmon",
+   "params": [],
+   "desc": "资源监视器",
+   "examples": [
+    "resmon"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "cscript",
+   "params": [
+    "//nologo",
+    "//e:",
+    "//t:"
+   ],
+   "desc": "运行脚本（VBS/JS）",
+   "examples": [
+    "cscript //nologo script.vbs"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "wscript",
+   "params": [
+    "//nologo",
+    "//e:",
+    "//t:"
+   ],
+   "desc": "Windows 脚本宿主（GUI）",
+   "examples": [
+    "wscript //nologo script.vbs"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "calc",
+   "params": [],
+   "desc": "计算器",
+   "examples": [
+    "calc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "mspaint",
+   "params": [],
+   "desc": "画图",
+   "examples": [
+    "mspaint image.png"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "charmap",
+   "params": [],
+   "desc": "字符映射表",
+   "examples": [
+    "charmap"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "magnify",
+   "params": [],
+   "desc": "放大镜",
+   "examples": [
+    "magnify"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "narrator",
+   "params": [],
+   "desc": "讲述人（屏幕阅读）",
+   "examples": [
+    "narrator"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "osk",
+   "params": [],
+   "desc": "屏幕键盘",
+   "examples": [
+    "osk"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "snippingtool",
+   "params": [],
+   "desc": "截图工具",
+   "examples": [
+    "snippingtool"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "utilman",
+   "params": [],
+   "desc": "轻松使用（辅助功能）",
+   "examples": [
+    "utilman"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "verifier",
+   "params": [],
+   "desc": "驱动程序验证器",
+   "examples": [
+    "verifier /standard"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "winmgmt",
+   "params": [
+    "/?"
+   ],
+   "desc": "WMI 服务管理",
+   "examples": [
+    "winmgmt /?"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "sysdm.cpl",
+   "params": [],
+   "desc": "系统属性",
+   "examples": [
+    "sysdm.cpl"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "mobsync",
+   "params": [],
+   "desc": "同步中心",
+   "examples": [
+    "mobsync"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "powershell_ise",
+   "params": [],
+   "desc": "PowerShell ISE",
+   "examples": [
+    "powershell_ise"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "tzutil",
+   "params": [
+    "/g",
+    "/s",
+    "/l"
+   ],
+   "desc": "时区工具",
+   "examples": [
+    "tzutil /g"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  }
+ ]
 }

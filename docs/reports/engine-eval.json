@@ -1,0 +1,3495 @@
+{
+  "cases": [
+    {
+      "input": "ipconfig",
+      "shell": "cmd",
+      "expected": [
+        "ipconfig"
+      ]
+    },
+    {
+      "input": "dir",
+      "shell": "cmd",
+      "expected": [
+        "dir"
+      ]
+    },
+    {
+      "input": "chkdsk",
+      "shell": "cmd",
+      "expected": [
+        "chkdsk"
+      ]
+    },
+    {
+      "input": "tasklist",
+      "shell": "cmd",
+      "expected": [
+        "tasklist"
+      ]
+    },
+    {
+      "input": "netstat",
+      "shell": "cmd",
+      "expected": [
+        "netstat"
+      ]
+    },
+    {
+      "input": "ping",
+      "shell": "cmd",
+      "expected": [
+        "ping"
+      ]
+    },
+    {
+      "input": "cls",
+      "shell": "cmd",
+      "expected": [
+        "cls"
+      ]
+    },
+    {
+      "input": "tree",
+      "shell": "cmd",
+      "expected": [
+        "tree"
+      ]
+    },
+    {
+      "input": "attrib",
+      "shell": "cmd",
+      "expected": [
+        "attrib"
+      ]
+    },
+    {
+      "input": "fc",
+      "shell": "cmd",
+      "expected": [
+        "fc"
+      ]
+    },
+    {
+      "input": "findstr",
+      "shell": "cmd",
+      "expected": [
+        "findstr"
+      ]
+    },
+    {
+      "input": "sort",
+      "shell": "cmd",
+      "expected": [
+        "sort"
+      ]
+    },
+    {
+      "input": "more",
+      "shell": "cmd",
+      "expected": [
+        "more"
+      ]
+    },
+    {
+      "input": "whoami",
+      "shell": "cmd",
+      "expected": [
+        "whoami"
+      ]
+    },
+    {
+      "input": "systeminfo",
+      "shell": "cmd",
+      "expected": [
+        "systeminfo"
+      ]
+    },
+    {
+      "input": "driverquery",
+      "shell": "cmd",
+      "expected": [
+        "driverquery"
+      ]
+    },
+    {
+      "input": "schtasks",
+      "shell": "cmd",
+      "expected": [
+        "schtasks"
+      ]
+    },
+    {
+      "input": "taskkill",
+      "shell": "cmd",
+      "expected": [
+        "taskkill"
+      ]
+    },
+    {
+      "input": "shutdown",
+      "shell": "cmd",
+      "expected": [
+        "shutdown"
+      ]
+    },
+    {
+      "input": "timeout",
+      "shell": "cmd",
+      "expected": [
+        "timeout"
+      ]
+    },
+    {
+      "input": "vol",
+      "shell": "cmd",
+      "expected": [
+        "vol"
+      ]
+    },
+    {
+      "input": "ver",
+      "shell": "cmd",
+      "expected": [
+        "ver"
+      ]
+    },
+    {
+      "input": "where",
+      "shell": "cmd",
+      "expected": [
+        "where"
+      ]
+    },
+    {
+      "input": "xcopy",
+      "shell": "cmd",
+      "expected": [
+        "xcopy"
+      ]
+    },
+    {
+      "input": "compact",
+      "shell": "cmd",
+      "expected": [
+        "compact"
+      ]
+    },
+    {
+      "input": "cipher",
+      "shell": "cmd",
+      "expected": [
+        "cipher"
+      ]
+    },
+    {
+      "input": "certutil",
+      "shell": "cmd",
+      "expected": [
+        "certutil"
+      ]
+    },
+    {
+      "input": "bcdedit",
+      "shell": "cmd",
+      "expected": [
+        "bcdedit"
+      ]
+    },
+    {
+      "input": "diskpart",
+      "shell": "cmd",
+      "expected": [
+        "diskpart"
+      ]
+    },
+    {
+      "input": "reg",
+      "shell": "cmd",
+      "expected": [
+        "reg"
+      ]
+    },
+    {
+      "input": "sc",
+      "shell": "cmd",
+      "expected": [
+        "sc"
+      ]
+    },
+    {
+      "input": "copy",
+      "shell": "cmd",
+      "expected": [
+        "copy"
+      ]
+    },
+    {
+      "input": "move",
+      "shell": "cmd",
+      "expected": [
+        "move"
+      ]
+    },
+    {
+      "input": "ren",
+      "shell": "cmd",
+      "expected": [
+        "ren"
+      ]
+    },
+    {
+      "input": "pushd",
+      "shell": "cmd",
+      "expected": [
+        "pushd"
+      ]
+    },
+    {
+      "input": "popd",
+      "shell": "cmd",
+      "expected": [
+        "popd"
+      ]
+    },
+    {
+      "input": "start",
+      "shell": "cmd",
+      "expected": [
+        "start"
+      ]
+    },
+    {
+      "input": "title",
+      "shell": "cmd",
+      "expected": [
+        "title"
+      ]
+    },
+    {
+      "input": "chcp",
+      "shell": "cmd",
+      "expected": [
+        "chcp"
+      ]
+    },
+    {
+      "input": "clip",
+      "shell": "cmd",
+      "expected": [
+        "clip"
+      ]
+    },
+    {
+      "input": "msconfig",
+      "shell": "cmd",
+      "expected": [
+        "msconfig"
+      ]
+    },
+    {
+      "input": "dxdiag",
+      "shell": "cmd",
+      "expected": [
+        "dxdiag"
+      ]
+    },
+    {
+      "input": "compmgmt",
+      "shell": "cmd",
+      "expected": [
+        "compmgmt.msc"
+      ]
+    },
+    {
+      "input": "devmgmt",
+      "shell": "cmd",
+      "expected": [
+        "devmgmt.msc"
+      ]
+    },
+    {
+      "input": "diskmgmt",
+      "shell": "cmd",
+      "expected": [
+        "diskmgmt.msc"
+      ]
+    },
+    {
+      "input": "appwiz",
+      "shell": "cmd",
+      "expected": [
+        "appwiz.cpl"
+      ]
+    },
+    {
+      "input": "telnet",
+      "shell": "cmd",
+      "expected": [
+        "telnet"
+      ]
+    },
+    {
+      "input": "tracert",
+      "shell": "cmd",
+      "expected": [
+        "tracert"
+      ]
+    },
+    {
+      "input": "pathping",
+      "shell": "cmd",
+      "expected": [
+        "pathping"
+      ]
+    },
+    {
+      "input": "nslookup",
+      "shell": "cmd",
+      "expected": [
+        "nslookup"
+      ]
+    },
+    {
+      "input": "subst",
+      "shell": "cmd",
+      "expected": [
+        "subst"
+      ]
+    },
+    {
+      "input": "typeperf",
+      "shell": "cmd",
+      "expected": [
+        "typeperf"
+      ]
+    },
+    {
+      "input": "wmic",
+      "shell": "cmd",
+      "expected": [
+        "wmic"
+      ]
+    },
+    {
+      "input": "gpupdate",
+      "shell": "cmd",
+      "expected": [
+        "gpupdate"
+      ]
+    },
+    {
+      "input": "powercfg",
+      "shell": "cmd",
+      "expected": [
+        "powercfg"
+      ]
+    },
+    {
+      "input": "fsutil",
+      "shell": "cmd",
+      "expected": [
+        "fsutil"
+      ]
+    },
+    {
+      "input": "defrag",
+      "shell": "cmd",
+      "expected": [
+        "defrag"
+      ]
+    },
+    {
+      "input": "robocopy",
+      "shell": "cmd",
+      "expected": [
+        "robocopy"
+      ]
+    },
+    {
+      "input": "cacls",
+      "shell": "cmd",
+      "expected": [
+        "cacls"
+      ]
+    },
+    {
+      "input": "takeown",
+      "shell": "cmd",
+      "expected": [
+        "takeown"
+      ]
+    },
+    {
+      "input": "icacls",
+      "shell": "cmd",
+      "expected": [
+        "icacls"
+      ]
+    },
+    {
+      "input": "doskey",
+      "shell": "cmd",
+      "expected": [
+        "doskey"
+      ]
+    },
+    {
+      "input": "setx",
+      "shell": "cmd",
+      "expected": [
+        "setx"
+      ]
+    },
+    {
+      "input": "choice",
+      "shell": "cmd",
+      "expected": [
+        "choice"
+      ]
+    },
+    {
+      "input": "eventvwr",
+      "shell": "cmd",
+      "expected": [
+        "eventvwr"
+      ]
+    },
+    {
+      "input": "services",
+      "shell": "cmd",
+      "expected": [
+        "services.msc"
+      ]
+    },
+    {
+      "input": "taskmgr",
+      "shell": "cmd",
+      "expected": [
+        "taskmgr"
+      ]
+    },
+    {
+      "input": "notepad",
+      "shell": "cmd",
+      "expected": [
+        "notepad"
+      ]
+    },
+    {
+      "input": "mstsc",
+      "shell": "cmd",
+      "expected": [
+        "mstsc"
+      ]
+    },
+    {
+      "input": "explorer",
+      "shell": "cmd",
+      "expected": [
+        "explorer"
+      ]
+    },
+    {
+      "input": "control",
+      "shell": "cmd",
+      "expected": [
+        "control"
+      ]
+    },
+    {
+      "input": "certmgr",
+      "shell": "cmd",
+      "expected": [
+        "certmgr.msc"
+      ]
+    },
+    {
+      "input": "wf",
+      "shell": "cmd",
+      "expected": [
+        "wf.msc"
+      ]
+    },
+    {
+      "input": "lusrmgr",
+      "shell": "cmd",
+      "expected": [
+        "lusrmgr.msc"
+      ]
+    },
+    {
+      "input": "perfmon",
+      "shell": "cmd",
+      "expected": [
+        "perfmon"
+      ]
+    },
+    {
+      "input": "resmon",
+      "shell": "cmd",
+      "expected": [
+        "resmon"
+      ]
+    },
+    {
+      "input": "winver",
+      "shell": "cmd",
+      "expected": [
+        "winver"
+      ]
+    },
+    {
+      "input": "cscript",
+      "shell": "cmd",
+      "expected": [
+        "cscript"
+      ]
+    },
+    {
+      "input": "wscript",
+      "shell": "cmd",
+      "expected": [
+        "wscript"
+      ]
+    },
+    {
+      "input": "bitsadmin",
+      "shell": "cmd",
+      "expected": [
+        "bitsadmin"
+      ]
+    },
+    {
+      "input": "auditpol",
+      "shell": "cmd",
+      "expected": [
+        "auditpol"
+      ]
+    },
+    {
+      "input": "secpol",
+      "shell": "cmd",
+      "expected": [
+        "secpol.msc"
+      ]
+    },
+    {
+      "input": "gpedit",
+      "shell": "cmd",
+      "expected": [
+        "gpedit.msc"
+      ]
+    },
+    {
+      "input": "dism",
+      "shell": "cmd",
+      "expected": [
+        "dism"
+      ]
+    },
+    {
+      "input": "sfc",
+      "shell": "cmd",
+      "expected": [
+        "sfc"
+      ]
+    },
+    {
+      "input": "mklink",
+      "shell": "cmd",
+      "expected": [
+        "mklink"
+      ]
+    },
+    {
+      "input": "assoc",
+      "shell": "cmd",
+      "expected": [
+        "assoc"
+      ]
+    },
+    {
+      "input": "ftype",
+      "shell": "cmd",
+      "expected": [
+        "ftype"
+      ]
+    },
+    {
+      "input": "prompt",
+      "shell": "cmd",
+      "expected": [
+        "prompt"
+      ]
+    },
+    {
+      "input": "setlocal",
+      "shell": "cmd",
+      "expected": [
+        "setlocal"
+      ]
+    },
+    {
+      "input": "endlocal",
+      "shell": "cmd",
+      "expected": [
+        "endlocal"
+      ]
+    },
+    {
+      "input": "shift",
+      "shell": "cmd",
+      "expected": [
+        "shift"
+      ]
+    },
+    {
+      "input": "call",
+      "shell": "cmd",
+      "expected": [
+        "call"
+      ]
+    },
+    {
+      "input": "exit",
+      "shell": "cmd",
+      "expected": [
+        "exit"
+      ]
+    },
+    {
+      "input": "echo",
+      "shell": "cmd",
+      "expected": [
+        "echo"
+      ]
+    },
+    {
+      "input": "set",
+      "shell": "cmd",
+      "expected": [
+        "set"
+      ]
+    },
+    {
+      "input": "type",
+      "shell": "cmd",
+      "expected": [
+        "type"
+      ]
+    },
+    {
+      "input": "cd",
+      "shell": "cmd",
+      "expected": [
+        "cd"
+      ]
+    },
+    {
+      "input": "md",
+      "shell": "cmd",
+      "expected": [
+        "md"
+      ]
+    },
+    {
+      "input": "rd",
+      "shell": "cmd",
+      "expected": [
+        "rd"
+      ]
+    },
+    {
+      "input": "del",
+      "shell": "cmd",
+      "expected": [
+        "del"
+      ]
+    },
+    {
+      "input": "erase",
+      "shell": "cmd",
+      "expected": [
+        "erase"
+      ]
+    },
+    {
+      "input": "tassklist",
+      "shell": "cmd",
+      "expected": [
+        "tasklist"
+      ],
+      "note": "编辑距离 1 容错"
+    },
+    {
+      "input": "netstat -a",
+      "shell": "cmd",
+      "expected": [
+        "netstat -a"
+      ],
+      "note": "带参数"
+    },
+    {
+      "input": "Get-Process",
+      "shell": "ps",
+      "expected": [
+        "Get-Process"
+      ]
+    },
+    {
+      "input": "Get-Service",
+      "shell": "ps",
+      "expected": [
+        "Get-Service"
+      ]
+    },
+    {
+      "input": "Get-ChildItem",
+      "shell": "ps",
+      "expected": [
+        "Get-ChildItem"
+      ]
+    },
+    {
+      "input": "Get-Content",
+      "shell": "ps",
+      "expected": [
+        "Get-Content"
+      ]
+    },
+    {
+      "input": "Get-Item",
+      "shell": "ps",
+      "expected": [
+        "Get-Item"
+      ]
+    },
+    {
+      "input": "Remove-Item",
+      "shell": "ps",
+      "expected": [
+        "Remove-Item"
+      ]
+    },
+    {
+      "input": "Copy-Item",
+      "shell": "ps",
+      "expected": [
+        "Copy-Item"
+      ]
+    },
+    {
+      "input": "Move-Item",
+      "shell": "ps",
+      "expected": [
+        "Move-Item"
+      ]
+    },
+    {
+      "input": "New-Item",
+      "shell": "ps",
+      "expected": [
+        "New-Item"
+      ]
+    },
+    {
+      "input": "Set-Content",
+      "shell": "ps",
+      "expected": [
+        "Set-Content"
+      ]
+    },
+    {
+      "input": "Add-Content",
+      "shell": "ps",
+      "expected": [
+        "Add-Content"
+      ]
+    },
+    {
+      "input": "Clear-Host",
+      "shell": "ps",
+      "expected": [
+        "Clear-Host"
+      ]
+    },
+    {
+      "input": "Get-Help",
+      "shell": "ps",
+      "expected": [
+        "Get-Help"
+      ]
+    },
+    {
+      "input": "Get-Command",
+      "shell": "ps",
+      "expected": [
+        "Get-Command"
+      ]
+    },
+    {
+      "input": "Get-Alias",
+      "shell": "ps",
+      "expected": [
+        "Get-Alias"
+      ]
+    },
+    {
+      "input": "Get-Date",
+      "shell": "ps",
+      "expected": [
+        "Get-Date"
+      ]
+    },
+    {
+      "input": "Get-Location",
+      "shell": "ps",
+      "expected": [
+        "Get-Location"
+      ]
+    },
+    {
+      "input": "Set-Location",
+      "shell": "ps",
+      "expected": [
+        "Set-Location"
+      ]
+    },
+    {
+      "input": "Get-ComputerInfo",
+      "shell": "ps",
+      "expected": [
+        "Get-ComputerInfo"
+      ]
+    },
+    {
+      "input": "Get-NetIPAddress",
+      "shell": "ps",
+      "expected": [
+        "Get-NetIPAddress"
+      ]
+    },
+    {
+      "input": "Test-Connection",
+      "shell": "ps",
+      "expected": [
+        "Test-Connection"
+      ]
+    },
+    {
+      "input": "Invoke-WebRequest",
+      "shell": "ps",
+      "expected": [
+        "Invoke-WebRequest"
+      ]
+    },
+    {
+      "input": "ConvertTo-Json",
+      "shell": "ps",
+      "expected": [
+        "ConvertTo-Json"
+      ]
+    },
+    {
+      "input": "Select-Object",
+      "shell": "ps",
+      "expected": [
+        "Select-Object"
+      ]
+    },
+    {
+      "input": "Where-Object",
+      "shell": "ps",
+      "expected": [
+        "Where-Object"
+      ]
+    },
+    {
+      "input": "ForEach-Object",
+      "shell": "ps",
+      "expected": [
+        "ForEach-Object"
+      ]
+    },
+    {
+      "input": "Sort-Object",
+      "shell": "ps",
+      "expected": [
+        "Sort-Object"
+      ]
+    },
+    {
+      "input": "Measure-Object",
+      "shell": "ps",
+      "expected": [
+        "Measure-Object"
+      ]
+    },
+    {
+      "input": "Import-Csv",
+      "shell": "ps",
+      "expected": [
+        "Import-Csv"
+      ]
+    },
+    {
+      "input": "Export-Csv",
+      "shell": "ps",
+      "expected": [
+        "Export-Csv"
+      ]
+    },
+    {
+      "input": "Compress-Archive",
+      "shell": "ps",
+      "expected": [
+        "Compress-Archive"
+      ]
+    },
+    {
+      "input": "Expand-Archive",
+      "shell": "ps",
+      "expected": [
+        "Expand-Archive"
+      ]
+    },
+    {
+      "input": "Set-ExecutionPolicy",
+      "shell": "ps",
+      "expected": [
+        "Set-ExecutionPolicy"
+      ]
+    },
+    {
+      "input": "Get-ExecutionPolicy",
+      "shell": "ps",
+      "expected": [
+        "Get-ExecutionPolicy"
+      ]
+    },
+    {
+      "input": "Start-Service",
+      "shell": "ps",
+      "expected": [
+        "Start-Service"
+      ]
+    },
+    {
+      "input": "Stop-Service",
+      "shell": "ps",
+      "expected": [
+        "Stop-Service"
+      ]
+    },
+    {
+      "input": "Restart-Service",
+      "shell": "ps",
+      "expected": [
+        "Restart-Service"
+      ]
+    },
+    {
+      "input": "Stop-Process",
+      "shell": "ps",
+      "expected": [
+        "Stop-Process"
+      ]
+    },
+    {
+      "input": "Start-Process",
+      "shell": "ps",
+      "expected": [
+        "Start-Process"
+      ]
+    },
+    {
+      "input": "Get-FileHash",
+      "shell": "ps",
+      "expected": [
+        "Get-FileHash"
+      ]
+    },
+    {
+      "input": "Get-EventLog",
+      "shell": "ps",
+      "expected": [
+        "Get-EventLog"
+      ]
+    },
+    {
+      "input": "Clear-History",
+      "shell": "ps",
+      "expected": [
+        "Clear-History"
+      ]
+    },
+    {
+      "input": "Get-Process -Name",
+      "shell": "ps",
+      "expected": [
+        "Get-Process -Name"
+      ]
+    },
+    {
+      "input": "get-process",
+      "shell": "ps",
+      "expected": [
+        "Get-Process"
+      ],
+      "note": "大小写不敏感"
+    },
+    {
+      "input": "get-servi",
+      "shell": "ps",
+      "expected": [
+        "Get-Service"
+      ],
+      "note": "前缀"
+    },
+    {
+      "input": "restart-servic",
+      "shell": "ps",
+      "expected": [
+        "Restart-Service"
+      ]
+    },
+    {
+      "input": "git st",
+      "shell": "cmd",
+      "expected": [
+        "git stash",
+        "git status"
+      ]
+    },
+    {
+      "input": "git st",
+      "shell": "ps",
+      "expected": [
+        "git stash",
+        "git status"
+      ]
+    },
+    {
+      "input": "git co",
+      "shell": "cmd",
+      "expected": [
+        "git checkout"
+      ]
+    },
+    {
+      "input": "git com",
+      "shell": "cmd",
+      "expected": [
+        "git commit"
+      ]
+    },
+    {
+      "input": "git br",
+      "shell": "ps",
+      "expected": [
+        "git branch"
+      ]
+    },
+    {
+      "input": "git lo",
+      "shell": "cmd",
+      "expected": [
+        "git log"
+      ]
+    },
+    {
+      "input": "git di",
+      "shell": "ps",
+      "expected": [
+        "git diff"
+      ]
+    },
+    {
+      "input": "git pu",
+      "shell": "cmd",
+      "expected": [
+        "git push"
+      ]
+    },
+    {
+      "input": "git pl",
+      "shell": "ps",
+      "expected": [
+        "git pull"
+      ]
+    },
+    {
+      "input": "git fe",
+      "shell": "cmd",
+      "expected": [
+        "git fetch"
+      ]
+    },
+    {
+      "input": "git me",
+      "shell": "ps",
+      "expected": [
+        "git merge"
+      ]
+    },
+    {
+      "input": "git cl",
+      "shell": "cmd",
+      "expected": [
+        "git clone"
+      ]
+    },
+    {
+      "input": "git re",
+      "shell": "ps",
+      "expected": [
+        "git rebase",
+        "git reset",
+        "git reflog",
+        "git remote"
+      ]
+    },
+    {
+      "input": "git ta",
+      "shell": "cmd",
+      "expected": [
+        "git tag"
+      ]
+    },
+    {
+      "input": "git sh",
+      "shell": "ps",
+      "expected": [
+        "git show",
+        "git stash"
+      ]
+    },
+    {
+      "input": "git sw",
+      "shell": "cmd",
+      "expected": [
+        "git switch"
+      ]
+    },
+    {
+      "input": "git in",
+      "shell": "ps",
+      "expected": [
+        "git init"
+      ]
+    },
+    {
+      "input": "git ad",
+      "shell": "cmd",
+      "expected": [
+        "git add"
+      ]
+    },
+    {
+      "input": "git rm",
+      "shell": "ps",
+      "expected": [
+        "git rm"
+      ]
+    },
+    {
+      "input": "git mv",
+      "shell": "cmd",
+      "expected": [
+        "git mv"
+      ]
+    },
+    {
+      "input": "git bl",
+      "shell": "ps",
+      "expected": [
+        "git blame"
+      ]
+    },
+    {
+      "input": "git ci",
+      "shell": "cmd",
+      "expected": [
+        "git cherry-pick"
+      ]
+    },
+    {
+      "input": "git gr",
+      "shell": "ps",
+      "expected": [
+        "git grep"
+      ]
+    },
+    {
+      "input": "git ar",
+      "shell": "cmd",
+      "expected": [
+        "git archive"
+      ]
+    },
+    {
+      "input": "git work",
+      "shell": "ps",
+      "expected": [
+        "git worktree"
+      ]
+    },
+    {
+      "input": "git sub",
+      "shell": "cmd",
+      "expected": [
+        "git submodule"
+      ]
+    },
+    {
+      "input": "git status",
+      "shell": "cmd",
+      "expected": [
+        "git status"
+      ],
+      "note": "精确子命令"
+    },
+    {
+      "input": "npm i",
+      "shell": "ps",
+      "expected": [
+        "npm install"
+      ]
+    },
+    {
+      "input": "npm in",
+      "shell": "cmd",
+      "expected": [
+        "npm init",
+        "npm install"
+      ]
+    },
+    {
+      "input": "npm ru",
+      "shell": "ps",
+      "expected": [
+        "npm run"
+      ]
+    },
+    {
+      "input": "npm ls",
+      "shell": "cmd",
+      "expected": [
+        "npm ls"
+      ]
+    },
+    {
+      "input": "npm un",
+      "shell": "ps",
+      "expected": [
+        "npm uninstall"
+      ]
+    },
+    {
+      "input": "npm au",
+      "shell": "cmd",
+      "expected": [
+        "npm audit"
+      ]
+    },
+    {
+      "input": "npm pu",
+      "shell": "ps",
+      "expected": [
+        "npm publish"
+      ]
+    },
+    {
+      "input": "npm up",
+      "shell": "cmd",
+      "expected": [
+        "npm update"
+      ]
+    },
+    {
+      "input": "pip in",
+      "shell": "ps",
+      "expected": [
+        "pip install"
+      ]
+    },
+    {
+      "input": "pip li",
+      "shell": "cmd",
+      "expected": [
+        "pip list"
+      ]
+    },
+    {
+      "input": "pip fr",
+      "shell": "ps",
+      "expected": [
+        "pip freeze"
+      ]
+    },
+    {
+      "input": "pip sh",
+      "shell": "cmd",
+      "expected": [
+        "pip show"
+      ]
+    },
+    {
+      "input": "pip un",
+      "shell": "ps",
+      "expected": [
+        "pip uninstall"
+      ]
+    },
+    {
+      "input": "pip ch",
+      "shell": "cmd",
+      "expected": [
+        "pip check"
+      ]
+    },
+    {
+      "input": "pip do",
+      "shell": "ps",
+      "expected": [
+        "pip download"
+      ]
+    },
+    {
+      "input": "docker ps",
+      "shell": "cmd",
+      "expected": [
+        "docker ps"
+      ]
+    },
+    {
+      "input": "docker ru",
+      "shell": "ps",
+      "expected": [
+        "docker run"
+      ]
+    },
+    {
+      "input": "docker bu",
+      "shell": "cmd",
+      "expected": [
+        "docker build"
+      ]
+    },
+    {
+      "input": "docker im",
+      "shell": "ps",
+      "expected": [
+        "docker images"
+      ]
+    },
+    {
+      "input": "docker pu",
+      "shell": "cmd",
+      "expected": [
+        "docker pull",
+        "docker push"
+      ]
+    },
+    {
+      "input": "docker lo",
+      "shell": "ps",
+      "expected": [
+        "docker logs"
+      ]
+    },
+    {
+      "input": "docker st",
+      "shell": "cmd",
+      "expected": [
+        "docker stop",
+        "docker start"
+      ]
+    },
+    {
+      "input": "docker rm",
+      "shell": "ps",
+      "expected": [
+        "docker rm"
+      ]
+    },
+    {
+      "input": "docker ex",
+      "shell": "cmd",
+      "expected": [
+        "docker exec"
+      ]
+    },
+    {
+      "input": "docker sy",
+      "shell": "ps",
+      "expected": [
+        "docker system"
+      ]
+    },
+    {
+      "input": "docker co",
+      "shell": "cmd",
+      "expected": [
+        "docker compose"
+      ]
+    },
+    {
+      "input": "go run",
+      "shell": "cmd",
+      "expected": [
+        "go run"
+      ]
+    },
+    {
+      "input": "go tes",
+      "shell": "ps",
+      "expected": [
+        "go test"
+      ]
+    },
+    {
+      "input": "go bui",
+      "shell": "cmd",
+      "expected": [
+        "go build"
+      ]
+    },
+    {
+      "input": "go mod",
+      "shell": "ps",
+      "expected": [
+        "go mod"
+      ]
+    },
+    {
+      "input": "go get",
+      "shell": "cmd",
+      "expected": [
+        "go get"
+      ]
+    },
+    {
+      "input": "go vet",
+      "shell": "ps",
+      "expected": [
+        "go vet"
+      ]
+    },
+    {
+      "input": "go env",
+      "shell": "cmd",
+      "expected": [
+        "go env"
+      ]
+    },
+    {
+      "input": "go ins",
+      "shell": "ps",
+      "expected": [
+        "go install"
+      ]
+    },
+    {
+      "input": "kubectl ge",
+      "shell": "cmd",
+      "expected": [
+        "kubectl get"
+      ]
+    },
+    {
+      "input": "kubectl ap",
+      "shell": "ps",
+      "expected": [
+        "kubectl apply"
+      ]
+    },
+    {
+      "input": "kubectl de",
+      "shell": "cmd",
+      "expected": [
+        "kubectl delete",
+        "kubectl describe"
+      ]
+    },
+    {
+      "input": "kubectl lo",
+      "shell": "ps",
+      "expected": [
+        "kubectl logs"
+      ]
+    },
+    {
+      "input": "kubectl ex",
+      "shell": "cmd",
+      "expected": [
+        "kubectl exec"
+      ]
+    },
+    {
+      "input": "ssh-keygen",
+      "shell": "cmd",
+      "expected": [
+        "ssh-keygen"
+      ]
+    },
+    {
+      "input": "ssh-copy-id",
+      "shell": "ps",
+      "expected": [
+        "ssh-copy-id"
+      ]
+    },
+    {
+      "input": "terraform",
+      "shell": "cmd",
+      "expected": [
+        "terraform"
+      ]
+    },
+    {
+      "input": "mvn",
+      "shell": "ps",
+      "expected": [
+        "mvn"
+      ]
+    },
+    {
+      "input": "gradle",
+      "shell": "cmd",
+      "expected": [
+        "gradle"
+      ]
+    },
+    {
+      "input": "make",
+      "shell": "ps",
+      "expected": [
+        "make"
+      ]
+    },
+    {
+      "input": "jq",
+      "shell": "cmd",
+      "expected": [
+        "jq"
+      ]
+    },
+    {
+      "input": "gh",
+      "shell": "ps",
+      "expected": [
+        "gh"
+      ]
+    },
+    {
+      "input": "uv",
+      "shell": "cmd",
+      "expected": [
+        "uv"
+      ]
+    },
+    {
+      "input": "conda",
+      "shell": "ps",
+      "expected": [
+        "conda"
+      ]
+    },
+    {
+      "input": "aws",
+      "shell": "cmd",
+      "expected": [
+        "aws"
+      ]
+    },
+    {
+      "input": "az",
+      "shell": "ps",
+      "expected": [
+        "az"
+      ]
+    },
+    {
+      "input": "helm",
+      "shell": "cmd",
+      "expected": [
+        "helm"
+      ]
+    },
+    {
+      "input": "rg",
+      "shell": "ps",
+      "expected": [
+        "rg"
+      ]
+    },
+    {
+      "input": "fd",
+      "shell": "cmd",
+      "expected": [
+        "fd"
+      ]
+    }
+  ],
+  "date": "2026-09-15T18:55:27+08:00",
+  "pass": 227,
+  "results": [
+    {
+      "Hit": true,
+      "Got": [
+        "ipconfig ",
+        "msconfig"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "dir ",
+        "driverquery",
+        "diskpart",
+        "rmdir",
+        "chdir",
+        "mkdir"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "chkdsk "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "tasklist "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "netstat ",
+        "nbtstat"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ping ",
+        "pathping",
+        "snippingtool",
+        "print",
+        "find"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "cls ",
+        "cacls",
+        "docker logs",
+        "icacls",
+        "secpol.msc",
+        "kubectl describe",
+        "kubectl logs"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "tree ",
+        "git revert",
+        "git remote",
+        "git reset",
+        "git rebase",
+        "git worktree",
+        "eventcreate",
+        "rem"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "attrib "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "fc ",
+        "git fetch",
+        "sfc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "findstr "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "sort ",
+        "for",
+        "more",
+        "set",
+        "start"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "more ",
+        "move",
+        "mode",
+        "make",
+        "msra",
+        "sort",
+        "for"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "whoami "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "systeminfo "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "driverquery "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "schtasks "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "taskkill "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "shutdown "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "timeout "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "vol ",
+        "mountvol"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ver ",
+        "verify",
+        "verifier",
+        "convert",
+        "git revert",
+        "driverquery",
+        "eventvwr",
+        "winver"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "where "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "xcopy ",
+        "copy"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "compact "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "cipher "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "certutil "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "bcdedit "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "diskpart "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "reg ",
+        "regedit",
+        "regsvr32",
+        "git reflog"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "sc ",
+        "scp",
+        "schtasks",
+        "sysdm.cpl",
+        "ssh-copy-id",
+        "setlocal",
+        "sfc",
+        "secpol.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "copy ",
+        "ssh-copy-id",
+        "robocopy",
+        "xcopy",
+        "comp",
+        "popd"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "move ",
+        "mode",
+        "more",
+        "make",
+        "mvn"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ren ",
+        "rename",
+        "resmon"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pushd "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "popd ",
+        "copy"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "start ",
+        "sort"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "title ",
+        "time"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "chcp ",
+        "comp",
+        "clip",
+        "scp"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "clip ",
+        "chcp",
+        "comp",
+        "cls"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "msconfig ",
+        "ipconfig"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "dxdiag "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "compmgmt.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "devmgmt.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "diskmgmt.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "appwiz.cpl"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "telnet "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "tracert ",
+        "tracerpt"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pathping "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "nslookup "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "subst "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "typeperf "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "wmic "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "gpupdate "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "powercfg "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "fsutil ",
+        "tzutil"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "defrag "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "robocopy "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "cacls ",
+        "icacls",
+        "call",
+        "calc",
+        "cls"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "takeown "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "icacls ",
+        "cacls"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "doskey "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "setx ",
+        "set",
+        "sftp",
+        "net"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "choice "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "eventvwr "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "services.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "taskmgr "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "notepad "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "mstsc "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "explorer "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "control "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "certmgr.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": false,
+      "Got": [
+        "waitfor",
+        "powercfg"
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "lusrmgr.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "perfmon "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "resmon "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "winver "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "cscript ",
+        "wscript"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "wscript ",
+        "cscript"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "bitsadmin "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "auditpol "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "secpol.msc"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": false,
+      "Got": [
+        "gpedit "
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "dism ",
+        "diskmgmt.msc",
+        "dir"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "sfc "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "mklink "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "assoc "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ftype ",
+        "type",
+        "ftp"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "prompt "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "setlocal "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "endlocal "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "shift "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "call ",
+        "calc",
+        "curl",
+        "cls",
+        "cacls"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "exit "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "echo "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "set ",
+        "setx",
+        "setlocal",
+        "git reset"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "type ",
+        "typeperf",
+        "ftype",
+        "time",
+        "tree"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "cd ",
+        "conda",
+        "chdir",
+        "ssh-copy-id",
+        "kubectl delete",
+        "cmd",
+        "chkdsk",
+        "kubectl describe"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "md ",
+        "go mod",
+        "mode",
+        "mkdir",
+        "git submodule",
+        "cmd",
+        "rmdir",
+        "npm update"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "rd ",
+        "rmdir",
+        "regedit",
+        "gradle",
+        "kubectl port-forward",
+        "docker build"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "del ",
+        "docker logs",
+        "kubectl delete",
+        "docker build",
+        "docker pull"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "erase "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "tasklist"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "netstat -a"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Process "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Service ",
+        "Set-Service",
+        "New-Service"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-ChildItem "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Content ",
+        "Set-Content"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Item ",
+        "Get-ItemProperty",
+        "Get-InstalledModule",
+        "Get-ChildItem",
+        "New-Item"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Remove-Item ",
+        "Remove-ItemProperty",
+        "Move-Item"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Copy-Item "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Move-Item ",
+        "Remove-Item",
+        "Remove-ItemProperty"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "New-Item ",
+        "New-ItemProperty",
+        "Get-Item"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Set-Content ",
+        "Get-Content"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Add-Content "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Clear-Host "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Help "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Command "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Alias ",
+        "Set-Alias",
+        "New-Alias"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Date ",
+        "Get-WindowsOptionalFeature",
+        "Get-AuthenticodeSignature",
+        "Get-NetAdapter",
+        "Set-Date"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Location ",
+        "Set-Location"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Set-Location ",
+        "Get-Location"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-ComputerInfo "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-NetIPAddress ",
+        "New-NetIPAddress"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Test-Connection ",
+        "Test-NetConnection"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Invoke-WebRequest "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ConvertTo-Json "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Select-Object "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Where-Object "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ForEach-Object "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Sort-Object "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Measure-Object "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Import-Csv ",
+        "Export-Csv"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Export-Csv ",
+        "Import-Csv"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Compress-Archive "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Expand-Archive "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Set-ExecutionPolicy ",
+        "Get-ExecutionPolicy"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-ExecutionPolicy ",
+        "Set-ExecutionPolicy"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Start-Service ",
+        "Restart-Service"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Stop-Service "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Restart-Service ",
+        "Start-Service"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Stop-Process "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Start-Process "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-FileHash "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-EventLog "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Clear-History "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Process -Name",
+        "Get-Process -IncludeUserName"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Process "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Get-Service"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "Restart-Service"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git stash",
+        "git status",
+        "git switch",
+        "git reset"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git stash",
+        "git status",
+        "git switch",
+        "git reset"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git config",
+        "git commit",
+        "git clone",
+        "git checkout"
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git commit"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git branch"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git log",
+        "git reflog",
+        "git clone"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git diff"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git push",
+        "git pull"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git pull"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git fetch"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git merge",
+        "git blame",
+        "git submodule",
+        "git remote"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git clone",
+        "git clean"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git reset",
+        "git remote",
+        "git rebase",
+        "git reflog",
+        "git revert",
+        "git grep",
+        "git merge",
+        "git worktree"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git tag",
+        "git stash",
+        "git status"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git show",
+        "git switch",
+        "git stash",
+        "git push"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git switch",
+        "git show"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git init"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git add"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": false,
+      "Got": [
+        "git remote"
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": false,
+      "Got": [],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git blame",
+        "git submodule"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git commit",
+        "git config",
+        "git cherry-pick",
+        "git archive"
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git grep"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git archive"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git worktree"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git submodule"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "git status"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm init",
+        "npm install",
+        "npm uninstall",
+        "npm audit",
+        "npm publish",
+        "npm ci"
+      ],
+      "Top1Hit": false
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm init",
+        "npm install",
+        "npm uninstall"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm run"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm ls",
+        "npm publish"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm uninstall",
+        "npm run"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm audit"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm publish"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "npm update"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip install",
+        "pip uninstall"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip list"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip freeze"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip show"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip uninstall"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip check"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "pip download"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker ps",
+        "docker push",
+        "docker compose"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker run"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker build"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker images"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker pull",
+        "docker push"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker logs"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker stop",
+        "docker system"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker rm",
+        "docker rmi"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker exec"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker system"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "docker compose"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go run"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go test"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go build"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go mod"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go get"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go vet"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go env"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "go install"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "kubectl get"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "kubectl apply"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "kubectl delete",
+        "kubectl describe"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "kubectl logs"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "kubectl exec"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ssh-keygen "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "ssh-copy-id "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "terraform "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "mvn ",
+        "Remove-NetFirewallRule",
+        "Remove-NetIPAddress",
+        "Remove-CimSession",
+        "Remove-PSReadLineKeyHandler",
+        "Remove-PSSession",
+        "Remove-EnvironmentVariable"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "gradle "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "make ",
+        "Remove-AppxPackage",
+        "Remove-PSReadLineKeyHandler"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "jq "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "gh ",
+        "Get-Help",
+        "Get-History",
+        "Get-Host",
+        "git push",
+        "git archive",
+        "Get-SmbShare",
+        "Get-FileHash"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "uv ",
+        "mountvol"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "conda "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "aws "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "az "
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "helm ",
+        "help",
+        "del",
+        "rem"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "rg ",
+        "Register-ScheduledTask",
+        "Remove-AppxPackage",
+        "Register-PSRepository",
+        "git reflog",
+        "Unregister-ScheduledTask",
+        "Enable-PSRemoting",
+        "docker images"
+      ],
+      "Top1Hit": true
+    },
+    {
+      "Hit": true,
+      "Got": [
+        "fd ",
+        "find",
+        "kubectl port-forward",
+        "findstr"
+      ],
+      "Top1Hit": true
+    }
+  ],
+  "top1": 224,
+  "top1_rate": 96.96969696969697,
+  "top5_rate": 98.26839826839827,
+  "total": 231
+}
