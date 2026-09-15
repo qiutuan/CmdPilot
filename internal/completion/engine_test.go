@@ -255,19 +255,33 @@ func TestHistoryCandidates(t *testing.T) {
 	}
 }
 
-// TestChainRecommendation: after "git add", "git commit" gets the context bonus.
+// TestChainRecommendation: after "git add", "git commit" gets the chain bonus.
 func TestChainRecommendation(t *testing.T) {
 	store := newTestStore(t)
 	now := time.Now()
-	// Equal usage for commit and checkout; chain bonus must break the tie.
-	_ = store.RecordUsage(db.UsageRecord{Command: "git commit", Dir: "/p", Shell: "ps", At: now})
-	_ = store.RecordUsage(db.UsageRecord{Command: "git checkout", Dir: "/p", Shell: "ps", At: now})
-	_ = store.RecordUsage(db.UsageRecord{Command: "git add", Dir: "/p", Shell: "ps", At: now.Add(time.Second)})
+	// Realistic order: stage first, then commit, then a later checkout.
+	_ = store.RecordUsage(db.UsageRecord{Command: "git add", Dir: "/p", Shell: "ps", At: now})
+	_ = store.RecordUsage(db.UsageRecord{Command: "git commit", Dir: "/p", Shell: "ps", At: now.Add(time.Second)})
+	_ = store.RecordUsage(db.UsageRecord{Command: "git checkout", Dir: "/p", Shell: "ps", At: now.Add(2 * time.Second)})
 
 	e := newTestEngine(t, store, nil)
 	resp, _ := e.Complete(Request{Input: "git c", Shell: "ps", CWD: "/p"})
 	if resp.Top == nil || resp.Top.Full != "git commit" {
-		t.Fatalf("chain bonus should prefer git commit, got %+v", resp.Top)
+		t.Fatalf("chain bonus should prefer git commit (closest follow-up of git add), got %+v", resp.Top)
+	}
+}
+
+// TestNoChainBonusWithoutParentExec verifies no bonus when the parent command
+// was never executed recently (plain recency decides).
+func TestNoChainBonusWithoutParentExec(t *testing.T) {
+	store := newTestStore(t)
+	now := time.Now()
+	_ = store.RecordUsage(db.UsageRecord{Command: "git commit", Dir: "/p", Shell: "ps", At: now})
+	_ = store.RecordUsage(db.UsageRecord{Command: "git checkout", Dir: "/p", Shell: "ps", At: now.Add(time.Second)})
+	e := newTestEngine(t, store, nil)
+	resp, _ := e.Complete(Request{Input: "git c", Shell: "ps", CWD: "/p"})
+	if resp.Top == nil || resp.Top.Full != "git checkout" {
+		t.Fatalf("no chain context: later command should win, got %+v", resp.Top)
 	}
 }
 

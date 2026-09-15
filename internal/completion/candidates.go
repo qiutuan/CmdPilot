@@ -48,16 +48,20 @@ func (e *Engine) commandCandidates(req Request, ui *usageIndex) []cand {
 	var out []cand
 	input := strings.TrimSpace(req.Input)
 	cmds := e.mergedCommands()
-	for name, c := range cmds {
-		if !shellRelevant(c, req.Shell) {
+	parent := firstToken(input)
+	var matched []string
+	for name := range cmds {
+		if !shellRelevant(cmds[name], req.Shell) {
 			continue
 		}
+		if match.Match(input, name).Tier != match.TierNone {
+			matched = append(matched, name)
+		}
+	}
+	weights := e.chainWeights(ui, parent, matched)
+	for _, name := range matched {
 		mr := match.Match(input, name)
-		if mr.Tier == match.TierNone {
-			continue
-		}
-		contextMatch := e.chainMatch(ui, name, req)
-		rs := e.rankScore(ui, name, req.CWD, contextMatch)
+		rs := e.rankScore(ui, name, req.CWD, false) * weights[name]
 		out = append(out, e.cmdToCand(name, input, mr, rs, "local"))
 	}
 	// favorites: name and command content both participate.
@@ -100,6 +104,7 @@ func (e *Engine) subcommandCandidates(req Request, ui *usageIndex) []cand {
 	}
 	var out []cand
 	cmds := e.mergedCommands()
+	var matched []string
 	for name, c := range cmds {
 		if !strings.HasPrefix(name, parent+" ") {
 			continue
@@ -108,12 +113,15 @@ func (e *Engine) subcommandCandidates(req Request, ui *usageIndex) []cand {
 			continue
 		}
 		child := name[len(parent)+1:]
-		mr := match.Match(current, child)
-		if mr.Tier == match.TierNone {
-			continue
+		if match.Match(current, child).Tier != match.TierNone {
+			matched = append(matched, name)
 		}
-		contextMatch := ui.recentParent == parent
-		rs := e.rankScore(ui, name, req.CWD, contextMatch)
+	}
+	weights := e.chainWeights(ui, parent, matched)
+	for _, name := range matched {
+		child := name[len(parent)+1:]
+		mr := match.Match(current, child)
+		rs := e.rankScore(ui, name, req.CWD, false) * weights[name]
 		out = append(out, cand{
 			text: suffixOrName(current, child), kind: "subcommand", source: "local",
 			display: name, isSuffix: isPrefixMatch(current, child), mr: mr, rankScore: rs,
@@ -270,15 +278,9 @@ func (e *Engine) historyCandidates(req Request, ui *usageIndex) []cand {
 	return out
 }
 
-// chainMatch reports whether the candidate benefits from chain context
-// (the most recent executed command shares the same parent).
-func (e *Engine) chainMatch(ui *usageIndex, cmd string, req Request) bool {
-	if ui.recentParent == "" {
-		return false
-	}
-	first := firstToken(cmd)
-	return first == ui.recentParent && first == firstToken(req.Input)
-}
+// chainMatch is superseded by chainWeights; kept as a thin wrapper only for
+// compatibility with older call sites (none remain). It always returns false.
+func (e *Engine) chainMatch(ui *usageIndex, cmd string, req Request) bool { return false }
 
 // cmdToCand converts a knowledge command into a candidate.
 func (e *Engine) cmdToCand(name, input string, mr match.Result, rs float64, source string) cand {

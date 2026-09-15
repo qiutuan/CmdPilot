@@ -37,12 +37,12 @@ func TestValidateSuffix(t *testing.T) {
 		want          string
 	}{
 		{"git c", "ommit", "ommit"},
-		{"git c", " ommit", "ommit"},        // leading space stripped
-		{"git ", " add", "add"},             // no double space
+		{"git c", " ommit", "ommit"}, // leading space stripped
+		{"git ", " add", "add"},      // no double space
 		{"git ", "add", "add"},
-		{"git c", "ommit\nrm -rf /", ""},    // newline injection blocked
-		{"git c", "ommit\r", ""},            // CR blocked
-		{"git c", "   ", ""},                // whitespace only
+		{"git c", "ommit\nrm -rf /", ""}, // newline injection blocked
+		{"git c", "ommit\r", ""},         // CR blocked
+		{"git c", "   ", ""},             // whitespace only
 		{"git c", "", ""},
 		{"git c", strings.Repeat("x", 600), strings.Repeat("x", 512)}, // capped
 	}

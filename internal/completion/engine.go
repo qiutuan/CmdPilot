@@ -148,9 +148,8 @@ func New(kb *knowledge.DB, store *db.DB, cfg *config.Config, aiClient *ai.Client
 
 // usageIndex aggregates usage stats for one request (single DB read set).
 type usageIndex struct {
-	byCmd        map[string]db.UsageRow
-	recent       []string
-	recentParent string
+	byCmd  map[string]db.UsageRow
+	recent []string
 }
 
 // loadUsage fetches stats + recent commands once per request.
@@ -180,12 +179,58 @@ func (e *Engine) loadUsage(req Request) *usageIndex {
 		}
 	}
 	ui.recent, _ = e.Store.RecentCommands(10, "")
-	if len(ui.recent) > 0 {
-		if f := strings.Fields(ui.recent[0]); len(f) > 0 {
-			ui.recentParent = f[0]
+	return ui
+}
+
+// chainWeights returns a per-command chain multiplier. The anchor is the most
+// recently executed command sharing the parent token that is NOT itself a
+// candidate (e.g. `git add` when suggesting `git c...`). The candidate whose
+// last usage most recently *followed* the anchor gets 1.5x; all others 1.0.
+func (e *Engine) chainWeights(ui *usageIndex, parent string, cmds []string) map[string]float64 {
+	w := make(map[string]float64, len(cmds))
+	if parent == "" || ui == nil {
+		return w
+	}
+	inSet := map[string]bool{}
+	for _, c := range cmds {
+		inSet[c] = true
+	}
+	anchor := ""
+	for _, line := range ui.recent {
+		f := strings.Fields(line)
+		if len(f) == 0 || f[0] != parent || inSet[line] {
+			continue
+		}
+		anchor = line
+		break // recent is ordered most-recent-first
+	}
+	if anchor == "" {
+		return w
+	}
+	anchorRow, ok := ui.byCmd[anchor]
+	if !ok {
+		return w
+	}
+	t0 := anchorRow.LastUsed
+	best := time.Duration(-1)
+	bestCmd := ""
+	for _, c := range cmds {
+		row, ok := ui.byCmd[c]
+		if !ok || row.Count <= 0 {
+			continue
+		}
+		dt := row.LastUsed.Sub(t0)
+		if dt <= 0 {
+			continue // not executed after the anchor: not a follow-up
+		}
+		if best == -1 || dt < best {
+			best, bestCmd = dt, c
 		}
 	}
-	return ui
+	if bestCmd != "" && best > 0 {
+		w[bestCmd] = 1.5
+	}
+	return w
 }
 
 // rankScore computes the frequency component for a candidate.
@@ -288,11 +333,13 @@ func (e *Engine) buildResponse(req Request, ctxInfo ContextInfo, cands []cand) *
 func (e *Engine) recommend(req Request, ctx ContextInfo) []Suggestion {
 	ui := e.loadUsage(req)
 	var cands []cand
+	seen := map[string]bool{}
 	add := func(cmd string, dirContext bool) {
 		row, ok := ui.byCmd[cmd]
-		if !ok {
+		if !ok || seen[cmd] {
 			return
 		}
+		seen[cmd] = true
 		s := rank.Score(row.Count, row.LastUsed, e.Now(), dirContext && e.Cfg.RecommendWeighting)
 		if s <= 0 {
 			return

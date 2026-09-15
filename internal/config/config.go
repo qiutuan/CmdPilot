@@ -87,6 +87,15 @@ const envPrefix = "CMDPILOT_"
 // baseDirOverride lets tests redirect the data directory (empty in production).
 var baseDirOverride string
 
+// BaseDirOverrideForTest sets the data directory for tests and returns the
+// previous value. Production callers must not use it; it exists only so the
+// CLI integration tests can isolate their data.
+func BaseDirOverrideForTest(dir string) string {
+	old := baseDirOverride
+	baseDirOverride = dir
+	return old
+}
+
 // BaseDir returns the per-user data directory for CmdPilot.
 // Windows: %LOCALAPPDATA%\CmdPilot ; others: $XDG_DATA_HOME/cmdpilot or ~/.local/share/cmdpilot.
 func BaseDir() string {

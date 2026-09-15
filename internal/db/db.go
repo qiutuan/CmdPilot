@@ -26,8 +26,11 @@ type DB struct {
 }
 
 // Open opens (creating if needed) the database in dir and migrates it.
-// dir must already be created by the caller if needed.
+// The directory is created when missing.
 func Open(dir string) (*DB, error) {
+	if err := os.MkdirAll(dir, 0o700); err != nil {
+		return nil, fmt.Errorf("db: create data dir: %w", err)
+	}
 	path := filepath.Join(dir, "cmdpilot.db")
 	dsn := fmt.Sprintf("file:%s?_pragma=journal_mode(WAL)&_pragma=synchronous(NORMAL)&_pragma=busy_timeout(5000)&_pragma=foreign_keys(ON)", path)
 	sqlDB, err := sql.Open("sqlite", dsn)
@@ -282,6 +285,36 @@ func (d *DB) StatsDistribution() (byDir map[string]int, byShell map[string]int, 
 		total += c
 	}
 	return byDir, byShell, total, rows.Err()
+}
+
+// TrendPoint is one day's command-execution count.
+type TrendPoint struct {
+	Day   string // YYYY-MM-DD (local time)
+	Count int
+}
+
+// UsageTrend returns per-day execution counts for the last `days` days.
+func (d *DB) UsageTrend(days int) ([]TrendPoint, error) {
+	if days <= 0 {
+		days = 14
+	}
+	cutoff := time.Now().AddDate(0, 0, -days).Unix()
+	rows, err := d.sql.Query(
+		`SELECT date(at, 'unixepoch', 'localtime') AS day, COUNT(*) FROM recent_commands
+		 WHERE at >= ? GROUP BY day ORDER BY day`, cutoff)
+	if err != nil {
+		return nil, fmt.Errorf("db: query trend: %w", err)
+	}
+	defer rows.Close()
+	var out []TrendPoint
+	for rows.Next() {
+		var p TrendPoint
+		if err := rows.Scan(&p.Day, &p.Count); err != nil {
+			return nil, err
+		}
+		out = append(out, p)
+	}
+	return out, rows.Err()
 }
 
 // ClearStats wipes usage statistics but preserves favorites and user commands.

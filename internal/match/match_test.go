@@ -11,11 +11,11 @@ func TestMatchTiers(t *testing.T) {
 		{"git", "git", TierExact},
 		{"git commit", "git commit", TierExact},
 		{"git c", "git commit", TierPrefix},
-		{"gitc", "git commit", TierFuzzy},               // no space: in-order chars, not a prefix
-		{"gcmt", "git commit", TierFuzzy},               // all chars in order, skipped gaps
-		{"gco", "git checkout", TierFuzzy},              // word-initial letters
-		{"git checkot", "git checkout", TierFuzzy},      // in-order match beats typo tier
-		{"git commti", "git commit", TierEdit},          // out-of-order tail -> edit tier
+		{"gitc", "git commit", TierFuzzy},          // no space: in-order chars, not a prefix
+		{"gcmt", "git commit", TierFuzzy},          // all chars in order, skipped gaps
+		{"gco", "git checkout", TierFuzzy},         // word-initial letters
+		{"git checkot", "git checkout", TierFuzzy}, // in-order match beats typo tier
+		{"git commti", "git commit", TierEdit},     // out-of-order tail -> edit tier
 		{"xyzq", "git commit", TierNone},
 		{"", "git", TierNone},
 	}
