@@ -2864,6 +2864,30 @@
    "tags": [
     "系统工具"
    ]
+  },
+  {
+   "name": "wf.msc",
+   "params": [],
+   "desc": "高级安全 Windows 防火墙",
+   "examples": [
+    "wf.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
+  },
+  {
+   "name": "gpedit.msc",
+   "params": [],
+   "desc": "本地组策略编辑器",
+   "examples": [
+    "gpedit.msc"
+   ],
+   "shell": "cmd",
+   "tags": [
+    "系统工具"
+   ]
   }
  ]
 }

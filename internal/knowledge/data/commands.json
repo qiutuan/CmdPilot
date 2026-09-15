@@ -1069,6 +1069,18 @@
       ]
     },
     {
+      "name": "gpedit.msc",
+      "params": [],
+      "desc": "本地组策略编辑器",
+      "examples": [
+        "gpedit.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "gpresult",
       "params": [
         "/r",
@@ -2726,6 +2738,18 @@
       ]
     },
     {
+      "name": "wf.msc",
+      "params": [],
+      "desc": "高级安全 Windows 防火墙",
+      "examples": [
+        "wf.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统工具"
+      ]
+    },
+    {
       "name": "where",
       "params": [
         "/r",
@@ -3456,6 +3480,21 @@
       ]
     },
     {
+      "name": "git mv",
+      "params": [
+        "-f",
+        "-k"
+      ],
+      "desc": "移动/重命名文件并暂存",
+      "examples": [
+        "git mv old.txt new.txt"
+      ],
+      "shell": "external",
+      "tags": [
+        "版本控制"
+      ]
+    },
+    {
       "name": "git pull",
       "params": [
         "--rebase",
@@ -3574,6 +3613,23 @@
       "shell": "external",
       "tags": [
         "git"
+      ]
+    },
+    {
+      "name": "git rm",
+      "params": [
+        "-r",
+        "--cached",
+        "-f"
+      ],
+      "desc": "删除文件或暂存区文件",
+      "examples": [
+        "git rm --cached app.log",
+        "git rm -r build/"
+      ],
+      "shell": "external",
+      "tags": [
+        "版本控制"
       ]
     },
     {

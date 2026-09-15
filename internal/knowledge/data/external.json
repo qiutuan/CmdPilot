@@ -1,1564 +1,1596 @@
 {
-  "version": 1,
-  "commands": [
-    {
-      "name": "git clone",
-      "params": [
-        "--depth",
-        "--branch",
-        "--recurse-submodules",
-        "--single-branch"
-      ],
-      "desc": "克隆远程仓库",
-      "examples": [
-        "git clone --depth 1 https://github.com/x/y.git",
-        "git clone -b dev git@github.com:x/y.git"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git init",
-      "params": [
-        "--bare",
-        "--initial-branch"
-      ],
-      "desc": "初始化仓库",
-      "examples": [
-        "git init",
-        "git init -b main"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git add",
-      "params": [
-        "-A",
-        "-p",
-        "-u",
-        "-f"
-      ],
-      "desc": "暂存改动",
-      "examples": [
-        "git add -A",
-        "git add -p src/"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git commit",
-      "params": [
-        "-m",
-        "-am",
-        "--amend",
-        "--no-verify",
-        "-S"
-      ],
-      "desc": "提交暂存内容",
-      "examples": [
-        "git commit -m \"feat: x\"",
-        "git commit --amend"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git push",
-      "params": [
-        "origin",
-        "-u",
-        "--force-with-lease",
-        "--tags",
-        "-f"
-      ],
-      "desc": "推送提交到远程",
-      "examples": [
-        "git push -u origin main",
-        "git push --force-with-lease"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git pull",
-      "params": [
-        "--rebase",
-        "origin",
-        "--ff-only"
-      ],
-      "desc": "拉取远程更新",
-      "examples": [
-        "git pull --rebase origin main"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git fetch",
-      "params": [
-        "origin",
-        "--all",
-        "--prune",
-        "--tags"
-      ],
-      "desc": "获取远程引用",
-      "examples": [
-        "git fetch origin",
-        "git fetch --all --prune"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git status",
-      "params": [
-        "--short",
-        "-b",
-        "--porcelain"
-      ],
-      "desc": "查看工作区状态",
-      "examples": [
-        "git status",
-        "git status -sb"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git log",
-      "params": [
-        "--oneline",
-        "--graph",
-        "-n",
-        "--all",
-        "--stat",
-        "--author"
-      ],
-      "desc": "查看提交历史",
-      "examples": [
-        "git log --oneline --graph -20",
-        "git log --all --oneline"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git diff",
-      "params": [
-        "--stat",
-        "--cached",
-        "HEAD",
-        "origin/main",
-        "--word-diff"
-      ],
-      "desc": "查看差异",
-      "examples": [
-        "git diff --stat",
-        "git diff HEAD~1"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git checkout",
-      "params": [
-        "-b",
-        "--track",
-        "origin/",
-        "."
-      ],
-      "desc": "切换分支/恢复文件",
-      "examples": [
-        "git checkout -b feature/x",
-        "git checkout -- file.txt"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git switch",
-      "params": [
-        "-c",
-        "--discard-changes"
-      ],
-      "desc": "切换分支（新式）",
-      "examples": [
-        "git switch -c feature/x",
-        "git switch main"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git branch",
-      "params": [
-        "-a",
-        "-d",
-        "-D",
-        "-vv",
-        "--merged",
-        "--no-merged"
-      ],
-      "desc": "管理分支",
-      "examples": [
-        "git branch -a",
-        "git branch -D old-feature"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git merge",
-      "params": [
-        "--no-ff",
-        "--squash",
-        "--abort",
-        "origin/main"
-      ],
-      "desc": "合并分支",
-      "examples": [
-        "git merge --no-ff feature/x",
-        "git merge --abort"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git rebase",
-      "params": [
-        "-i",
-        "--onto",
-        "--continue",
-        "--abort",
-        "--autostash"
-      ],
-      "desc": "变基",
-      "examples": [
-        "git rebase -i HEAD~3",
-        "git rebase --continue"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git stash",
-      "params": [
-        "push",
-        "pop",
-        "list",
-        "apply",
-        "drop",
-        "clear",
-        "show"
-      ],
-      "desc": "暂存工作区",
-      "examples": [
-        "git stash push -m wip",
-        "git stash pop"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git tag",
-      "params": [
-        "-a",
-        "-m",
-        "-d",
-        "-l",
-        "v1.0.0"
-      ],
-      "desc": "管理标签",
-      "examples": [
-        "git tag -a v1.0.0 -m release",
-        "git tag -l"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git remote",
-      "params": [
-        "-v",
-        "add",
-        "remove",
-        "set-url",
-        "rename"
-      ],
-      "desc": "管理远程",
-      "examples": [
-        "git remote -v",
-        "git remote add origin git@github.com:x/y.git"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git reset",
-      "params": [
-        "--hard",
-        "--soft",
-        "--mixed",
-        "HEAD~",
-        "origin/main"
-      ],
-      "desc": "重置提交（危险）",
-      "examples": [
-        "git reset --hard HEAD",
-        "git reset --soft HEAD~1"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git revert",
-      "params": [
-        "--no-commit",
-        "-m"
-      ],
-      "desc": "撤销提交",
-      "examples": [
-        "git revert HEAD"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git cherry-pick",
-      "params": [
-        "-n",
-        "-m"
-      ],
-      "desc": "挑选提交",
-      "examples": [
-        "git cherry-pick abc123"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git clean",
-      "params": [
-        "-fd",
-        "-n",
-        "-x"
-      ],
-      "desc": "清理未跟踪文件（危险）",
-      "examples": [
-        "git clean -fd",
-        "git clean -n"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git config",
-      "params": [
-        "--global",
-        "--list",
-        "user.name",
-        "user.email",
-        "--get"
-      ],
-      "desc": "配置 git",
-      "examples": [
-        "git config --global user.name qiutuan",
-        "git config --list"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git show",
-      "params": [
-        "--stat",
-        "HEAD",
-        "--format"
-      ],
-      "desc": "查看提交详情",
-      "examples": [
-        "git show HEAD --stat"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git blame",
-      "params": [
-        "-L",
-        "-w"
-      ],
-      "desc": "逐行追溯",
-      "examples": [
-        "git blame -L 10,20 file.go"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git grep",
-      "params": [
-        "-n",
-        "-i",
-        "--"
-      ],
-      "desc": "在版本库中搜索",
-      "examples": [
-        "git grep -n TODO"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git reflog",
-      "params": [
-        "--oneline"
-      ],
-      "desc": "查看引用日志（找回丢失提交）",
-      "examples": [
-        "git reflog"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git submodule",
-      "params": [
-        "update",
-        "add",
-        "init",
-        "foreach",
-        "status"
-      ],
-      "desc": "管理子模块",
-      "examples": [
-        "git submodule update --init --recursive"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git worktree",
-      "params": [
-        "add",
-        "list",
-        "remove"
-      ],
-      "desc": "管理多工作树",
-      "examples": [
-        "git worktree add ../hotfix hotfix"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "git archive",
-      "params": [
-        "--format",
-        "-o"
-      ],
-      "desc": "打包仓库快照",
-      "examples": [
-        "git archive --format zip -o out.zip HEAD"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "npm init",
-      "params": [
-        "-y",
-        "--scope"
-      ],
-      "desc": "初始化 npm 项目",
-      "examples": [
-        "npm init -y"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm install",
-      "params": [
-        "-g",
-        "--save-dev",
-        "--save",
-        "--no-save",
-        "-D"
-      ],
-      "desc": "安装依赖",
-      "examples": [
-        "npm install",
-        "npm install -D typescript"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm uninstall",
-      "params": [
-        "-g",
-        "--save-dev"
-      ],
-      "desc": "卸载依赖",
-      "examples": [
-        "npm uninstall lodash"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm run",
-      "params": [
-        "dev",
-        "build",
-        "test",
-        "lint",
-        "start"
-      ],
-      "desc": "运行脚本",
-      "examples": [
-        "npm run dev",
-        "npm run build -- --mode=prod"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm update",
-      "params": [
-        "-g",
-        "--save"
-      ],
-      "desc": "更新依赖",
-      "examples": [
-        "npm update"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm publish",
-      "params": [
-        "--access",
-        "--tag"
-      ],
-      "desc": "发布包",
-      "examples": [
-        "npm publish --access public"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm ls",
-      "params": [
-        "-g",
-        "--depth"
-      ],
-      "desc": "列出依赖树",
-      "examples": [
-        "npm ls --depth 0"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm audit",
-      "params": [
-        "fix",
-        "--force"
-      ],
-      "desc": "依赖安全审计",
-      "examples": [
-        "npm audit fix"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npm ci",
-      "params": [],
-      "desc": "按锁文件干净安装",
-      "examples": [
-        "npm ci"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "npx",
-      "params": [
-        "--yes",
-        "--package"
-      ],
-      "desc": "直接运行 npm 包",
-      "examples": [
-        "npx create-react-app my-app",
-        "npx tsc --init"
-      ],
-      "shell": "external",
-      "tags": [
-        "npm"
-      ]
-    },
-    {
-      "name": "pip install",
-      "params": [
-        "-r",
-        "-U",
-        "--user",
-        "-i",
-        "--no-cache-dir",
-        "-e"
-      ],
-      "desc": "安装 Python 包",
-      "examples": [
-        "pip install -r requirements.txt",
-        "pip install -U requests"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip uninstall",
-      "params": [
-        "-y"
-      ],
-      "desc": "卸载 Python 包",
-      "examples": [
-        "pip uninstall -y requests"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip list",
-      "params": [
-        "--outdated",
-        "--format"
-      ],
-      "desc": "列出已装包",
-      "examples": [
-        "pip list --outdated"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip freeze",
-      "params": [],
-      "desc": "导出依赖清单",
-      "examples": [
-        "pip freeze > requirements.txt"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip show",
-      "params": [
-        "-f"
-      ],
-      "desc": "查看包信息",
-      "examples": [
-        "pip show requests"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip download",
-      "params": [
-        "-d",
-        "-r"
-      ],
-      "desc": "下载包不安装",
-      "examples": [
-        "pip download -d ./wheels -r requirements.txt"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "pip check",
-      "params": [],
-      "desc": "校验依赖冲突",
-      "examples": [
-        "pip check"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "docker run",
-      "params": [
-        "-d",
-        "-it",
-        "--rm",
-        "-p",
-        "-v",
-        "--name",
-        "-e",
-        "--network",
-        "--restart"
-      ],
-      "desc": "运行容器",
-      "examples": [
-        "docker run -d -p 8080:80 --name web nginx",
-        "docker run --rm -it -v $PWD:/app node:20 bash"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker ps",
-      "params": [
-        "-a",
-        "-q",
-        "--filter",
-        "--format"
-      ],
-      "desc": "列出容器",
-      "examples": [
-        "docker ps -a",
-        "docker ps --filter status=exited"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker build",
-      "params": [
-        "-t",
-        "-f",
-        "--no-cache",
-        "--build-arg",
-        "."
-      ],
-      "desc": "构建镜像",
-      "examples": [
-        "docker build -t myapp:latest .",
-        "docker build --no-cache -t app ."
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker images",
-      "params": [
-        "--filter",
-        "--format"
-      ],
-      "desc": "列出镜像",
-      "examples": [
-        "docker images"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker exec",
-      "params": [
-        "-it",
-        "-u",
-        "-w"
-      ],
-      "desc": "进入运行中容器",
-      "examples": [
-        "docker exec -it web bash"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker logs",
-      "params": [
-        "-f",
-        "--tail",
-        "-t"
-      ],
-      "desc": "查看容器日志",
-      "examples": [
-        "docker logs -f --tail 100 web"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker stop",
-      "params": [
-        "-t"
-      ],
-      "desc": "停止容器",
-      "examples": [
-        "docker stop web"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker rm",
-      "params": [
-        "-f",
-        "-v"
-      ],
-      "desc": "删除容器",
-      "examples": [
-        "docker rm -f web"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker rmi",
-      "params": [
-        "-f"
-      ],
-      "desc": "删除镜像",
-      "examples": [
-        "docker rmi -f myapp"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker compose",
-      "params": [
-        "up",
-        "down",
-        "ps",
-        "logs",
-        "build",
-        "pull",
-        "restart",
-        "-d"
-      ],
-      "desc": "Compose 编排",
-      "examples": [
-        "docker compose up -d",
-        "docker compose down -v"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker pull",
-      "params": [],
-      "desc": "拉取镜像",
-      "examples": [
-        "docker pull nginx:alpine"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker push",
-      "params": [],
-      "desc": "推送镜像",
-      "examples": [
-        "docker push user/app:tag"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "docker system",
-      "params": [
-        "prune",
-        "df",
-        "events"
-      ],
-      "desc": "系统级维护",
-      "examples": [
-        "docker system prune -a",
-        "docker system df"
-      ],
-      "shell": "external",
-      "tags": [
-        "docker"
-      ]
-    },
-    {
-      "name": "ssh-keygen",
-      "params": [
-        "-t",
-        "-b",
-        "-C",
-        "-f",
-        "-p"
-      ],
-      "desc": "生成 SSH 密钥",
-      "examples": [
-        "ssh-keygen -t ed25519 -C you@mail.com"
-      ],
-      "shell": "external",
-      "tags": [
-        "ssh"
-      ]
-    },
-    {
-      "name": "ssh-copy-id",
-      "params": [
-        "-i"
-      ],
-      "desc": "分发公钥",
-      "examples": [
-        "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@host"
-      ],
-      "shell": "external",
-      "tags": [
-        "ssh"
-      ]
-    },
-    {
-      "name": "kubectl get",
-      "params": [
-        "pods",
-        "deployments",
-        "services",
-        "nodes",
-        "configmaps",
-        "secrets",
-        "-n",
-        "-o",
-        "--all-namespaces"
-      ],
-      "desc": "获取 K8s 资源",
-      "examples": [
-        "kubectl get pods -n kube-system",
-        "kubectl get deploy -o wide"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl logs",
-      "params": [
-        "-f",
-        "--tail",
-        "-p",
-        "--all-containers"
-      ],
-      "desc": "查看 Pod 日志",
-      "examples": [
-        "kubectl logs -f deploy/web --tail 100"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl describe",
-      "params": [
-        "pod",
-        "node",
-        "deploy",
-        "svc"
-      ],
-      "desc": "查看资源详情",
-      "examples": [
-        "kubectl describe pod web-0"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl apply",
-      "params": [
-        "-f",
-        "--dry-run",
-        "-k"
-      ],
-      "desc": "应用配置",
-      "examples": [
-        "kubectl apply -f deploy.yaml",
-        "kubectl apply -k ./overlays/prod"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl exec",
-      "params": [
-        "-it",
-        "--",
-        "-n"
-      ],
-      "desc": "进入 Pod 执行命令",
-      "examples": [
-        "kubectl exec -it web-0 -- bash"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl port-forward",
-      "params": [
-        "-n"
-      ],
-      "desc": "端口转发",
-      "examples": [
-        "kubectl port-forward svc/web 8080:80"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "kubectl delete",
-      "params": [
-        "pod",
-        "deploy",
-        "svc",
-        "-f",
-        "--grace-period"
-      ],
-      "desc": "删除资源",
-      "examples": [
-        "kubectl delete pod web-0"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "go build",
-      "params": [
-        "-o",
-        "-ldflags",
-        "-tags",
-        "-race",
-        "./..."
-      ],
-      "desc": "编译 Go 程序",
-      "examples": [
-        "go build -o bin/app ./cmd/app",
-        "go build -race ./..."
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go test",
-      "params": [
-        "-v",
-        "-cover",
-        "-race",
-        "-run",
-        "./..."
-      ],
-      "desc": "运行测试",
-      "examples": [
-        "go test ./... -cover",
-        "go test -run TestFoo -v ./internal/x"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go run",
-      "params": [
-        ".",
-        "main.go"
-      ],
-      "desc": "直接运行",
-      "examples": [
-        "go run ./cmd/server"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go mod",
-      "params": [
-        "tidy",
-        "init",
-        "download",
-        "vendor",
-        "graph"
-      ],
-      "desc": "模块管理",
-      "examples": [
-        "go mod tidy",
-        "go mod init github.com/x/y"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go vet",
-      "params": [
-        "./..."
-      ],
-      "desc": "静态检查",
-      "examples": [
-        "go vet ./..."
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go get",
-      "params": [
-        "-u",
-        "-t"
-      ],
-      "desc": "获取依赖",
-      "examples": [
-        "go get golang.org/x/sys@latest"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go install",
-      "params": [
-        "@latest",
-        "-u"
-      ],
-      "desc": "安装工具",
-      "examples": [
-        "go install golang.org/x/tools/cmd/goimports@latest"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "go env",
-      "params": [
-        "-w",
-        "GOPATH",
-        "GOMODCACHE"
-      ],
-      "desc": "查看/设置 Go 环境",
-      "examples": [
-        "go env GOPATH",
-        "go env -w GOFLAGS=-mod=mod"
-      ],
-      "shell": "external",
-      "tags": [
-        "go"
-      ]
-    },
-    {
-      "name": "jq",
-      "params": [
-        "'.'",
-        "'.key'",
-        "-r",
-        ".[]",
-        "select()",
-        "map()"
-      ],
-      "desc": "JSON 处理",
-      "examples": [
-        "curl -s api | jq '.items[].name'",
-        "jq '.a.b' data.json"
-      ],
-      "shell": "external",
-      "tags": [
-        "网络"
-      ]
-    },
-    {
-      "name": "rg",
-      "params": [
-        "-n",
-        "-i",
-        "-l",
-        "--type",
-        "-C",
-        "--hidden"
-      ],
-      "desc": "快速搜索（ripgrep）",
-      "examples": [
-        "rg -n TODO src/",
-        "rg --type go 'FIXME'"
-      ],
-      "shell": "external",
-      "tags": [
-        "搜索"
-      ]
-    },
-    {
-      "name": "fd",
-      "params": [
-        "-e",
-        "-t",
-        "-H",
-        "-x"
-      ],
-      "desc": "文件查找（fd）",
-      "examples": [
-        "fd -e go",
-        "fd -t d node_modules"
-      ],
-      "shell": "external",
-      "tags": [
-        "搜索"
-      ]
-    },
-    {
-      "name": "gh",
-      "params": [
-        "repo clone",
-        "pr create",
-        "pr list",
-        "issue create",
-        "release create",
-        "auth login"
-      ],
-      "desc": "GitHub CLI",
-      "examples": [
-        "gh repo clone owner/repo",
-        "gh pr create --fill"
-      ],
-      "shell": "external",
-      "tags": [
-        "git"
-      ]
-    },
-    {
-      "name": "az",
-      "params": [
-        "login",
-        "account show",
-        "group create",
-        "vm list",
-        "aks get-credentials"
-      ],
-      "desc": "Azure CLI",
-      "examples": [
-        "az login",
-        "az aks get-credentials -g rg -n cluster"
-      ],
-      "shell": "external",
-      "tags": [
-        "云"
-      ]
-    },
-    {
-      "name": "aws",
-      "params": [
-        "s3 ls",
-        "s3 cp",
-        "ec2 describe-instances",
-        "sts get-caller-identity",
-        "configure"
-      ],
-      "desc": "AWS CLI",
-      "examples": [
-        "aws s3 ls",
-        "aws sts get-caller-identity"
-      ],
-      "shell": "external",
-      "tags": [
-        "云"
-      ]
-    },
-    {
-      "name": "terraform",
-      "params": [
-        "init",
-        "plan",
-        "apply",
-        "destroy",
-        "fmt",
-        "validate",
-        "workspace"
-      ],
-      "desc": "Terraform 基础设施编排",
-      "examples": [
-        "terraform init",
-        "terraform plan -out plan.tfplan"
-      ],
-      "shell": "external",
-      "tags": [
-        "云"
-      ]
-    },
-    {
-      "name": "helm",
-      "params": [
-        "install",
-        "upgrade",
-        "list",
-        "uninstall",
-        "repo add",
-        "template"
-      ],
-      "desc": "Helm 包管理",
-      "examples": [
-        "helm install myapp ./chart",
-        "helm upgrade --install myapp ./chart"
-      ],
-      "shell": "external",
-      "tags": [
-        "k8s"
-      ]
-    },
-    {
-      "name": "mvn",
-      "params": [
-        "clean",
-        "install",
-        "test",
-        "package",
-        "deploy",
-        "-DskipTests",
-        "spring-boot:run"
-      ],
-      "desc": "Maven 构建",
-      "examples": [
-        "mvn clean install -DskipTests",
-        "mvn spring-boot:run"
-      ],
-      "shell": "external",
-      "tags": [
-        "java"
-      ]
-    },
-    {
-      "name": "gradle",
-      "params": [
-        "build",
-        "test",
-        "clean",
-        "bootRun",
-        "--daemon",
-        "-x"
-      ],
-      "desc": "Gradle 构建",
-      "examples": [
-        "gradle build",
-        "gradle test --rerun"
-      ],
-      "shell": "external",
-      "tags": [
-        "java"
-      ]
-    },
-    {
-      "name": "java",
-      "params": [
-        "-jar",
-        "-version",
-        "-Xmx",
-        "-Xms",
-        "-cp"
-      ],
-      "desc": "Java 运行器",
-      "examples": [
-        "java -jar app.jar --spring.profiles.active=prod"
-      ],
-      "shell": "external",
-      "tags": [
-        "java"
-      ]
-    },
-    {
-      "name": "uv",
-      "params": [
-        "venv",
-        "pip install",
-        "sync",
-        "run",
-        "add",
-        "remove",
-        "lock"
-      ],
-      "desc": "Python 包管理器（uv）",
-      "examples": [
-        "uv venv",
-        "uv pip install -r requirements.txt"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "conda",
-      "params": [
-        "create",
-        "activate",
-        "deactivate",
-        "env list",
-        "install",
-        "remove"
-      ],
-      "desc": "Conda 环境管理",
-      "examples": [
-        "conda create -n myenv python=3.12",
-        "conda activate myenv"
-      ],
-      "shell": "external",
-      "tags": [
-        "pip"
-      ]
-    },
-    {
-      "name": "make",
-      "params": [
-        "build",
-        "test",
-        "clean",
-        "install",
-        "all",
-        "-j"
-      ],
-      "desc": "Make 构建",
-      "examples": [
-        "make build -j8"
-      ],
-      "shell": "external",
-      "tags": [
-        "构建"
-      ]
-    }
-  ]
+ "version": 1,
+ "commands": [
+  {
+   "name": "git clone",
+   "params": [
+    "--depth",
+    "--branch",
+    "--recurse-submodules",
+    "--single-branch"
+   ],
+   "desc": "克隆远程仓库",
+   "examples": [
+    "git clone --depth 1 https://github.com/x/y.git",
+    "git clone -b dev git@github.com:x/y.git"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git init",
+   "params": [
+    "--bare",
+    "--initial-branch"
+   ],
+   "desc": "初始化仓库",
+   "examples": [
+    "git init",
+    "git init -b main"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git add",
+   "params": [
+    "-A",
+    "-p",
+    "-u",
+    "-f"
+   ],
+   "desc": "暂存改动",
+   "examples": [
+    "git add -A",
+    "git add -p src/"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git commit",
+   "params": [
+    "-m",
+    "-am",
+    "--amend",
+    "--no-verify",
+    "-S"
+   ],
+   "desc": "提交暂存内容",
+   "examples": [
+    "git commit -m \"feat: x\"",
+    "git commit --amend"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git push",
+   "params": [
+    "origin",
+    "-u",
+    "--force-with-lease",
+    "--tags",
+    "-f"
+   ],
+   "desc": "推送提交到远程",
+   "examples": [
+    "git push -u origin main",
+    "git push --force-with-lease"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git pull",
+   "params": [
+    "--rebase",
+    "origin",
+    "--ff-only"
+   ],
+   "desc": "拉取远程更新",
+   "examples": [
+    "git pull --rebase origin main"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git fetch",
+   "params": [
+    "origin",
+    "--all",
+    "--prune",
+    "--tags"
+   ],
+   "desc": "获取远程引用",
+   "examples": [
+    "git fetch origin",
+    "git fetch --all --prune"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git status",
+   "params": [
+    "--short",
+    "-b",
+    "--porcelain"
+   ],
+   "desc": "查看工作区状态",
+   "examples": [
+    "git status",
+    "git status -sb"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git log",
+   "params": [
+    "--oneline",
+    "--graph",
+    "-n",
+    "--all",
+    "--stat",
+    "--author"
+   ],
+   "desc": "查看提交历史",
+   "examples": [
+    "git log --oneline --graph -20",
+    "git log --all --oneline"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git diff",
+   "params": [
+    "--stat",
+    "--cached",
+    "HEAD",
+    "origin/main",
+    "--word-diff"
+   ],
+   "desc": "查看差异",
+   "examples": [
+    "git diff --stat",
+    "git diff HEAD~1"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git checkout",
+   "params": [
+    "-b",
+    "--track",
+    "origin/",
+    "."
+   ],
+   "desc": "切换分支/恢复文件",
+   "examples": [
+    "git checkout -b feature/x",
+    "git checkout -- file.txt"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git switch",
+   "params": [
+    "-c",
+    "--discard-changes"
+   ],
+   "desc": "切换分支（新式）",
+   "examples": [
+    "git switch -c feature/x",
+    "git switch main"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git branch",
+   "params": [
+    "-a",
+    "-d",
+    "-D",
+    "-vv",
+    "--merged",
+    "--no-merged"
+   ],
+   "desc": "管理分支",
+   "examples": [
+    "git branch -a",
+    "git branch -D old-feature"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git merge",
+   "params": [
+    "--no-ff",
+    "--squash",
+    "--abort",
+    "origin/main"
+   ],
+   "desc": "合并分支",
+   "examples": [
+    "git merge --no-ff feature/x",
+    "git merge --abort"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git rebase",
+   "params": [
+    "-i",
+    "--onto",
+    "--continue",
+    "--abort",
+    "--autostash"
+   ],
+   "desc": "变基",
+   "examples": [
+    "git rebase -i HEAD~3",
+    "git rebase --continue"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git stash",
+   "params": [
+    "push",
+    "pop",
+    "list",
+    "apply",
+    "drop",
+    "clear",
+    "show"
+   ],
+   "desc": "暂存工作区",
+   "examples": [
+    "git stash push -m wip",
+    "git stash pop"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git tag",
+   "params": [
+    "-a",
+    "-m",
+    "-d",
+    "-l",
+    "v1.0.0"
+   ],
+   "desc": "管理标签",
+   "examples": [
+    "git tag -a v1.0.0 -m release",
+    "git tag -l"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git remote",
+   "params": [
+    "-v",
+    "add",
+    "remove",
+    "set-url",
+    "rename"
+   ],
+   "desc": "管理远程",
+   "examples": [
+    "git remote -v",
+    "git remote add origin git@github.com:x/y.git"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git reset",
+   "params": [
+    "--hard",
+    "--soft",
+    "--mixed",
+    "HEAD~",
+    "origin/main"
+   ],
+   "desc": "重置提交（危险）",
+   "examples": [
+    "git reset --hard HEAD",
+    "git reset --soft HEAD~1"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git revert",
+   "params": [
+    "--no-commit",
+    "-m"
+   ],
+   "desc": "撤销提交",
+   "examples": [
+    "git revert HEAD"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git cherry-pick",
+   "params": [
+    "-n",
+    "-m"
+   ],
+   "desc": "挑选提交",
+   "examples": [
+    "git cherry-pick abc123"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git clean",
+   "params": [
+    "-fd",
+    "-n",
+    "-x"
+   ],
+   "desc": "清理未跟踪文件（危险）",
+   "examples": [
+    "git clean -fd",
+    "git clean -n"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git config",
+   "params": [
+    "--global",
+    "--list",
+    "user.name",
+    "user.email",
+    "--get"
+   ],
+   "desc": "配置 git",
+   "examples": [
+    "git config --global user.name qiutuan",
+    "git config --list"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git show",
+   "params": [
+    "--stat",
+    "HEAD",
+    "--format"
+   ],
+   "desc": "查看提交详情",
+   "examples": [
+    "git show HEAD --stat"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git blame",
+   "params": [
+    "-L",
+    "-w"
+   ],
+   "desc": "逐行追溯",
+   "examples": [
+    "git blame -L 10,20 file.go"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git grep",
+   "params": [
+    "-n",
+    "-i",
+    "--"
+   ],
+   "desc": "在版本库中搜索",
+   "examples": [
+    "git grep -n TODO"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git reflog",
+   "params": [
+    "--oneline"
+   ],
+   "desc": "查看引用日志（找回丢失提交）",
+   "examples": [
+    "git reflog"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git submodule",
+   "params": [
+    "update",
+    "add",
+    "init",
+    "foreach",
+    "status"
+   ],
+   "desc": "管理子模块",
+   "examples": [
+    "git submodule update --init --recursive"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git worktree",
+   "params": [
+    "add",
+    "list",
+    "remove"
+   ],
+   "desc": "管理多工作树",
+   "examples": [
+    "git worktree add ../hotfix hotfix"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "git archive",
+   "params": [
+    "--format",
+    "-o"
+   ],
+   "desc": "打包仓库快照",
+   "examples": [
+    "git archive --format zip -o out.zip HEAD"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "npm init",
+   "params": [
+    "-y",
+    "--scope"
+   ],
+   "desc": "初始化 npm 项目",
+   "examples": [
+    "npm init -y"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm install",
+   "params": [
+    "-g",
+    "--save-dev",
+    "--save",
+    "--no-save",
+    "-D"
+   ],
+   "desc": "安装依赖",
+   "examples": [
+    "npm install",
+    "npm install -D typescript"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm uninstall",
+   "params": [
+    "-g",
+    "--save-dev"
+   ],
+   "desc": "卸载依赖",
+   "examples": [
+    "npm uninstall lodash"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm run",
+   "params": [
+    "dev",
+    "build",
+    "test",
+    "lint",
+    "start"
+   ],
+   "desc": "运行脚本",
+   "examples": [
+    "npm run dev",
+    "npm run build -- --mode=prod"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm update",
+   "params": [
+    "-g",
+    "--save"
+   ],
+   "desc": "更新依赖",
+   "examples": [
+    "npm update"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm publish",
+   "params": [
+    "--access",
+    "--tag"
+   ],
+   "desc": "发布包",
+   "examples": [
+    "npm publish --access public"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm ls",
+   "params": [
+    "-g",
+    "--depth"
+   ],
+   "desc": "列出依赖树",
+   "examples": [
+    "npm ls --depth 0"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm audit",
+   "params": [
+    "fix",
+    "--force"
+   ],
+   "desc": "依赖安全审计",
+   "examples": [
+    "npm audit fix"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npm ci",
+   "params": [],
+   "desc": "按锁文件干净安装",
+   "examples": [
+    "npm ci"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "npx",
+   "params": [
+    "--yes",
+    "--package"
+   ],
+   "desc": "直接运行 npm 包",
+   "examples": [
+    "npx create-react-app my-app",
+    "npx tsc --init"
+   ],
+   "shell": "external",
+   "tags": [
+    "npm"
+   ]
+  },
+  {
+   "name": "pip install",
+   "params": [
+    "-r",
+    "-U",
+    "--user",
+    "-i",
+    "--no-cache-dir",
+    "-e"
+   ],
+   "desc": "安装 Python 包",
+   "examples": [
+    "pip install -r requirements.txt",
+    "pip install -U requests"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip uninstall",
+   "params": [
+    "-y"
+   ],
+   "desc": "卸载 Python 包",
+   "examples": [
+    "pip uninstall -y requests"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip list",
+   "params": [
+    "--outdated",
+    "--format"
+   ],
+   "desc": "列出已装包",
+   "examples": [
+    "pip list --outdated"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip freeze",
+   "params": [],
+   "desc": "导出依赖清单",
+   "examples": [
+    "pip freeze > requirements.txt"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip show",
+   "params": [
+    "-f"
+   ],
+   "desc": "查看包信息",
+   "examples": [
+    "pip show requests"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip download",
+   "params": [
+    "-d",
+    "-r"
+   ],
+   "desc": "下载包不安装",
+   "examples": [
+    "pip download -d ./wheels -r requirements.txt"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "pip check",
+   "params": [],
+   "desc": "校验依赖冲突",
+   "examples": [
+    "pip check"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "docker run",
+   "params": [
+    "-d",
+    "-it",
+    "--rm",
+    "-p",
+    "-v",
+    "--name",
+    "-e",
+    "--network",
+    "--restart"
+   ],
+   "desc": "运行容器",
+   "examples": [
+    "docker run -d -p 8080:80 --name web nginx",
+    "docker run --rm -it -v $PWD:/app node:20 bash"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker ps",
+   "params": [
+    "-a",
+    "-q",
+    "--filter",
+    "--format"
+   ],
+   "desc": "列出容器",
+   "examples": [
+    "docker ps -a",
+    "docker ps --filter status=exited"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker build",
+   "params": [
+    "-t",
+    "-f",
+    "--no-cache",
+    "--build-arg",
+    "."
+   ],
+   "desc": "构建镜像",
+   "examples": [
+    "docker build -t myapp:latest .",
+    "docker build --no-cache -t app ."
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker images",
+   "params": [
+    "--filter",
+    "--format"
+   ],
+   "desc": "列出镜像",
+   "examples": [
+    "docker images"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker exec",
+   "params": [
+    "-it",
+    "-u",
+    "-w"
+   ],
+   "desc": "进入运行中容器",
+   "examples": [
+    "docker exec -it web bash"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker logs",
+   "params": [
+    "-f",
+    "--tail",
+    "-t"
+   ],
+   "desc": "查看容器日志",
+   "examples": [
+    "docker logs -f --tail 100 web"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker stop",
+   "params": [
+    "-t"
+   ],
+   "desc": "停止容器",
+   "examples": [
+    "docker stop web"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker rm",
+   "params": [
+    "-f",
+    "-v"
+   ],
+   "desc": "删除容器",
+   "examples": [
+    "docker rm -f web"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker rmi",
+   "params": [
+    "-f"
+   ],
+   "desc": "删除镜像",
+   "examples": [
+    "docker rmi -f myapp"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker compose",
+   "params": [
+    "up",
+    "down",
+    "ps",
+    "logs",
+    "build",
+    "pull",
+    "restart",
+    "-d"
+   ],
+   "desc": "Compose 编排",
+   "examples": [
+    "docker compose up -d",
+    "docker compose down -v"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker pull",
+   "params": [],
+   "desc": "拉取镜像",
+   "examples": [
+    "docker pull nginx:alpine"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker push",
+   "params": [],
+   "desc": "推送镜像",
+   "examples": [
+    "docker push user/app:tag"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "docker system",
+   "params": [
+    "prune",
+    "df",
+    "events"
+   ],
+   "desc": "系统级维护",
+   "examples": [
+    "docker system prune -a",
+    "docker system df"
+   ],
+   "shell": "external",
+   "tags": [
+    "docker"
+   ]
+  },
+  {
+   "name": "ssh-keygen",
+   "params": [
+    "-t",
+    "-b",
+    "-C",
+    "-f",
+    "-p"
+   ],
+   "desc": "生成 SSH 密钥",
+   "examples": [
+    "ssh-keygen -t ed25519 -C you@mail.com"
+   ],
+   "shell": "external",
+   "tags": [
+    "ssh"
+   ]
+  },
+  {
+   "name": "ssh-copy-id",
+   "params": [
+    "-i"
+   ],
+   "desc": "分发公钥",
+   "examples": [
+    "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@host"
+   ],
+   "shell": "external",
+   "tags": [
+    "ssh"
+   ]
+  },
+  {
+   "name": "kubectl get",
+   "params": [
+    "pods",
+    "deployments",
+    "services",
+    "nodes",
+    "configmaps",
+    "secrets",
+    "-n",
+    "-o",
+    "--all-namespaces"
+   ],
+   "desc": "获取 K8s 资源",
+   "examples": [
+    "kubectl get pods -n kube-system",
+    "kubectl get deploy -o wide"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl logs",
+   "params": [
+    "-f",
+    "--tail",
+    "-p",
+    "--all-containers"
+   ],
+   "desc": "查看 Pod 日志",
+   "examples": [
+    "kubectl logs -f deploy/web --tail 100"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl describe",
+   "params": [
+    "pod",
+    "node",
+    "deploy",
+    "svc"
+   ],
+   "desc": "查看资源详情",
+   "examples": [
+    "kubectl describe pod web-0"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl apply",
+   "params": [
+    "-f",
+    "--dry-run",
+    "-k"
+   ],
+   "desc": "应用配置",
+   "examples": [
+    "kubectl apply -f deploy.yaml",
+    "kubectl apply -k ./overlays/prod"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl exec",
+   "params": [
+    "-it",
+    "--",
+    "-n"
+   ],
+   "desc": "进入 Pod 执行命令",
+   "examples": [
+    "kubectl exec -it web-0 -- bash"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl port-forward",
+   "params": [
+    "-n"
+   ],
+   "desc": "端口转发",
+   "examples": [
+    "kubectl port-forward svc/web 8080:80"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "kubectl delete",
+   "params": [
+    "pod",
+    "deploy",
+    "svc",
+    "-f",
+    "--grace-period"
+   ],
+   "desc": "删除资源",
+   "examples": [
+    "kubectl delete pod web-0"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "go build",
+   "params": [
+    "-o",
+    "-ldflags",
+    "-tags",
+    "-race",
+    "./..."
+   ],
+   "desc": "编译 Go 程序",
+   "examples": [
+    "go build -o bin/app ./cmd/app",
+    "go build -race ./..."
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go test",
+   "params": [
+    "-v",
+    "-cover",
+    "-race",
+    "-run",
+    "./..."
+   ],
+   "desc": "运行测试",
+   "examples": [
+    "go test ./... -cover",
+    "go test -run TestFoo -v ./internal/x"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go run",
+   "params": [
+    ".",
+    "main.go"
+   ],
+   "desc": "直接运行",
+   "examples": [
+    "go run ./cmd/server"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go mod",
+   "params": [
+    "tidy",
+    "init",
+    "download",
+    "vendor",
+    "graph"
+   ],
+   "desc": "模块管理",
+   "examples": [
+    "go mod tidy",
+    "go mod init github.com/x/y"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go vet",
+   "params": [
+    "./..."
+   ],
+   "desc": "静态检查",
+   "examples": [
+    "go vet ./..."
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go get",
+   "params": [
+    "-u",
+    "-t"
+   ],
+   "desc": "获取依赖",
+   "examples": [
+    "go get golang.org/x/sys@latest"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go install",
+   "params": [
+    "@latest",
+    "-u"
+   ],
+   "desc": "安装工具",
+   "examples": [
+    "go install golang.org/x/tools/cmd/goimports@latest"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "go env",
+   "params": [
+    "-w",
+    "GOPATH",
+    "GOMODCACHE"
+   ],
+   "desc": "查看/设置 Go 环境",
+   "examples": [
+    "go env GOPATH",
+    "go env -w GOFLAGS=-mod=mod"
+   ],
+   "shell": "external",
+   "tags": [
+    "go"
+   ]
+  },
+  {
+   "name": "jq",
+   "params": [
+    "'.'",
+    "'.key'",
+    "-r",
+    ".[]",
+    "select()",
+    "map()"
+   ],
+   "desc": "JSON 处理",
+   "examples": [
+    "curl -s api | jq '.items[].name'",
+    "jq '.a.b' data.json"
+   ],
+   "shell": "external",
+   "tags": [
+    "网络"
+   ]
+  },
+  {
+   "name": "rg",
+   "params": [
+    "-n",
+    "-i",
+    "-l",
+    "--type",
+    "-C",
+    "--hidden"
+   ],
+   "desc": "快速搜索（ripgrep）",
+   "examples": [
+    "rg -n TODO src/",
+    "rg --type go 'FIXME'"
+   ],
+   "shell": "external",
+   "tags": [
+    "搜索"
+   ]
+  },
+  {
+   "name": "fd",
+   "params": [
+    "-e",
+    "-t",
+    "-H",
+    "-x"
+   ],
+   "desc": "文件查找（fd）",
+   "examples": [
+    "fd -e go",
+    "fd -t d node_modules"
+   ],
+   "shell": "external",
+   "tags": [
+    "搜索"
+   ]
+  },
+  {
+   "name": "gh",
+   "params": [
+    "repo clone",
+    "pr create",
+    "pr list",
+    "issue create",
+    "release create",
+    "auth login"
+   ],
+   "desc": "GitHub CLI",
+   "examples": [
+    "gh repo clone owner/repo",
+    "gh pr create --fill"
+   ],
+   "shell": "external",
+   "tags": [
+    "git"
+   ]
+  },
+  {
+   "name": "az",
+   "params": [
+    "login",
+    "account show",
+    "group create",
+    "vm list",
+    "aks get-credentials"
+   ],
+   "desc": "Azure CLI",
+   "examples": [
+    "az login",
+    "az aks get-credentials -g rg -n cluster"
+   ],
+   "shell": "external",
+   "tags": [
+    "云"
+   ]
+  },
+  {
+   "name": "aws",
+   "params": [
+    "s3 ls",
+    "s3 cp",
+    "ec2 describe-instances",
+    "sts get-caller-identity",
+    "configure"
+   ],
+   "desc": "AWS CLI",
+   "examples": [
+    "aws s3 ls",
+    "aws sts get-caller-identity"
+   ],
+   "shell": "external",
+   "tags": [
+    "云"
+   ]
+  },
+  {
+   "name": "terraform",
+   "params": [
+    "init",
+    "plan",
+    "apply",
+    "destroy",
+    "fmt",
+    "validate",
+    "workspace"
+   ],
+   "desc": "Terraform 基础设施编排",
+   "examples": [
+    "terraform init",
+    "terraform plan -out plan.tfplan"
+   ],
+   "shell": "external",
+   "tags": [
+    "云"
+   ]
+  },
+  {
+   "name": "helm",
+   "params": [
+    "install",
+    "upgrade",
+    "list",
+    "uninstall",
+    "repo add",
+    "template"
+   ],
+   "desc": "Helm 包管理",
+   "examples": [
+    "helm install myapp ./chart",
+    "helm upgrade --install myapp ./chart"
+   ],
+   "shell": "external",
+   "tags": [
+    "k8s"
+   ]
+  },
+  {
+   "name": "mvn",
+   "params": [
+    "clean",
+    "install",
+    "test",
+    "package",
+    "deploy",
+    "-DskipTests",
+    "spring-boot:run"
+   ],
+   "desc": "Maven 构建",
+   "examples": [
+    "mvn clean install -DskipTests",
+    "mvn spring-boot:run"
+   ],
+   "shell": "external",
+   "tags": [
+    "java"
+   ]
+  },
+  {
+   "name": "gradle",
+   "params": [
+    "build",
+    "test",
+    "clean",
+    "bootRun",
+    "--daemon",
+    "-x"
+   ],
+   "desc": "Gradle 构建",
+   "examples": [
+    "gradle build",
+    "gradle test --rerun"
+   ],
+   "shell": "external",
+   "tags": [
+    "java"
+   ]
+  },
+  {
+   "name": "java",
+   "params": [
+    "-jar",
+    "-version",
+    "-Xmx",
+    "-Xms",
+    "-cp"
+   ],
+   "desc": "Java 运行器",
+   "examples": [
+    "java -jar app.jar --spring.profiles.active=prod"
+   ],
+   "shell": "external",
+   "tags": [
+    "java"
+   ]
+  },
+  {
+   "name": "uv",
+   "params": [
+    "venv",
+    "pip install",
+    "sync",
+    "run",
+    "add",
+    "remove",
+    "lock"
+   ],
+   "desc": "Python 包管理器（uv）",
+   "examples": [
+    "uv venv",
+    "uv pip install -r requirements.txt"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "conda",
+   "params": [
+    "create",
+    "activate",
+    "deactivate",
+    "env list",
+    "install",
+    "remove"
+   ],
+   "desc": "Conda 环境管理",
+   "examples": [
+    "conda create -n myenv python=3.12",
+    "conda activate myenv"
+   ],
+   "shell": "external",
+   "tags": [
+    "pip"
+   ]
+  },
+  {
+   "name": "make",
+   "params": [
+    "build",
+    "test",
+    "clean",
+    "install",
+    "all",
+    "-j"
+   ],
+   "desc": "Make 构建",
+   "examples": [
+    "make build -j8"
+   ],
+   "shell": "external",
+   "tags": [
+    "构建"
+   ]
+  },
+  {
+   "name": "git rm",
+   "params": [
+    "-r",
+    "--cached",
+    "-f"
+   ],
+   "desc": "删除文件或暂存区文件",
+   "examples": [
+    "git rm --cached app.log",
+    "git rm -r build/"
+   ],
+   "shell": "external",
+   "tags": [
+    "版本控制"
+   ]
+  },
+  {
+   "name": "git mv",
+   "params": [
+    "-f",
+    "-k"
+   ],
+   "desc": "移动/重命名文件并暂存",
+   "examples": [
+    "git mv old.txt new.txt"
+   ],
+   "shell": "external",
+   "tags": [
+    "版本控制"
+   ]
+  }
+ ]
 }
