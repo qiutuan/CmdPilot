@@ -16,7 +16,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/qiutuan/CmdPilot/internal/client"
@@ -778,9 +777,12 @@ func cmdDaemon(args []string) int {
 		}
 		_ = c.Shutdown()
 		// fall back to PID kill if graceful shutdown fails silently
+		// （跨平台：Windows 走 TerminateProcess，类 Unix 走 SIGKILL）
 		st, _ := daemonstate.Read()
 		if st != nil && st.PID > 0 {
-			_ = syscall.Kill(st.PID, syscall.SIGTERM) //nolint:errcheck // best-effort
+			if proc, err := os.FindProcess(st.PID); err == nil {
+				_ = proc.Kill() //nolint:errcheck // best-effort
+			}
 		}
 		daemonstate.Remove()
 		fmt.Fprintln(Stdout, "守护进程已停止")

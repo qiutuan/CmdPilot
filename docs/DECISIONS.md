@@ -20,6 +20,7 @@
 | 11 | **配置损坏自动备份+回退默认**，绝不启动失败 | 用户机器上配置损坏不应让终端功能消失 | config 包 |
 | 12 | **SQLite WAL + synchronous=NORMAL + busy_timeout + user_version 迁移** | kill -9 断电式崩溃可自动恢复、无半写入（稳定性测试验证） | db 包 |
 | 13 | **评测口径采用官方 go test 覆盖率**（此前自研解析与 go tool cover 不一致，已修正） | 报告必须与权威工具一致，可复现 | tools/eval |
+| 15 | **DPAPI 实现直接使用 x/sys/windows.DataBlob**；daemon stop 兜底 kill 用 os.Process.Kill（跨平台） | Windows 交叉编译实测发现自定义 dataBlob 类型不兼容、syscall.Kill 在 Windows 不存在，均为真实 bug，已修复并加交叉编译验证 | secrets_windows.go / cli.go |
 | 14 | **token 无 workflow 权限时 CI 以示例文件入库** | GitHub 拒绝 PAT 更新 .github/workflows；获得相应权限后复制即启用 | docs/windows-ci.example.yml |
 
 ## 二、测试执行摘要（全部可一键复跑：`go run ./tools/eval all`）
@@ -34,6 +35,7 @@
 | 稳定性 | 并发上报中 kill -9 → integrity ok、数据可读、守护进程重启、补全/写入正常 | docs/reports/stability.md |
 | E2E | **12/12**：启动→建议→上报→统计→推荐→收藏→配置→导出导入→AI test→自检→重启持久→清空保留→无效 AI 降级 | docs/reports/e2e.md |
 | 性能 | 本地补全 P95 达 ≤10ms 硬指标；万条历史延迟；RSS ≤30MB；空闲 CPU≈0%（事件驱动）；AI 慢 1.2s 时首返 ≤500ms 非阻塞 | docs/reports/performance.md |
+| 安装包体积 | Windows amd64 交叉编译：cmdpilot.exe 11.4MB + cmdpilot-clink.exe 10.3MB，gzip 安装包合计 **9.3MB ≤ 20MB** 硬指标达标 | 实测（`GOOS=windows go build -ldflags "-s -w"` + gzip） |
 
 ## 三、本地验证边界（诚实声明）
 
@@ -47,6 +49,8 @@
    dev 占位；单测覆盖占位路径。
 4. **安装/卸载脚本**：PowerShell 语法人工审查 + 结构对齐模块路径；真机
    执行依赖 Windows。
+5. **DPAPI 真机加解密**：交叉编译通过、类型与 x/sys API 对齐；真实
+   CryptProtectData 往返依赖 Windows 实测（CI 已含构建，可加冒烟）。
 5. **演示 GIF**：Windows 终端画面无法在 Linux 录制，交付演示脚本
    （见 docs/demo/README.md），供在真机一键录制。
 

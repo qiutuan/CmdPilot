@@ -14,17 +14,11 @@ import (
 // running as the same user still cannot decrypt our values without the entropy.
 var appEntropy = []byte("CmdPilot::secrets::v1")
 
-// dataBlob mirrors the Win32 CRYPTOAPI_BLOB structure.
-type dataBlob struct {
-	cbData uint32
-	pbData *byte
-}
-
-func newDataBlob(b []byte) *dataBlob {
+func newDataBlob(b []byte) *windows.DataBlob {
 	if len(b) == 0 {
-		return &dataBlob{}
+		return &windows.DataBlob{}
 	}
-	return &dataBlob{cbData: uint32(len(b)), pbData: &b[0]}
+	return &windows.DataBlob{Size: uint32(len(b)), Data: &b[0]}
 }
 
 // Protect encrypts plaintext with DPAPI (CRYPTPROTECT_UI_FORBIDDEN).
@@ -32,14 +26,14 @@ func Protect(plaintext string) (string, error) {
 	if plaintext == "" {
 		return "", nil
 	}
-	var out dataBlob
+	var out windows.DataBlob
 	entropy := newDataBlob(appEntropy)
 	in := newDataBlob([]byte(plaintext))
 	if err := windows.CryptProtectData(in, nil, entropy, 0, nil, windows.CRYPTPROTECT_UI_FORBIDDEN, &out); err != nil {
 		return "", fmt.Errorf("secrets: DPAPI protect failed: %w", err)
 	}
-	defer windows.LocalFree(windows.Handle(unsafe.Pointer(out.pbData)))
-	return base64.StdEncoding.EncodeToString(unsafe.Slice(out.pbData, int(out.cbData))), nil
+	defer windows.LocalFree(windows.Handle(unsafe.Pointer(out.Data)))
+	return base64.StdEncoding.EncodeToString(unsafe.Slice(out.Data, int(out.Size))), nil
 }
 
 // Unprotect decrypts a DPAPI-protected value produced by Protect.
@@ -51,12 +45,12 @@ func Unprotect(encoded string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("secrets: invalid base64 payload: %w", err)
 	}
-	var out dataBlob
+	var out windows.DataBlob
 	entropy := newDataBlob(appEntropy)
 	in := newDataBlob(raw)
 	if err := windows.CryptUnprotectData(in, nil, entropy, 0, nil, windows.CRYPTPROTECT_UI_FORBIDDEN, &out); err != nil {
 		return "", fmt.Errorf("secrets: DPAPI unprotect failed: %w", err)
 	}
-	defer windows.LocalFree(windows.Handle(unsafe.Pointer(out.pbData)))
-	return string(unsafe.Slice(out.pbData, int(out.cbData))), nil
+	defer windows.LocalFree(windows.Handle(unsafe.Pointer(out.Data)))
+	return string(unsafe.Slice(out.Data, int(out.Size))), nil
 }
