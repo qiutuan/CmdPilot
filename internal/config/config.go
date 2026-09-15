@@ -51,17 +51,17 @@ type AIConfig struct {
 
 // Config is the root configuration document (schema version 1).
 type Config struct {
-	Version            int        `json:"version"`
-	Engine             EngineMode `json:"engine"`
+	Version            int         `json:"version"`
+	Engine             EngineMode  `json:"engine"`
 	Trigger            TriggerMode `json:"trigger"`
-	AI                 AIConfig   `json:"ai"`
-	DebounceMS         int        `json:"debounce_ms"`           // AI debounce window
-	AICacheTTLMinutes  int        `json:"ai_cache_ttl_minutes"`  // per-prefix AI cache TTL
-	HistoryLines       int        `json:"history_lines"`         // recent lines sent to AI (sanitized)
-	RecommendWeighting bool       `json:"recommend_weighting"`   // context bonus x1.5
-	EnablePromptLine   bool       `json:"enable_prompt_line"`    // one-line enable banner on load
-	LogEnabled         bool       `json:"log_enabled"`
-	LogLevel           string     `json:"log_level"` // debug|info|warn|error
+	AI                 AIConfig    `json:"ai"`
+	DebounceMS         int         `json:"debounce_ms"`          // AI debounce window
+	AICacheTTLMinutes  int         `json:"ai_cache_ttl_minutes"` // per-prefix AI cache TTL
+	HistoryLines       int         `json:"history_lines"`        // recent lines sent to AI (sanitized)
+	RecommendWeighting bool        `json:"recommend_weighting"`  // context bonus x1.5
+	EnablePromptLine   bool        `json:"enable_prompt_line"`   // one-line enable banner on load
+	LogEnabled         bool        `json:"log_enabled"`
+	LogLevel           string      `json:"log_level"` // debug|info|warn|error
 }
 
 // Default returns the built-in defaults.

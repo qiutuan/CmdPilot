@@ -1,0 +1,3509 @@
+{
+  "version": 1,
+  "commands": [
+    {
+      "name": "Get-ChildItem",
+      "params": [
+        "-Path",
+        "-Filter",
+        "-Recurse",
+        "-Force",
+        "-Name",
+        "-Depth",
+        "-File",
+        "-Directory",
+        "-Hidden"
+      ],
+      "desc": "列出目录中的文件和子目录（别名 gci/ls/dir）",
+      "examples": [
+        "Get-ChildItem -Filter *.go -Recurse",
+        "gci -Name"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Set-Location",
+      "params": [
+        "-Path",
+        "-PassThru",
+        "-StackName"
+      ],
+      "desc": "切换当前工作目录（别名 cd/sl）",
+      "examples": [
+        "Set-Location D:\\project",
+        "cd .."
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Push-Location",
+      "params": [
+        "-Path",
+        "-StackName"
+      ],
+      "desc": "将当前目录压栈并切换（别名 pushd）",
+      "examples": [
+        "Push-Location D:\\temp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Pop-Location",
+      "params": [
+        "-StackName",
+        "-PassThru"
+      ],
+      "desc": "弹出目录栈并切换（别名 popd）",
+      "examples": [
+        "Pop-Location"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Location",
+      "params": [
+        "-PSDrive",
+        "-PSProvider"
+      ],
+      "desc": "显示当前工作目录（别名 pwd/gl）",
+      "examples": [
+        "Get-Location"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Content",
+      "params": [
+        "-Path",
+        "-Tail",
+        "-TotalCount",
+        "-Raw",
+        "-Encoding",
+        "-Wait",
+        "-Filter",
+        "-Head"
+      ],
+      "desc": "读取文件内容（别名 cat/gc/type）",
+      "examples": [
+        "Get-Content app.log -Tail 100",
+        "gc -Path file.txt -Raw"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Set-Content",
+      "params": [
+        "-Path",
+        "-Value",
+        "-Encoding",
+        "-Append",
+        "-Force",
+        "-NoNewline"
+      ],
+      "desc": "写入文件内容（别名 sc）",
+      "examples": [
+        "Set-Content -Path out.txt -Value \"hello\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Add-Content",
+      "params": [
+        "-Path",
+        "-Value",
+        "-Encoding",
+        "-PassThru"
+      ],
+      "desc": "向文件追加内容（别名 ac）",
+      "examples": [
+        "Add-Content log.txt \"line\"",
+        "1..10 | Add-Content nums.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Clear-Content",
+      "params": [
+        "-Path",
+        "-Force"
+      ],
+      "desc": "清空文件内容",
+      "examples": [
+        "Clear-Content -Path tmp.log"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Item",
+      "params": [
+        "-Path",
+        "-Force",
+        "-Stream"
+      ],
+      "desc": "获取文件/目录/注册表项对象（别名 gi）",
+      "examples": [
+        "Get-Item .\\README.md"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "New-Item",
+      "params": [
+        "-Path",
+        "-ItemType",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "创建文件/目录/注册表项（别名 ni）",
+      "examples": [
+        "New-Item -ItemType Directory -Path build",
+        "ni file.txt -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Remove-Item",
+      "params": [
+        "-Path",
+        "-Recurse",
+        "-Force",
+        "-Confirm"
+      ],
+      "desc": "删除文件/目录（别名 rm/del/ri）",
+      "examples": [
+        "Remove-Item -Recurse -Force node_modules",
+        "rm *.tmp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Copy-Item",
+      "params": [
+        "-Path",
+        "-Destination",
+        "-Recurse",
+        "-Force",
+        "-Container"
+      ],
+      "desc": "复制文件/目录（别名 cp/copy/ci）",
+      "examples": [
+        "Copy-Item -Recurse src dist",
+        "cp a.txt b.txt -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Move-Item",
+      "params": [
+        "-Path",
+        "-Destination",
+        "-Force"
+      ],
+      "desc": "移动/重命名（别名 mv/move/mi）",
+      "examples": [
+        "Move-Item old.txt new.txt",
+        "mv *.log logs\\"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Rename-Item",
+      "params": [
+        "-Path",
+        "-NewName"
+      ],
+      "desc": "重命名文件/目录（别名 ren/rni）",
+      "examples": [
+        "Rename-Item report.txt report_2026.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name"
+      ],
+      "desc": "获取项属性（含注册表值）",
+      "examples": [
+        "Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Set-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name",
+        "-Value"
+      ],
+      "desc": "设置项属性/注册表值",
+      "examples": [
+        "Set-ItemProperty HKCU:\\Env -Name TEST -Value 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "New-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name",
+        "-PropertyType",
+        "-Value"
+      ],
+      "desc": "创建新注册表值",
+      "examples": [
+        "New-ItemProperty HKCU:\\Env -Name TEST -PropertyType DWord -Value 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Remove-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name"
+      ],
+      "desc": "删除注册表值",
+      "examples": [
+        "Remove-ItemProperty HKCU:\\Env -Name TEST"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Test-Path",
+      "params": [
+        "-Path",
+        "-PathType",
+        "-IsValid"
+      ],
+      "desc": "测试路径是否存在",
+      "examples": [
+        "Test-Path .git",
+        "Test-Path -PathType Container build"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Resolve-Path",
+      "params": [
+        "-Path",
+        "-Relative"
+      ],
+      "desc": "解析相对路径为绝对路径",
+      "examples": [
+        "Resolve-Path .",
+        "Resolve-Path ..\\ -Relative"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Split-Path",
+      "params": [
+        "-Path",
+        "-Parent",
+        "-Leaf",
+        "-Qualifier"
+      ],
+      "desc": "拆分路径组成部分",
+      "examples": [
+        "Split-Path -Parent C:\\a\\b\\c.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Join-Path",
+      "params": [
+        "-Path",
+        "-ChildPath"
+      ],
+      "desc": "拼接路径",
+      "examples": [
+        "Join-Path $env:USERPROFILE Downloads"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-FileHash",
+      "params": [
+        "-Path",
+        "-Algorithm"
+      ],
+      "desc": "计算文件哈希",
+      "examples": [
+        "Get-FileHash setup.exe -Algorithm SHA256"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Get-ACL",
+      "params": [
+        "-Path"
+      ],
+      "desc": "获取文件/注册表 ACL",
+      "examples": [
+        "Get-ACL .\\secret.txt | Format-List"
+      ],
+      "shell": "ps",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "Set-ACL",
+      "params": [
+        "-Path",
+        "-AclObject"
+      ],
+      "desc": "设置 ACL",
+      "examples": [
+        "Set-ACL -Path file -AclObject $acl"
+      ],
+      "shell": "ps",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "Get-AuthenticodeSignature",
+      "params": [
+        "-FilePath"
+      ],
+      "desc": "获取文件签名信息",
+      "examples": [
+        "Get-AuthenticodeSignature .\\app.exe"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Set-AuthenticodeSignature",
+      "params": [
+        "-FilePath",
+        "-Certificate"
+      ],
+      "desc": "对文件签名",
+      "examples": [
+        "Set-AuthenticodeSignature -FilePath script.ps1 -Certificate $cert"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Unblock-File",
+      "params": [
+        "-Path"
+      ],
+      "desc": "解除下载文件的 Mark of the Web",
+      "examples": [
+        "Unblock-File .\\downloaded.ps1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Compress-Archive",
+      "params": [
+        "-Path",
+        "-DestinationPath",
+        "-Force",
+        "-CompressionLevel"
+      ],
+      "desc": "压缩为 ZIP",
+      "examples": [
+        "Compress-Archive -Path logs\\* -DestinationPath logs.zip"
+      ],
+      "shell": "ps",
+      "tags": [
+        "压缩"
+      ]
+    },
+    {
+      "name": "Expand-Archive",
+      "params": [
+        "-Path",
+        "-DestinationPath",
+        "-Force"
+      ],
+      "desc": "解压 ZIP",
+      "examples": [
+        "Expand-Archive -Path app.zip -DestinationPath app"
+      ],
+      "shell": "ps",
+      "tags": [
+        "压缩"
+      ]
+    },
+    {
+      "name": "Get-Volume",
+      "params": [
+        "-DriveLetter",
+        "-FileSystemLabel"
+      ],
+      "desc": "获取卷信息",
+      "examples": [
+        "Get-Volume -DriveLetter C"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-PSDrive",
+      "params": [
+        "-Name",
+        "-PSProvider"
+      ],
+      "desc": "列出 PS 驱动器",
+      "examples": [
+        "Get-PSDrive -PSProvider FileSystem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "New-PSDrive",
+      "params": [
+        "-Name",
+        "-PSProvider",
+        "-Root"
+      ],
+      "desc": "创建 PS 驱动器映射",
+      "examples": [
+        "New-PSDrive -Name P -PSProvider FileSystem -Root D:\\projects"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Remove-PSDrive",
+      "params": [
+        "-Name"
+      ],
+      "desc": "删除 PS 驱动器",
+      "examples": [
+        "Remove-PSDrive -Name P"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Disk",
+      "params": [
+        "-Number"
+      ],
+      "desc": "获取磁盘信息",
+      "examples": [
+        "Get-Disk | Where-Object BusType -eq 'NVMe'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-Partition",
+      "params": [
+        "-DiskNumber"
+      ],
+      "desc": "获取分区信息",
+      "examples": [
+        "Get-Partition -DiskNumber 0"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-PhysicalDisk",
+      "params": [],
+      "desc": "获取物理磁盘信息",
+      "examples": [
+        "Get-PhysicalDisk | Select-Object FriendlyName,MediaType,HealthStatus"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Select-String",
+      "params": [
+        "-Path",
+        "-Pattern",
+        "-CaseSensitive",
+        "-List",
+        "-AllMatches",
+        "-Context",
+        "-NotMatch"
+      ],
+      "desc": "在文本中搜索模式（别名 sls/grep）",
+      "examples": [
+        "Select-String -Path *.go -Pattern 'TODO'",
+        "Get-ChildItem -Recurse *.log | sls 'ERROR'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "Select-Object",
+      "params": [
+        "-Property",
+        "-First",
+        "-Last",
+        "-Unique",
+        "-Skip",
+        "-ExpandProperty"
+      ],
+      "desc": "选择对象属性（别名 select）",
+      "examples": [
+        "Get-Process | Select-Object -First 5 Name,CPU",
+        "Get-Service | select -ExpandProperty Name"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Where-Object",
+      "params": [
+        "-Property",
+        "-Value",
+        "-FilterScript",
+        "-EQ",
+        "-Like",
+        "-Match"
+      ],
+      "desc": "按条件筛选对象（别名 where）",
+      "examples": [
+        "Get-Process | Where-Object CPU -gt 10",
+        "Get-ChildItem | where Extension -eq '.go'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "ForEach-Object",
+      "params": [
+        "-Process",
+        "-Begin",
+        "-End",
+        "-Parallel",
+        "-ThrottleLimit"
+      ],
+      "desc": "对管道对象逐一处理（别名 foreach）",
+      "examples": [
+        "Get-ChildItem *.txt | ForEach-Object { $_.Name }",
+        "1..10 | % { $_ * $_ }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Sort-Object",
+      "params": [
+        "-Property",
+        "-Descending",
+        "-Unique"
+      ],
+      "desc": "对象排序（别名 sort）",
+      "examples": [
+        "Get-Process | Sort-Object CPU -Descending"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Group-Object",
+      "params": [
+        "-Property",
+        "-AsHashTable",
+        "-NoElement"
+      ],
+      "desc": "按属性分组",
+      "examples": [
+        "Get-Process | Group-Object ProcessName"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Compare-Object",
+      "params": [
+        "-ReferenceObject",
+        "-DifferenceObject",
+        "-Property",
+        "-IncludeEqual",
+        "-ExcludeDifferent"
+      ],
+      "desc": "比较两个对象集合",
+      "examples": [
+        "Compare-Object (Get-Content a.txt) (Get-Content b.txt)"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Get-Unique",
+      "params": [
+        "-AsString",
+        "-InputObject"
+      ],
+      "desc": "返回去重后的元素",
+      "examples": [
+        "Get-Content list.txt | Get-Unique"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Measure-Object",
+      "params": [
+        "-Property",
+        "-Sum",
+        "-Average",
+        "-Minimum",
+        "-Maximum"
+      ],
+      "desc": "计算对象统计值",
+      "examples": [
+        "Get-ChildItem | Measure-Object -Property Length -Sum -Average"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Format-Table",
+      "params": [
+        "-AutoSize",
+        "-Property",
+        "-Wrap"
+      ],
+      "desc": "以表格格式输出（别名 ft）",
+      "examples": [
+        "Get-Process | Format-Table -AutoSize Name,CPU"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Format-List",
+      "params": [
+        "-Property"
+      ],
+      "desc": "以列表格式输出（别名 fl）",
+      "examples": [
+        "Get-Service | Format-List *"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Format-Wide",
+      "params": [
+        "-Column",
+        "-Property"
+      ],
+      "desc": "以宽列表输出（别名 fw）",
+      "examples": [
+        "Get-Alias | Format-Wide -Column 4"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Format-Hex",
+      "params": [
+        "-Path",
+        "-InputObject"
+      ],
+      "desc": "十六进制查看内容",
+      "examples": [
+        "Format-Hex -Path binary.dat"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "Out-File",
+      "params": [
+        "-FilePath",
+        "-Append",
+        "-Encoding",
+        "-NoClobber",
+        "-Width"
+      ],
+      "desc": "输出到文件",
+      "examples": [
+        "Get-Process | Out-File procs.txt",
+        "dir | Out-File -Append list.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Out-String",
+      "params": [
+        "-Width",
+        "-Stream"
+      ],
+      "desc": "输出为字符串",
+      "examples": [
+        "Get-Service | Out-String -Width 200"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Out-Null",
+      "params": [],
+      "desc": "丢弃输出",
+      "examples": [
+        "Copy-Item a b | Out-Null"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Output",
+      "params": [
+        "-InputObject",
+        "-NoEnumerate"
+      ],
+      "desc": "向管道输出对象（别名 echo）",
+      "examples": [
+        "Write-Output 'hello'",
+        "echo $env:PATH"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Host",
+      "params": [
+        "-Object",
+        "-ForegroundColor",
+        "-NoNewline",
+        "-Separator"
+      ],
+      "desc": "直接写入控制台",
+      "examples": [
+        "Write-Host 'done' -ForegroundColor Green"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Error",
+      "params": [
+        "-Message",
+        "-Category",
+        "-ErrorId"
+      ],
+      "desc": "写入错误流",
+      "examples": [
+        "Write-Error 'file not found'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Warning",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入警告流",
+      "examples": [
+        "Write-Warning 'deprecated'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Verbose",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入详细流",
+      "examples": [
+        "Write-Verbose 'parsing...'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Debug",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入调试流",
+      "examples": [
+        "Write-Debug 'trace'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Information",
+      "params": [
+        "-MessageData",
+        "-Tags"
+      ],
+      "desc": "写入信息流",
+      "examples": [
+        "Write-Information 'progress 50%' -Tags build"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Read-Host",
+      "params": [
+        "-Prompt",
+        "-AsSecureString"
+      ],
+      "desc": "读取用户输入",
+      "examples": [
+        "$name = Read-Host 'Name'",
+        "$pwd = Read-Host -AsSecureString 'Password'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输入"
+      ]
+    },
+    {
+      "name": "Clear-Host",
+      "params": [],
+      "desc": "清空屏幕（别名 cls）",
+      "examples": [
+        "Clear-Host"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "ConvertTo-Json",
+      "params": [
+        "-InputObject",
+        "-Depth",
+        "-Compress",
+        "-EnumsAsStrings"
+      ],
+      "desc": "对象转 JSON",
+      "examples": [
+        "Get-Process | Select-Object -First 3 | ConvertTo-Json -Depth 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertFrom-Json",
+      "params": [
+        "-InputObject",
+        "-Depth"
+      ],
+      "desc": "JSON 转对象",
+      "examples": [
+        "$data = Get-Content config.json -Raw | ConvertFrom-Json"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-Csv",
+      "params": [
+        "-InputObject",
+        "-NoTypeInformation",
+        "-Delimiter"
+      ],
+      "desc": "对象转 CSV",
+      "examples": [
+        "Get-Process | ConvertTo-Csv -NoTypeInformation"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertFrom-Csv",
+      "params": [
+        "-InputObject",
+        "-Delimiter"
+      ],
+      "desc": "CSV 转对象",
+      "examples": [
+        "Get-Content data.csv | ConvertFrom-Csv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-Html",
+      "params": [
+        "-InputObject",
+        "-Property",
+        "-Title"
+      ],
+      "desc": "对象转 HTML",
+      "examples": [
+        "Get-Process | ConvertTo-Html -Title 'Procs' | Out-File p.html"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-Xml",
+      "params": [
+        "-InputObject",
+        "-Depth",
+        "-As"
+      ],
+      "desc": "对象转 XML",
+      "examples": [
+        "Get-Service | ConvertTo-Xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-SecureString",
+      "params": [
+        "-String",
+        "-AsPlainText",
+        "-Force"
+      ],
+      "desc": "明文转 SecureString",
+      "examples": [
+        "ConvertTo-SecureString 'abc' -AsPlainText -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "ConvertFrom-SecureString",
+      "params": [
+        "-SecureString"
+      ],
+      "desc": "SecureString 转密文",
+      "examples": [
+        "ConvertFrom-SecureString $sec"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Export-Csv",
+      "params": [
+        "-Path",
+        "-InputObject",
+        "-NoTypeInformation",
+        "-Encoding",
+        "-Append"
+      ],
+      "desc": "导出 CSV",
+      "examples": [
+        "Get-Process | Export-Csv procs.csv -NoTypeInformation"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Import-Csv",
+      "params": [
+        "-Path",
+        "-Delimiter",
+        "-Encoding"
+      ],
+      "desc": "导入 CSV",
+      "examples": [
+        "$rows = Import-Csv users.csv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Export-Clixml",
+      "params": [
+        "-Path",
+        "-InputObject",
+        "-Depth"
+      ],
+      "desc": "对象序列化导出",
+      "examples": [
+        "Get-Service | Export-Clixml svc.xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Import-Clixml",
+      "params": [
+        "-Path"
+      ],
+      "desc": "反序列化导入",
+      "examples": [
+        "$svc = Import-Clixml svc.xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Get-Variable",
+      "params": [
+        "-Name",
+        "-Scope",
+        "-Include"
+      ],
+      "desc": "获取变量（别名 gv）",
+      "examples": [
+        "Get-Variable -Name PSVersionTable"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Set-Variable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Scope",
+        "-Force"
+      ],
+      "desc": "设置变量（别名 sv）",
+      "examples": [
+        "Set-Variable -Name DEBUG -Value $true"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "New-Variable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Option"
+      ],
+      "desc": "创建变量（别名 nv）",
+      "examples": [
+        "New-Variable -Name count -Value 0 -Option ReadOnly"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Remove-Variable",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "删除变量（别名 rv）",
+      "examples": [
+        "Remove-Variable -Name count"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Clear-Variable",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "清空变量值（别名 clv）",
+      "examples": [
+        "Clear-Variable -Name count"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Get-Alias",
+      "params": [
+        "-Name",
+        "-Definition"
+      ],
+      "desc": "获取别名（别名 gal）",
+      "examples": [
+        "Get-Alias -Definition Get-ChildItem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "New-Alias",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "创建别名（别名 nal）",
+      "examples": [
+        "New-Alias -Name g -Value git"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "Set-Alias",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "设置别名（别名 sal）",
+      "examples": [
+        "Set-Alias -Name ll -Value Get-ChildItem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "Get-Command",
+      "params": [
+        "-Name",
+        "-CommandType",
+        "-Module",
+        "-All"
+      ],
+      "desc": "查找命令（别名 gcm）",
+      "examples": [
+        "Get-Command *service*",
+        "Get-Command -CommandType Cmdlet | Measure-Object"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-Help",
+      "params": [
+        "-Name",
+        "-Full",
+        "-Examples",
+        "-Online",
+        "-Detailed"
+      ],
+      "desc": "显示命令帮助（别名 help/man）",
+      "examples": [
+        "Get-Help Get-Process -Examples",
+        "help Select-String -Full"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-History",
+      "params": [
+        "-Count",
+        "-Id"
+      ],
+      "desc": "获取会话历史（别名 h/ghy）",
+      "examples": [
+        "Get-History -Count 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Clear-History",
+      "params": [
+        "-Id",
+        "-CommandLine"
+      ],
+      "desc": "清空历史",
+      "examples": [
+        "Clear-History"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Invoke-History",
+      "params": [
+        "-Id",
+        "-CommandLine"
+      ],
+      "desc": "重新执行历史命令（别名 r/ihy）",
+      "examples": [
+        "Invoke-History -Id 5",
+        "r 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Get-Host",
+      "params": [],
+      "desc": "获取主机信息",
+      "examples": [
+        "Get-Host | Select-Object Version"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Random",
+      "params": [
+        "-Minimum",
+        "-Maximum",
+        "-Count"
+      ],
+      "desc": "生成随机数",
+      "examples": [
+        "Get-Random -Minimum 1 -Maximum 100",
+        "1..10 | Get-Random -Count 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Get-Date",
+      "params": [
+        "-Format",
+        "-UFormat",
+        "-Year",
+        "-Month",
+        "-Day"
+      ],
+      "desc": "获取日期时间",
+      "examples": [
+        "Get-Date -Format 'yyyy-MM-dd HH:mm'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Set-Date",
+      "params": [
+        "-Date"
+      ],
+      "desc": "设置系统日期时间",
+      "examples": [
+        "Set-Date -Date '2026-01-01 08:00'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Uptime",
+      "params": [],
+      "desc": "获取系统运行时间",
+      "examples": [
+        "Get-Uptime"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Culture",
+      "params": [],
+      "desc": "获取区域设置",
+      "examples": [
+        "Get-Culture"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-TimeZone",
+      "params": [],
+      "desc": "获取时区",
+      "examples": [
+        "Get-TimeZone"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Set-TimeZone",
+      "params": [
+        "-Id",
+        "-Name"
+      ],
+      "desc": "设置时区",
+      "examples": [
+        "Set-TimeZone -Id 'China Standard Time'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-ComputerInfo",
+      "params": [
+        "-Property"
+      ],
+      "desc": "获取计算机详细信息",
+      "examples": [
+        "Get-ComputerInfo | Select-Object WindowsProductName,OsVersion"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-CimInstance",
+      "params": [
+        "-ClassName",
+        "-Namespace",
+        "-Filter",
+        "-ComputerName"
+      ],
+      "desc": "查询 CIM/WMI 实例",
+      "examples": [
+        "Get-CimInstance Win32_Processor",
+        "Get-CimInstance -ClassName Win32_LogicalDisk -Filter \"DeviceID='C:'\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-CimClass",
+      "params": [
+        "-ClassName",
+        "-Namespace"
+      ],
+      "desc": "获取 CIM 类定义",
+      "examples": [
+        "Get-CimClass Win32_Process"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Invoke-CimMethod",
+      "params": [
+        "-ClassName",
+        "-MethodName",
+        "-Arguments"
+      ],
+      "desc": "调用 CIM 方法",
+      "examples": [
+        "Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='notepad'}"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "New-CimSession",
+      "params": [
+        "-ComputerName",
+        "-Credential"
+      ],
+      "desc": "创建 CIM 会话",
+      "examples": [
+        "New-CimSession -ComputerName server01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-CimSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "获取 CIM 会话",
+      "examples": [
+        "Get-CimSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Remove-CimSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "删除 CIM 会话",
+      "examples": [
+        "Remove-CimSession -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-WmiObject",
+      "params": [
+        "-Class",
+        "-Filter",
+        "-Namespace"
+      ],
+      "desc": "查询 WMI（旧版，推荐 Get-CimInstance）",
+      "examples": [
+        "Get-WmiObject Win32_BIOS"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-EventLog",
+      "params": [
+        "-LogName",
+        "-Newest",
+        "-EntryType"
+      ],
+      "desc": "获取事件日志（旧版）",
+      "examples": [
+        "Get-EventLog -LogName System -Newest 20"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Clear-EventLog",
+      "params": [
+        "-LogName"
+      ],
+      "desc": "清空事件日志",
+      "examples": [
+        "Clear-EventLog -LogName Application"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Write-EventLog",
+      "params": [
+        "-LogName",
+        "-Source",
+        "-EventId",
+        "-Message"
+      ],
+      "desc": "写入事件日志",
+      "examples": [
+        "Write-EventLog -LogName Application -Source MyApp -EventId 100 -Message 'ok'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Get-WinEvent",
+      "params": [
+        "-FilterHashtable",
+        "-LogName",
+        "-MaxEvents"
+      ],
+      "desc": "获取 Windows 事件日志",
+      "examples": [
+        "Get-WinEvent -FilterHashtable @{LogName='System'; Level=2} -MaxEvents 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Get-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-IncludeUserName"
+      ],
+      "desc": "获取进程（别名 ps/gps）",
+      "examples": [
+        "Get-Process -Name node",
+        "Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Start-Process",
+      "params": [
+        "-FilePath",
+        "-ArgumentList",
+        "-WorkingDirectory",
+        "-NoNewWindow",
+        "-Wait",
+        "-RedirectStandardOutput",
+        "-PassThru"
+      ],
+      "desc": "启动进程（别名 start/saps）",
+      "examples": [
+        "Start-Process notepad",
+        "Start-Process -FilePath node -ArgumentList 'server.js' -Wait"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Stop-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-Force"
+      ],
+      "desc": "停止进程（别名 kill/spps）",
+      "examples": [
+        "Stop-Process -Name node -Force",
+        "Get-Process chrome | Stop-Process"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Wait-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-Timeout"
+      ],
+      "desc": "等待进程退出",
+      "examples": [
+        "Wait-Process -Name build -Timeout 60"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Debug-Process",
+      "params": [
+        "-Name",
+        "-Id"
+      ],
+      "desc": "附加调试器到进程",
+      "examples": [
+        "Debug-Process -Name app"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Get-Service",
+      "params": [
+        "-Name",
+        "-DisplayName",
+        "-ComputerName"
+      ],
+      "desc": "获取服务（别名 gsv）",
+      "examples": [
+        "Get-Service -Name wuauserv",
+        "Get-Service | Where-Object Status -eq 'Running'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Start-Service",
+      "params": [
+        "-Name",
+        "-PassThru"
+      ],
+      "desc": "启动服务（别名 sasv）",
+      "examples": [
+        "Start-Service -Name Spooler"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Stop-Service",
+      "params": [
+        "-Name",
+        "-Force",
+        "-PassThru"
+      ],
+      "desc": "停止服务（别名 spsv）",
+      "examples": [
+        "Stop-Service -Name Spooler -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Restart-Service",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "重启服务（别名 rs）",
+      "examples": [
+        "Restart-Service -Name wuauserv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Set-Service",
+      "params": [
+        "-Name",
+        "-Status",
+        "-StartupType",
+        "-Description"
+      ],
+      "desc": "修改服务配置",
+      "examples": [
+        "Set-Service -Name X -StartupType Automatic"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "New-Service",
+      "params": [
+        "-Name",
+        "-BinaryPathName",
+        "-DisplayName",
+        "-StartupType"
+      ],
+      "desc": "创建服务",
+      "examples": [
+        "New-Service -Name MySvc -BinaryPathName 'C:\\app\\svc.exe'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Restart-Computer",
+      "params": [
+        "-Force",
+        "-Confirm"
+      ],
+      "desc": "重启计算机",
+      "examples": [
+        "Restart-Computer -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Stop-Computer",
+      "params": [
+        "-Force"
+      ],
+      "desc": "关闭计算机",
+      "examples": [
+        "Stop-Computer"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-NetIPAddress",
+      "params": [
+        "-AddressFamily",
+        "-InterfaceAlias"
+      ],
+      "desc": "获取 IP 地址配置",
+      "examples": [
+        "Get-NetIPAddress -AddressFamily IPv4"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetAdapter",
+      "params": [
+        "-Name",
+        "-Physical"
+      ],
+      "desc": "获取网卡信息",
+      "examples": [
+        "Get-NetAdapter | Where-Object Status -eq 'Up'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetTCPConnection",
+      "params": [
+        "-LocalPort",
+        "-State",
+        "-RemoteAddress"
+      ],
+      "desc": "获取 TCP 连接",
+      "examples": [
+        "Get-NetTCPConnection -LocalPort 8080",
+        "Get-NetTCPConnection -State Listen"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetUDPEndpoint",
+      "params": [
+        "-LocalPort"
+      ],
+      "desc": "获取 UDP 端点",
+      "examples": [
+        "Get-NetUDPEndpoint -LocalPort 5353"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Test-Connection",
+      "params": [
+        "-ComputerName",
+        "-Count",
+        "-Quiet",
+        "-IPv4"
+      ],
+      "desc": "Ping 测试（别名 ping）",
+      "examples": [
+        "Test-Connection -ComputerName 8.8.8.8 -Count 2"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Test-NetConnection",
+      "params": [
+        "-ComputerName",
+        "-Port",
+        "-InformationLevel",
+        "-TraceRoute"
+      ],
+      "desc": "网络连通性诊断",
+      "examples": [
+        "Test-NetConnection github.com -Port 443",
+        "Test-NetConnection -ComputerName host -InformationLevel Detailed"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Resolve-DnsName",
+      "params": [
+        "-Name",
+        "-Type",
+        "-Server"
+      ],
+      "desc": "DNS 解析（别名 nslookup）",
+      "examples": [
+        "Resolve-DnsName example.com",
+        "Resolve-DnsName -Name example.com -Type MX"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-DnsClientCache",
+      "params": [],
+      "desc": "查看 DNS 客户端缓存",
+      "examples": [
+        "Get-DnsClientCache"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Clear-DnsClientCache",
+      "params": [],
+      "desc": "清空 DNS 缓存",
+      "examples": [
+        "Clear-DnsClientCache"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetRoute",
+      "params": [
+        "-DestinationPrefix"
+      ],
+      "desc": "获取路由表",
+      "examples": [
+        "Get-NetRoute -DestinationPrefix 0.0.0.0/0"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "New-NetIPAddress",
+      "params": [
+        "-IPAddress",
+        "-PrefixLength",
+        "-InterfaceIndex"
+      ],
+      "desc": "添加静态 IP",
+      "examples": [
+        "New-NetIPAddress -IPAddress 192.168.1.50 -PrefixLength 24 -InterfaceIndex 12"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Remove-NetIPAddress",
+      "params": [
+        "-IPAddress",
+        "-InterfaceIndex"
+      ],
+      "desc": "删除 IP 地址",
+      "examples": [
+        "Remove-NetIPAddress -IPAddress 192.168.1.50"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Restart-NetAdapter",
+      "params": [
+        "-Name"
+      ],
+      "desc": "重启网卡",
+      "examples": [
+        "Restart-NetAdapter -Name 'Ethernet'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetConnectionProfile",
+      "params": [],
+      "desc": "获取网络连接配置文件",
+      "examples": [
+        "Get-NetConnectionProfile"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Set-NetConnectionProfile",
+      "params": [
+        "-InterfaceAlias",
+        "-NetworkCategory"
+      ],
+      "desc": "设置网络类别",
+      "examples": [
+        "Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Invoke-WebRequest",
+      "params": [
+        "-Uri",
+        "-Method",
+        "-Headers",
+        "-Body",
+        "-OutFile",
+        "-UseBasicParsing",
+        "-TimeoutSec"
+      ],
+      "desc": "HTTP 请求（别名 iwr/curl/wget）",
+      "examples": [
+        "Invoke-WebRequest -Uri https://example.com -OutFile page.html",
+        "iwr https://api.example.com/data -Method Post -Body $json"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Invoke-RestMethod",
+      "params": [
+        "-Uri",
+        "-Method",
+        "-Headers",
+        "-Body",
+        "-ContentType",
+        "-TimeoutSec"
+      ],
+      "desc": "REST API 调用（别名 irm）",
+      "examples": [
+        "Invoke-RestMethod -Uri 'https://api.github.com/repos/qiutuan/CmdPilot'",
+        "irm -Uri http://localhost:8080/api -Method Put -Body $body -ContentType 'application/json'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Invoke-Expression",
+      "params": [
+        "-Command"
+      ],
+      "desc": "执行表达式/字符串命令（别名 iex）",
+      "examples": [
+        "Invoke-Expression (Get-Content script.ps1 -Raw)",
+        "iex \"$env:PSModulePath\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Invoke-Item",
+      "params": [
+        "-Path"
+      ],
+      "desc": "用默认程序打开项（别名 ii）",
+      "examples": [
+        "Invoke-Item .\\report.pdf",
+        "ii ."
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Invoke-Command",
+      "params": [
+        "-ComputerName",
+        "-ScriptBlock",
+        "-Credential",
+        "-Session"
+      ],
+      "desc": "在本地/远程执行命令（别名 icm）",
+      "examples": [
+        "Invoke-Command -ComputerName srv01 -ScriptBlock { Get-Service }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Import-Module",
+      "params": [
+        "-Name",
+        "-Force",
+        "-Global",
+        "-PassThru"
+      ],
+      "desc": "导入模块（别名 ipmo）",
+      "examples": [
+        "Import-Module ActiveDirectory",
+        "Import-Module .\\myModule.psd1 -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Remove-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "卸载模块（别名 rmo）",
+      "examples": [
+        "Remove-Module ActiveDirectory"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-Module",
+      "params": [
+        "-Name",
+        "-ListAvailable",
+        "-All"
+      ],
+      "desc": "获取模块（别名 gmo）",
+      "examples": [
+        "Get-Module -ListAvailable",
+        "Get-Module | Select-Object Name,Version"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "New-Module",
+      "params": [
+        "-Name",
+        "-ScriptBlock",
+        "-Function"
+      ],
+      "desc": "动态创建模块",
+      "examples": [
+        "New-Module -Name util -ScriptBlock { function hi { 'hi' } }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Export-ModuleMember",
+      "params": [
+        "-Function",
+        "-Alias",
+        "-Cmdlet"
+      ],
+      "desc": "导出模块成员",
+      "examples": [
+        "Export-ModuleMember -Function Get-*,Set-*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Install-Module",
+      "params": [
+        "-Name",
+        "-Scope",
+        "-Force",
+        "-Repository",
+        "-AllowClobber"
+      ],
+      "desc": "从 PSGallery 安装模块",
+      "examples": [
+        "Install-Module -Name Pester -Scope CurrentUser",
+        "Install-Module -Name posh-git -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Update-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "更新模块",
+      "examples": [
+        "Update-Module -Name Pester"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Uninstall-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "卸载模块",
+      "examples": [
+        "Uninstall-Module -Name Pester"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Find-Module",
+      "params": [
+        "-Name",
+        "-Repository",
+        "-Tag"
+      ],
+      "desc": "搜索模块",
+      "examples": [
+        "Find-Module -Name Az* | Select-Object -First 5"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Save-Module",
+      "params": [
+        "-Name",
+        "-Path",
+        "-Repository"
+      ],
+      "desc": "下载模块到本地",
+      "examples": [
+        "Save-Module -Name Pester -Path .\\modules"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-InstalledModule",
+      "params": [
+        "-Name"
+      ],
+      "desc": "列出已安装模块",
+      "examples": [
+        "Get-InstalledModule"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-PSRepository",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取 PS 仓库配置",
+      "examples": [
+        "Get-PSRepository"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Set-PSRepository",
+      "params": [
+        "-Name",
+        "-InstallationPolicy"
+      ],
+      "desc": "设置仓库策略",
+      "examples": [
+        "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Register-PSRepository",
+      "params": [
+        "-Name",
+        "-SourceLocation",
+        "-InstallationPolicy"
+      ],
+      "desc": "注册私有仓库",
+      "examples": [
+        "Register-PSRepository -Name Corp -SourceLocation https://nuget.corp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Unregister-PSRepository",
+      "params": [
+        "-Name"
+      ],
+      "desc": "注销仓库",
+      "examples": [
+        "Unregister-PSRepository -Name Corp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Update-Help",
+      "params": [
+        "-Module",
+        "-Force"
+      ],
+      "desc": "更新帮助文档",
+      "examples": [
+        "Update-Help -Module Microsoft.PowerShell.Utility"
+      ],
+      "shell": "ps",
+      "tags": [
+        "帮助"
+      ]
+    },
+    {
+      "name": "Start-Job",
+      "params": [
+        "-ScriptBlock",
+        "-ArgumentList",
+        "-Name"
+      ],
+      "desc": "启动后台作业",
+      "examples": [
+        "Start-Job -ScriptBlock { 1..10 | ForEach-Object { $_ * $_ } }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Get-Job",
+      "params": [
+        "-Id",
+        "-Name",
+        "-State"
+      ],
+      "desc": "获取作业",
+      "examples": [
+        "Get-Job -State Running"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Receive-Job",
+      "params": [
+        "-Id",
+        "-Wait",
+        "-Keep",
+        "-AutoRemoveJob"
+      ],
+      "desc": "接收作业输出",
+      "examples": [
+        "Receive-Job -Id 1 -Wait"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Wait-Job",
+      "params": [
+        "-Id",
+        "-Timeout"
+      ],
+      "desc": "等待作业完成",
+      "examples": [
+        "Wait-Job -Id 1 -Timeout 30"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Stop-Job",
+      "params": [
+        "-Id",
+        "-PassThru"
+      ],
+      "desc": "停止作业",
+      "examples": [
+        "Stop-Job -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Remove-Job",
+      "params": [
+        "-Id",
+        "-Force"
+      ],
+      "desc": "删除作业",
+      "examples": [
+        "Remove-Job -Id 1 -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Start-ThreadJob",
+      "params": [
+        "-ScriptBlock",
+        "-ThrottleLimit"
+      ],
+      "desc": "线程级后台作业（PS 7）",
+      "examples": [
+        "Start-ThreadJob -ScriptBlock { Get-Service }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Enter-PSSession",
+      "params": [
+        "-ComputerName",
+        "-Session",
+        "-Credential"
+      ],
+      "desc": "进入远程 PS 会话",
+      "examples": [
+        "Enter-PSSession -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Exit-PSSession",
+      "params": [],
+      "desc": "退出远程会话",
+      "examples": [
+        "Exit-PSSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "New-PSSession",
+      "params": [
+        "-ComputerName",
+        "-SessionOption",
+        "-Credential"
+      ],
+      "desc": "创建 PS 会话",
+      "examples": [
+        "New-PSSession -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Get-PSSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "获取 PS 会话",
+      "examples": [
+        "Get-PSSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Remove-PSSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "删除 PS 会话",
+      "examples": [
+        "Remove-PSSession -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Test-WSMan",
+      "params": [
+        "-ComputerName"
+      ],
+      "desc": "测试 WinRM 服务",
+      "examples": [
+        "Test-WSMan -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Enable-PSRemoting",
+      "params": [
+        "-Force",
+        "-SkipNetworkProfileCheck"
+      ],
+      "desc": "启用 PS 远程",
+      "examples": [
+        "Enable-PSRemoting -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Disable-PSRemoting",
+      "params": [
+        "-Force"
+      ],
+      "desc": "禁用 PS 远程",
+      "examples": [
+        "Disable-PSRemoting -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Import-PSSession",
+      "params": [
+        "-Session",
+        "-Module",
+        "-Prefix"
+      ],
+      "desc": "导入远程会话命令",
+      "examples": [
+        "Import-PSSession -Session $s -Prefix R"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Export-PSSession",
+      "params": [
+        "-Session",
+        "-OutputModule",
+        "-CommandName"
+      ],
+      "desc": "导出远程会话命令到模块",
+      "examples": [
+        "Export-PSSession -Session $s -OutputModule RemoteSvc"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Get-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-TaskPath"
+      ],
+      "desc": "获取计划任务",
+      "examples": [
+        "Get-ScheduledTask -TaskName 'Backup'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "New-ScheduledTask",
+      "params": [
+        "-Action",
+        "-Trigger",
+        "-Settings"
+      ],
+      "desc": "创建计划任务定义",
+      "examples": [
+        "New-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'backup.bat') -Trigger (New-ScheduledTaskTrigger -Daily -At '02:00')"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Register-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Action",
+        "-Trigger",
+        "-User"
+      ],
+      "desc": "注册计划任务",
+      "examples": [
+        "Register-ScheduledTask -TaskName backup -Action $a -Trigger $t"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Set-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Action",
+        "-Trigger"
+      ],
+      "desc": "修改计划任务",
+      "examples": [
+        "Set-ScheduledTask -TaskName backup -Trigger $newTrigger"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Unregister-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Confirm"
+      ],
+      "desc": "删除计划任务",
+      "examples": [
+        "Unregister-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Start-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "启动计划任务",
+      "examples": [
+        "Start-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Stop-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "停止计划任务",
+      "examples": [
+        "Stop-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Disable-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "禁用计划任务",
+      "examples": [
+        "Disable-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Enable-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "启用计划任务",
+      "examples": [
+        "Enable-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Get-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Direction",
+        "-Action",
+        "-Enabled"
+      ],
+      "desc": "获取防火墙规则",
+      "examples": [
+        "Get-NetFirewallRule -Direction Inbound | Where-Object Enabled -eq True"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "New-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Direction",
+        "-Action",
+        "-Protocol",
+        "-LocalPort",
+        "-Profile"
+      ],
+      "desc": "创建防火墙规则",
+      "examples": [
+        "New-NetFirewallRule -DisplayName 'Allow 8080' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8080"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Set-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Action",
+        "-Enabled"
+      ],
+      "desc": "修改防火墙规则",
+      "examples": [
+        "Set-NetFirewallRule -DisplayName 'Allow 8080' -Action Block"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Remove-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "删除防火墙规则",
+      "examples": [
+        "Remove-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Enable-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "启用防火墙规则",
+      "examples": [
+        "Enable-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Disable-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "禁用防火墙规则",
+      "examples": [
+        "Disable-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Get-NetFirewallProfile",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取防火墙配置文件",
+      "examples": [
+        "Get-NetFirewallProfile"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Set-NetFirewallProfile",
+      "params": [
+        "-Name",
+        "-Enabled"
+      ],
+      "desc": "设置防火墙配置文件",
+      "examples": [
+        "Set-NetFirewallProfile -Name Public -Enabled False"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Get-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Target",
+        "-Process"
+      ],
+      "desc": "获取环境变量（PS 7）",
+      "examples": [
+        "Get-EnvironmentVariable -Name PATH -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Set-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Target"
+      ],
+      "desc": "设置环境变量（PS 7）",
+      "examples": [
+        "Set-EnvironmentVariable -Name JAVA_HOME -Value 'C:\\jdk17' -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Remove-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Target"
+      ],
+      "desc": "删除环境变量（PS 7）",
+      "examples": [
+        "Remove-EnvironmentVariable -Name TEST -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Set-Clipboard",
+      "params": [
+        "-Value",
+        "-Append"
+      ],
+      "desc": "写入剪贴板（别名 scb）",
+      "examples": [
+        "'hello' | Set-Clipboard"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Get-Clipboard",
+      "params": [
+        "-Raw"
+      ],
+      "desc": "读取剪贴板（别名 gcb）",
+      "examples": [
+        "Get-Clipboard -Raw"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Start-Sleep",
+      "params": [
+        "-Seconds",
+        "-Milliseconds"
+      ],
+      "desc": "休眠指定时间（别名 sleep）",
+      "examples": [
+        "Start-Sleep -Seconds 5"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Get-Counter",
+      "params": [
+        "-Counter",
+        "-SampleInterval",
+        "-MaxSamples"
+      ],
+      "desc": "读取性能计数器",
+      "examples": [
+        "Get-Counter '\\Processor(_Total)\\% Processor Time' -SampleInterval 1 -MaxSamples 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Clear-RecycleBin",
+      "params": [
+        "-DriveLetter",
+        "-Force"
+      ],
+      "desc": "清空回收站",
+      "examples": [
+        "Clear-RecycleBin -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-AppxPackage",
+      "params": [
+        "-Name",
+        "-AllUsers"
+      ],
+      "desc": "获取 UWP 应用包",
+      "examples": [
+        "Get-AppxPackage -Name *Photos*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Remove-AppxPackage",
+      "params": [
+        "-Package"
+      ],
+      "desc": "卸载 UWP 应用包",
+      "examples": [
+        "Get-AppxPackage *BingNews* | Remove-AppxPackage"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Verb",
+      "params": [
+        "-Verb"
+      ],
+      "desc": "列出 PowerShell 标准动词",
+      "examples": [
+        "Get-Verb | Sort-Object Verb"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-Member",
+      "params": [
+        "-InputObject",
+        "-MemberType",
+        "-Name"
+      ],
+      "desc": "查看对象成员（别名 gm）",
+      "examples": [
+        "Get-Process | Get-Member",
+        "Get-Service | gm -MemberType Method"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Add-Type",
+      "params": [
+        "-TypeDefinition",
+        "-Path",
+        "-AssemblyName"
+      ],
+      "desc": "编译/加载 .NET 类型",
+      "examples": [
+        "Add-Type -AssemblyName System.Windows.Forms"
+      ],
+      "shell": "ps",
+      "tags": [
+        "编程"
+      ]
+    },
+    {
+      "name": "Add-Member",
+      "params": [
+        "-InputObject",
+        "-MemberType",
+        "-Name",
+        "-Value",
+        "-NotePropertyName"
+      ],
+      "desc": "为对象添加成员",
+      "examples": [
+        "$o = [pscustomobject]@{a=1}; $o | Add-Member -NotePropertyName b -NotePropertyValue 2"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Get-ExecutionPolicy",
+      "params": [
+        "-Scope",
+        "-List"
+      ],
+      "desc": "获取执行策略",
+      "examples": [
+        "Get-ExecutionPolicy -List"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Set-ExecutionPolicy",
+      "params": [
+        "-ExecutionPolicy",
+        "-Scope",
+        "-Force"
+      ],
+      "desc": "设置执行策略",
+      "examples": [
+        "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Set-PSReadLineOption",
+      "params": [
+        "-PredictionSource",
+        "-PredictionViewStyle",
+        "-Colors",
+        "-EditMode",
+        "-HistoryNoDuplicates",
+        "-MaximumHistoryCount"
+      ],
+      "desc": "配置 PSReadLine",
+      "examples": [
+        "Set-PSReadLineOption -PredictionSource History",
+        "Set-PSReadLineOption -PredictionViewStyle ListView"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Get-PSReadLineOption",
+      "params": [],
+      "desc": "查看 PSReadLine 配置",
+      "examples": [
+        "Get-PSReadLineOption"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Set-PSReadLineKeyHandler",
+      "params": [
+        "-Key",
+        "-Function",
+        "-ScriptBlock",
+        "-BriefDescription"
+      ],
+      "desc": "绑定 PSReadLine 按键",
+      "examples": [
+        "Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Get-PSReadLineKeyHandler",
+      "params": [
+        "-Key"
+      ],
+      "desc": "查看 PSReadLine 按键绑定",
+      "examples": [
+        "Get-PSReadLineKeyHandler -Key Tab"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Remove-PSReadLineKeyHandler",
+      "params": [
+        "-Key"
+      ],
+      "desc": "移除 PSReadLine 按键绑定",
+      "examples": [
+        "Remove-PSReadLineKeyHandler -Key Tab"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Get-SmbShare",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取 SMB 共享",
+      "examples": [
+        "Get-SmbShare"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "New-SmbShare",
+      "params": [
+        "-Name",
+        "-Path",
+        "-FullAccess"
+      ],
+      "desc": "创建 SMB 共享",
+      "examples": [
+        "New-SmbShare -Name data -Path D:\\data -FullAccess Everyone"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Remove-SmbShare",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "删除 SMB 共享",
+      "examples": [
+        "Remove-SmbShare -Name data -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-Printer",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取打印机",
+      "examples": [
+        "Get-Printer"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-PrintJob",
+      "params": [
+        "-PrinterName"
+      ],
+      "desc": "获取打印任务",
+      "examples": [
+        "Get-PrintJob -PrinterName 'HP LaserJet'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Error",
+      "params": [
+        "-Newest",
+        "-Error"
+      ],
+      "desc": "获取最近错误（PS 7）",
+      "examples": [
+        "Get-Error -Newest 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "调试"
+      ]
+    },
+    {
+      "name": "Enable-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName",
+        "-All"
+      ],
+      "desc": "启用 Windows 可选功能",
+      "examples": [
+        "Enable-WindowsOptionalFeature -Online -FeatureName NetFx3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Disable-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName"
+      ],
+      "desc": "禁用 Windows 可选功能",
+      "examples": [
+        "Disable-WindowsOptionalFeature -Online -FeatureName Internet-Explorer-Optional-amd64"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName"
+      ],
+      "desc": "查询 Windows 可选功能",
+      "examples": [
+        "Get-WindowsOptionalFeature -Online | Where-Object State -eq 'Enabled'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Package",
+      "params": [
+        "-Name",
+        "-ProviderName"
+      ],
+      "desc": "获取已安装软件包",
+      "examples": [
+        "Get-Package -Name *7zip*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    },
+    {
+      "name": "Find-Package",
+      "params": [
+        "-Name",
+        "-ProviderName"
+      ],
+      "desc": "搜索软件包",
+      "examples": [
+        "Find-Package -Name jq"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    },
+    {
+      "name": "Install-Package",
+      "params": [
+        "-Name",
+        "-ProviderName",
+        "-Force"
+      ],
+      "desc": "安装软件包",
+      "examples": [
+        "Install-Package -Name jq -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    }
+  ]
+}

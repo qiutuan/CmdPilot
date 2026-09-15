@@ -1,0 +1,7673 @@
+{
+  "version": 1,
+  "commands": [
+    {
+      "name": "appwiz.cpl",
+      "params": [],
+      "desc": "打开程序和功能",
+      "examples": [
+        "appwiz.cpl"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "arp",
+      "params": [
+        "-a",
+        "-d",
+        "-s"
+      ],
+      "desc": "ARP 缓存管理",
+      "examples": [
+        "arp -a"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "assoc",
+      "params": [
+        ".txt=",
+        "/f"
+      ],
+      "desc": "显示或修改文件扩展名关联",
+      "examples": [
+        "assoc .txt=txtfile"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "attrib",
+      "params": [
+        "+r",
+        "-r",
+        "+a",
+        "-a",
+        "+s",
+        "-s",
+        "+h",
+        "-h",
+        "/s",
+        "/d"
+      ],
+      "desc": "显示或更改文件属性",
+      "examples": [
+        "attrib +h secret.txt",
+        "attrib -r -s -h file"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "auditpol",
+      "params": [
+        "/get",
+        "/set",
+        "/list"
+      ],
+      "desc": "审核策略管理",
+      "examples": [
+        "auditpol /get /category:*"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "bcdedit",
+      "params": [
+        "/enum",
+        "/set",
+        "/default",
+        "/timeout"
+      ],
+      "desc": "启动配置数据编辑器",
+      "examples": [
+        "bcdedit /enum"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "bitsadmin",
+      "params": [
+        "/transfer",
+        "/create",
+        "/addfile",
+        "/resume",
+        "/complete",
+        "/list",
+        "/cancel"
+      ],
+      "desc": "后台智能传输服务",
+      "examples": [
+        "bitsadmin /transfer job http://host/file C:\\file"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "bootrec",
+      "params": [
+        "/fixmbr",
+        "/fixboot",
+        "/scanos",
+        "/rebuildbcd"
+      ],
+      "desc": "修复启动记录",
+      "examples": [
+        "bootrec /fixmbr"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "cacls",
+      "params": [
+        "/g",
+        "/r",
+        "/p",
+        "/d",
+        "/t",
+        "/e",
+        "/c"
+      ],
+      "desc": "显示或修改文件 ACL（已弃用，用 icacls）",
+      "examples": [
+        "cacls file /g user:F"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "call",
+      "params": [],
+      "desc": "调用另一个批处理或标签",
+      "examples": [
+        "call setup.bat",
+        "call :sub"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "cd",
+      "params": [
+        "/d",
+        "..",
+        "\\"
+      ],
+      "desc": "显示或更改当前目录",
+      "examples": [
+        "cd /d D:\\project",
+        "cd .."
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "certutil",
+      "params": [
+        "-hashfile",
+        "-addstore",
+        "-delstore",
+        "-urlcache",
+        "-encode",
+        "-decode"
+      ],
+      "desc": "证书管理与哈希工具",
+      "examples": [
+        "certutil -hashfile file.exe SHA256",
+        "certutil -urlcache * delete"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "chcp",
+      "params": [
+        "65001",
+        "936",
+        "437"
+      ],
+      "desc": "显示或设置活动代码页",
+      "examples": [
+        "chcp 65001"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "chdir",
+      "params": [
+        "/d"
+      ],
+      "desc": "cd 的别名，显示或更改当前目录",
+      "examples": [
+        "chdir /d C:\\Windows"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "chkdsk",
+      "params": [
+        "/f",
+        "/r",
+        "/x",
+        "/scan"
+      ],
+      "desc": "检查磁盘错误",
+      "examples": [
+        "chkdsk C: /f",
+        "chkdsk D: /r"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "chkntfs",
+      "params": [
+        "/c",
+        "/d",
+        "/x"
+      ],
+      "desc": "显示或修改开机自动检查磁盘",
+      "examples": [
+        "chkntfs /d"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "choice",
+      "params": [
+        "/c",
+        "/n",
+        "/m",
+        "/t",
+        "/d"
+      ],
+      "desc": "提供选择菜单",
+      "examples": [
+        "choice /c YN /m \"继续?\"",
+        "choice /c 123 /t 5 /d 1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "cipher",
+      "params": [
+        "/e",
+        "/d",
+        "/w",
+        "/k"
+      ],
+      "desc": "显示或更改 NTFS 加密",
+      "examples": [
+        "cipher /e secret.txt",
+        "cipher /w:C:\\"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "clip",
+      "params": [],
+      "desc": "将输入重定向到剪贴板",
+      "examples": [
+        "dir /b | clip",
+        "type file.txt | clip"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "cls",
+      "params": [],
+      "desc": "清空屏幕",
+      "examples": [
+        "cls"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "cmd",
+      "params": [
+        "/c",
+        "/k",
+        "/v:on",
+        "/q",
+        "/s"
+      ],
+      "desc": "启动新的 CMD 实例",
+      "examples": [
+        "cmd /c dir",
+        "cmd /k cd /d D:\\dev"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "color",
+      "params": [
+        "0a",
+        "1b",
+        "07"
+      ],
+      "desc": "设置默认前景/背景色",
+      "examples": [
+        "color 0a"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "comp",
+      "params": [
+        "/d",
+        "/a",
+        "/l",
+        "/n"
+      ],
+      "desc": "逐字节比较两个文件",
+      "examples": [
+        "comp file1.dat file2.dat"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "compact",
+      "params": [
+        "/c",
+        "/u",
+        "/s",
+        "/i",
+        "/q"
+      ],
+      "desc": "显示或更改 NTFS 压缩",
+      "examples": [
+        "compact /c /s:D:\\data"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "compmgmt.msc",
+      "params": [],
+      "desc": "打开计算机管理控制台",
+      "examples": [
+        "compmgmt.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "control",
+      "params": [
+        "panel",
+        "keyboard",
+        "mouse",
+        "printers"
+      ],
+      "desc": "打开控制面板项目",
+      "examples": [
+        "control panel"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "convert",
+      "params": [
+        "/fs:ntfs",
+        "/cvtarea",
+        "/nosecurity"
+      ],
+      "desc": "将 FAT 卷转换为 NTFS",
+      "examples": [
+        "convert D: /fs:ntfs"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "copy",
+      "params": [
+        "/y",
+        "/-y",
+        "/v",
+        "/d",
+        "/b",
+        "/a"
+      ],
+      "desc": "复制一个或多个文件",
+      "examples": [
+        "copy config.ini config.bak",
+        "copy /y *.dll bin\\"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "curl",
+      "params": [
+        "-X",
+        "-H",
+        "-d",
+        "-o",
+        "-O",
+        "-L",
+        "-k",
+        "-u",
+        "-s",
+        "-i"
+      ],
+      "desc": "HTTP 请求工具",
+      "examples": [
+        "curl -X POST -H \"Content-Type: application/json\" -d @body.json http://api",
+        "curl -O https://example.com/file.zip"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "date",
+      "params": [
+        "/t"
+      ],
+      "desc": "显示或设置日期",
+      "examples": [
+        "date /t"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "defrag",
+      "params": [
+        "/c",
+        "/d",
+        "/h",
+        "/u",
+        "/v",
+        "/x"
+      ],
+      "desc": "磁盘碎片整理",
+      "examples": [
+        "defrag C: /d /h"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "del",
+      "params": [
+        "/f",
+        "/q",
+        "/s",
+        "/a"
+      ],
+      "desc": "删除一个或多个文件",
+      "examples": [
+        "del /f /q *.tmp",
+        "del /s *.log"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "devmgmt.msc",
+      "params": [],
+      "desc": "打开设备管理器",
+      "examples": [
+        "devmgmt.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "dir",
+      "params": [
+        "/a",
+        "/b",
+        "/c",
+        "/d",
+        "/l",
+        "/o",
+        "/p",
+        "/q",
+        "/r",
+        "/s",
+        "/t",
+        "/w",
+        "/x",
+        "/4"
+      ],
+      "desc": "显示目录中的文件和子目录列表",
+      "examples": [
+        "dir /s /b *.txt",
+        "dir /a:d"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "diskmgmt.msc",
+      "params": [],
+      "desc": "打开磁盘管理",
+      "examples": [
+        "diskmgmt.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "diskpart",
+      "params": [
+        "list disk",
+        "select disk",
+        "list volume",
+        "clean",
+        "create partition"
+      ],
+      "desc": "磁盘分区管理工具",
+      "examples": [
+        "diskpart"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "dism",
+      "params": [
+        "/online",
+        "/image",
+        "/cleanup-image",
+        "/restorehealth",
+        "/add-package",
+        "/get-packages",
+        "/export-image"
+      ],
+      "desc": "部署映像服务与管理",
+      "examples": [
+        "dism /online /cleanup-image /restorehealth",
+        "dism /online /get-packages"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "doskey",
+      "params": [
+        "/history",
+        "/macrofile",
+        "macroname"
+      ],
+      "desc": "命令行历史与宏",
+      "examples": [
+        "doskey /history",
+        "doskey ll=dir /b $*"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "driverquery",
+      "params": [
+        "/v",
+        "/fo",
+        "/si"
+      ],
+      "desc": "显示已安装驱动程序列表",
+      "examples": [
+        "driverquery /v"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "dxdiag",
+      "params": [
+        "/x"
+      ],
+      "desc": "DirectX 诊断工具",
+      "examples": [
+        "dxdiag /x output.xml"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "echo",
+      "params": [
+        "on",
+        "off"
+      ],
+      "desc": "显示消息或开关命令回显",
+      "examples": [
+        "echo hello",
+        "echo %PATH%",
+        "@echo off"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "endlocal",
+      "params": [],
+      "desc": "结束局部环境变量",
+      "examples": [
+        "endlocal"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "erase",
+      "params": [
+        "/f",
+        "/q",
+        "/s"
+      ],
+      "desc": "删除文件（del 的别名）",
+      "examples": [
+        "erase /q old.txt"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "eventcreate",
+      "params": [
+        "/l",
+        "/so",
+        "/t",
+        "/id",
+        "/d"
+      ],
+      "desc": "创建自定义事件日志",
+      "examples": [
+        "eventcreate /t information /id 100 /d \"backup ok\""
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "eventvwr",
+      "params": [],
+      "desc": "打开事件查看器",
+      "examples": [
+        "eventvwr"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "exit",
+      "params": [
+        "/b",
+        "code"
+      ],
+      "desc": "退出 CMD 或批处理",
+      "examples": [
+        "exit /b 1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "expand",
+      "params": [
+        "/f",
+        "/r",
+        "/d"
+      ],
+      "desc": "解压 CAB 文件",
+      "examples": [
+        "expand -F:* update.cab C:\\temp"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "压缩"
+      ]
+    },
+    {
+      "name": "fc",
+      "params": [
+        "/a",
+        "/b",
+        "/c",
+        "/l",
+        "/n",
+        "/u"
+      ],
+      "desc": "比较两个文件并显示差异",
+      "examples": [
+        "fc /n a.txt b.txt",
+        "fc /b img1.bin img2.bin"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "find",
+      "params": [
+        "/v",
+        "/c",
+        "/n",
+        "/i",
+        "/off"
+      ],
+      "desc": "在文件中搜索字符串",
+      "examples": [
+        "find /i \"error\" app.log"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "findstr",
+      "params": [
+        "/i",
+        "/s",
+        "/r",
+        "/n",
+        "/c",
+        "/v",
+        "/m",
+        "/l",
+        "/g"
+      ],
+      "desc": "在文件中搜索字符串（支持正则）",
+      "examples": [
+        "findstr /s /i \"TODO\" *.go",
+        "findstr /r \"^ERROR\" *.log"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "for",
+      "params": [
+        "%d in (set) do command",
+        "/d",
+        "/r",
+        "/l",
+        "/f"
+      ],
+      "desc": "循环命令",
+      "examples": [
+        "for %f in (*.txt) do echo %f",
+        "for /f \"tokens=*\" %i in (list.txt) do echo %i"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "forfiles",
+      "params": [
+        "/p",
+        "/m",
+        "/s",
+        "/d",
+        "/c"
+      ],
+      "desc": "批量处理文件",
+      "examples": [
+        "forfiles /p C:\\logs /s /m *.log /c \"cmd /c del @path\""
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "format",
+      "params": [
+        "/fs:ntfs",
+        "/q",
+        "/y",
+        "/v"
+      ],
+      "desc": "格式化磁盘（危险操作）",
+      "examples": [
+        "format E: /fs:exfat /q"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "fsutil",
+      "params": [
+        "file",
+        "volume",
+        "dirty",
+        "quota",
+        "usn",
+        "reparsepoint",
+        "hardlink"
+      ],
+      "desc": "文件系统管理工具",
+      "examples": [
+        "fsutil file createnew test.bin 1048576"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "ftp",
+      "params": [
+        "open",
+        "get",
+        "put",
+        "mget",
+        "mput",
+        "ls",
+        "bye"
+      ],
+      "desc": "FTP 客户端",
+      "examples": [
+        "ftp ftp.example.com"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "ftype",
+      "params": [
+        "txtfile=",
+        "/f"
+      ],
+      "desc": "显示或修改文件类型关联",
+      "examples": [
+        "ftype txtfile=\"C:\\notepad.exe\" %1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "getmac",
+      "params": [
+        "/v",
+        "/fo"
+      ],
+      "desc": "显示网卡 MAC 地址",
+      "examples": [
+        "getmac /v"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "goto",
+      "params": [
+        "label",
+        ":eof"
+      ],
+      "desc": "跳转到标签",
+      "examples": [
+        "goto :eof"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "gpedit",
+      "params": [],
+      "desc": "组策略编辑器",
+      "examples": [
+        "gpedit"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "gpresult",
+      "params": [
+        "/r",
+        "/h",
+        "/scope",
+        "/user"
+      ],
+      "desc": "显示组策略结果",
+      "examples": [
+        "gpresult /r",
+        "gpresult /h report.html"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "gpupdate",
+      "params": [
+        "/force",
+        "/target",
+        "/boot"
+      ],
+      "desc": "刷新组策略",
+      "examples": [
+        "gpupdate /force"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "help",
+      "params": [
+        "command"
+      ],
+      "desc": "显示命令帮助",
+      "examples": [
+        "help dir",
+        "help"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "hostname",
+      "params": [],
+      "desc": "显示主机名",
+      "examples": [
+        "hostname"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "icacls",
+      "params": [
+        "/grant",
+        "/deny",
+        "/remove",
+        "/setowner",
+        "/t",
+        "/c",
+        "/q",
+        "/inheritance"
+      ],
+      "desc": "显示或修改文件 ACL 权限",
+      "examples": [
+        "icacls file.txt /grant user:(F)",
+        "icacls dir /t /inheritance:r"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "if",
+      "params": [
+        "exist",
+        "not",
+        "==",
+        "errorlevel",
+        "defined"
+      ],
+      "desc": "条件判断",
+      "examples": [
+        "if exist file.txt echo found",
+        "if \"%1\"==\"\" echo no args"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "ipconfig",
+      "params": [
+        "/all",
+        "/release",
+        "/renew",
+        "/flushdns",
+        "/displaydns",
+        "/registerdns"
+      ],
+      "desc": "显示/管理 IP 配置",
+      "examples": [
+        "ipconfig /all",
+        "ipconfig /flushdns"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "label",
+      "params": [],
+      "desc": "创建/更改/删除磁盘卷标",
+      "examples": [
+        "label C: DATA"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "logman",
+      "params": [
+        "create",
+        "start",
+        "stop",
+        "query",
+        "delete"
+      ],
+      "desc": "性能计数器/事件追踪管理",
+      "examples": [
+        "logman query providers"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "logoff",
+      "params": [],
+      "desc": "注销当前会话",
+      "examples": [
+        "logoff"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "lusrmgr.msc",
+      "params": [],
+      "desc": "打开本地用户和组",
+      "examples": [
+        "lusrmgr.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "md",
+      "params": [],
+      "desc": "创建目录",
+      "examples": [
+        "md logs\\2026",
+        "md a b c"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "mkdir",
+      "params": [],
+      "desc": "创建目录（md 的别名）",
+      "examples": [
+        "mkdir build\\dist"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "mklink",
+      "params": [
+        "/d",
+        "/j",
+        "/h"
+      ],
+      "desc": "创建符号链接",
+      "examples": [
+        "mklink /d C:\\link D:\\target",
+        "mklink /j junction target"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "mode",
+      "params": [
+        "con",
+        "com1",
+        "120,30"
+      ],
+      "desc": "配置系统设备",
+      "examples": [
+        "mode con cols=120 lines=40"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "more",
+      "params": [
+        "/e",
+        "/c",
+        "/p",
+        "/s",
+        "/t",
+        "+n"
+      ],
+      "desc": "分页显示文件内容",
+      "examples": [
+        "more big.log",
+        "dir | more"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "mountvol",
+      "params": [
+        "/s",
+        "/e"
+      ],
+      "desc": "创建/删除卷挂载点",
+      "examples": [
+        "mountvol C:\\mount /s"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "move",
+      "params": [
+        "/y",
+        "/-y"
+      ],
+      "desc": "移动或重命名文件/目录",
+      "examples": [
+        "move old.txt new.txt",
+        "move *.log logs\\"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "msconfig",
+      "params": [],
+      "desc": "系统配置工具（启动项/服务）",
+      "examples": [
+        "msconfig"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "msiexec",
+      "params": [
+        "/i",
+        "/x",
+        "/a",
+        "/qn",
+        "/qb",
+        "/l*v"
+      ],
+      "desc": "Windows Installer 命令行",
+      "examples": [
+        "msiexec /i app.msi /qn",
+        "msiexec /x {GUID} /qn"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "安装"
+      ]
+    },
+    {
+      "name": "msinfo32",
+      "params": [
+        "/report"
+      ],
+      "desc": "系统信息工具",
+      "examples": [
+        "msinfo32"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "msra",
+      "params": [
+        "/offerra"
+      ],
+      "desc": "Windows 远程协助",
+      "examples": [
+        "msra /offerra"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "mstsc",
+      "params": [
+        "/v",
+        "/f",
+        "/admin",
+        "/w",
+        "/h"
+      ],
+      "desc": "远程桌面连接",
+      "examples": [
+        "mstsc /v:192.168.1.10",
+        "mstsc /f"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "nbtstat",
+      "params": [
+        "-a",
+        "-n",
+        "-r",
+        "-c",
+        "-s"
+      ],
+      "desc": "NetBIOS 统计",
+      "examples": [
+        "nbtstat -n"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "ncpa.cpl",
+      "params": [],
+      "desc": "打开网络连接设置",
+      "examples": [
+        "ncpa.cpl"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "net",
+      "params": [
+        "use",
+        "user",
+        "localgroup",
+        "share",
+        "view",
+        "start",
+        "stop",
+        "statistics",
+        "accounts"
+      ],
+      "desc": "网络/用户/服务管理",
+      "examples": [
+        "net use Z: \\\\server\\share",
+        "net user administrator",
+        "net localgroup administrators"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "netsh",
+      "params": [
+        "wlan show profiles",
+        "interface",
+        "advfirewall",
+        "winhttp",
+        "http",
+        "trace",
+        "add",
+        "delete"
+      ],
+      "desc": "网络配置命令行",
+      "examples": [
+        "netsh wlan show profiles",
+        "netsh advfirewall set allprofiles state off"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "netstat",
+      "params": [
+        "-a",
+        "-n",
+        "-o",
+        "-b",
+        "-e",
+        "-r",
+        "-s",
+        "-p"
+      ],
+      "desc": "显示网络连接/端口",
+      "examples": [
+        "netstat -ano | findstr :8080",
+        "netstat -b"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "nslookup",
+      "params": [
+        "-type",
+        "-server",
+        "-timeout",
+        "-port"
+      ],
+      "desc": "DNS 查询",
+      "examples": [
+        "nslookup example.com",
+        "nslookup -type=mx gmail.com"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "openfiles",
+      "params": [
+        "/query",
+        "/disconnect"
+      ],
+      "desc": "显示/断开共享文件",
+      "examples": [
+        "openfiles /query"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "path",
+      "params": [],
+      "desc": "显示或设置 PATH 环境变量",
+      "examples": [
+        "path %PATH%;C:\\tools"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "pathping",
+      "params": [
+        "-n",
+        "-h",
+        "-q",
+        "-w"
+      ],
+      "desc": "结合 ping 与 tracert 的路由分析",
+      "examples": [
+        "pathping -n 8.8.8.8"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "pause",
+      "params": [],
+      "desc": "暂停并提示按键继续",
+      "examples": [
+        "pause"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "perfmon",
+      "params": [
+        "/rel",
+        "/report"
+      ],
+      "desc": "打开性能监视器",
+      "examples": [
+        "perfmon /rel"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "ping",
+      "params": [
+        "-t",
+        "-a",
+        "-n",
+        "-l",
+        "-f",
+        "-w"
+      ],
+      "desc": "测试网络连通性",
+      "examples": [
+        "ping -n 4 google.com",
+        "ping -t 192.168.1.1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "popd",
+      "params": [],
+      "desc": "恢复到 pushd 保存的目录",
+      "examples": [
+        "popd"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "powercfg",
+      "params": [
+        "/a",
+        "/h",
+        "/energy",
+        "/batteryreport",
+        "/sleepstudy",
+        "/devicequery"
+      ],
+      "desc": "电源配置管理",
+      "examples": [
+        "powercfg /batteryreport",
+        "powercfg /energy"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "电源"
+      ]
+    },
+    {
+      "name": "powershell",
+      "params": [
+        "-Command",
+        "-File",
+        "-ExecutionPolicy",
+        "-NoProfile",
+        "-EncodedCommand"
+      ],
+      "desc": "调用 PowerShell",
+      "examples": [
+        "powershell -Command Get-Process",
+        "powershell -ExecutionPolicy Bypass -File setup.ps1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "print",
+      "params": [
+        "/d:"
+      ],
+      "desc": "打印文本文件",
+      "examples": [
+        "print /d:\\\\printer file.txt"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "prompt",
+      "params": [
+        "$P$G",
+        "$d",
+        "$t",
+        "$_"
+      ],
+      "desc": "更改命令提示符",
+      "examples": [
+        "prompt $P$G",
+        "prompt [$USER]$_$P$G"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "pushd",
+      "params": [],
+      "desc": "保存当前目录并切换到目标目录",
+      "examples": [
+        "pushd D:\\temp"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "rd",
+      "params": [
+        "/s",
+        "/q"
+      ],
+      "desc": "删除目录",
+      "examples": [
+        "rd /s /q node_modules"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "reg",
+      "params": [
+        "add",
+        "delete",
+        "query",
+        "copy",
+        "save",
+        "restore",
+        "load",
+        "unload",
+        "/v",
+        "/d",
+        "/f"
+      ],
+      "desc": "注册表命令行操作",
+      "examples": [
+        "reg query HKLM\\SOFTWARE\\Microsoft",
+        "reg add HKCU\\Env /v TEST /d 1 /f"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "regedit",
+      "params": [
+        "/s",
+        "/e"
+      ],
+      "desc": "注册表编辑器",
+      "examples": [
+        "regedit /e backup.reg HKCU\\Software"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "regsvr32",
+      "params": [
+        "/s",
+        "/u",
+        "/i"
+      ],
+      "desc": "注册/注销 COM DLL",
+      "examples": [
+        "regsvr32 /s mycom.dll",
+        "regsvr32 /u /s mycom.dll"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "rem",
+      "params": [],
+      "desc": "批处理注释",
+      "examples": [
+        "rem this is a comment"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "ren",
+      "params": [],
+      "desc": "重命名文件或目录",
+      "examples": [
+        "ren report.txt report_2026.txt"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "rename",
+      "params": [],
+      "desc": "重命名文件或目录（ren 的别名）",
+      "examples": [
+        "rename a.jpg b.jpg"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "replace",
+      "params": [
+        "/a",
+        "/p",
+        "/r",
+        "/w",
+        "/s",
+        "/u"
+      ],
+      "desc": "替换文件",
+      "examples": [
+        "replace new.exe C:\\bin /s"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "rmdir",
+      "params": [
+        "/s",
+        "/q"
+      ],
+      "desc": "删除目录（rd 的别名）",
+      "examples": [
+        "rmdir /s /q dist"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "robocopy",
+      "params": [
+        "/s",
+        "/e",
+        "/mir",
+        "/move",
+        "/purge",
+        "/njh",
+        "/njs",
+        "/ndl",
+        "/np",
+        "/mt",
+        "/r",
+        "/w",
+        "/log",
+        "/xf",
+        "/xd"
+      ],
+      "desc": "高级文件复制工具，支持镜像、多线程",
+      "examples": [
+        "robocopy D:\\data E:\\backup /mir /mt:8",
+        "robocopy src dst /e /xf *.tmp"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "route",
+      "params": [
+        "print",
+        "add",
+        "delete",
+        "change",
+        "-p"
+      ],
+      "desc": "操作路由表",
+      "examples": [
+        "route print",
+        "route add 10.0.0.0 mask 255.0.0.0 192.168.1.1"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "runas",
+      "params": [
+        "/user",
+        "/profile",
+        "/env",
+        "/netonly"
+      ],
+      "desc": "以其他用户身份运行程序",
+      "examples": [
+        "runas /user:Administrator cmd"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "sc",
+      "params": [
+        "query",
+        "start",
+        "stop",
+        "config",
+        "create",
+        "delete",
+        "failure",
+        "qc"
+      ],
+      "desc": "服务控制管理器命令行",
+      "examples": [
+        "sc query wuauserv",
+        "sc config X start= disabled",
+        "sc stop Spooler"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "schtasks",
+      "params": [
+        "/create",
+        "/run",
+        "/end",
+        "/delete",
+        "/query",
+        "/change",
+        "/tn",
+        "/sc",
+        "/tr"
+      ],
+      "desc": "计划任务管理",
+      "examples": [
+        "schtasks /create /tn backup /tr backup.bat /sc daily /st 02:00",
+        "schtasks /query /tn backup"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "scp",
+      "params": [
+        "-r",
+        "-P",
+        "-i",
+        "-C"
+      ],
+      "desc": "基于 SSH 的安全复制",
+      "examples": [
+        "scp -r build/ user@host:/var/www"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "secpol.msc",
+      "params": [],
+      "desc": "打开本地安全策略",
+      "examples": [
+        "secpol.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "services.msc",
+      "params": [],
+      "desc": "打开服务管理控制台",
+      "examples": [
+        "services.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "set",
+      "params": [
+        "/a",
+        "/p"
+      ],
+      "desc": "显示或设置环境变量",
+      "examples": [
+        "set PATH=C:\\bin;%PATH%",
+        "set /p name=输入名字:"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "setlocal",
+      "params": [
+        "enabledelayedexpansion",
+        "enableextensions"
+      ],
+      "desc": "开始局部环境变量",
+      "examples": [
+        "setlocal enabledelayedexpansion"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "setx",
+      "params": [
+        "/m",
+        "/u",
+        "/s"
+      ],
+      "desc": "永久设置环境变量（不影响当前窗口）",
+      "examples": [
+        "setx JAVA_HOME \"C:\\Program Files\\Java\\jdk17\"",
+        "setx PATH \"%PATH%;D:\\tools\" /m"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "sfc",
+      "params": [
+        "/scannow",
+        "/verifyonly",
+        "/scanfile",
+        "/offbootdir"
+      ],
+      "desc": "系统文件检查器",
+      "examples": [
+        "sfc /scannow"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "sftp",
+      "params": [
+        "get",
+        "put",
+        "ls",
+        "cd",
+        "rm"
+      ],
+      "desc": "基于 SSH 的文件传输",
+      "examples": [
+        "sftp user@host"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "shift",
+      "params": [],
+      "desc": "移动批处理参数",
+      "examples": [
+        "shift"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "shutdown",
+      "params": [
+        "/s",
+        "/r",
+        "/t",
+        "/a",
+        "/h",
+        "/f"
+      ],
+      "desc": "关机/重启/注销",
+      "examples": [
+        "shutdown /s /t 60",
+        "shutdown /r /t 0",
+        "shutdown /a"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "slmgr",
+      "params": [
+        "/ipk",
+        "/ato",
+        "/dli",
+        "/dlv",
+        "/xpr",
+        "/rearm"
+      ],
+      "desc": "Windows 软件授权管理",
+      "examples": [
+        "slmgr /xpr",
+        "slmgr /dlv"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "sort",
+      "params": [
+        "/r",
+        "/+n"
+      ],
+      "desc": "对输入排序",
+      "examples": [
+        "sort list.txt",
+        "dir /b | sort /r"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "ssh",
+      "params": [
+        "-p",
+        "-i",
+        "-L",
+        "-R",
+        "-D",
+        "-v",
+        "-o"
+      ],
+      "desc": "SSH 远程登录",
+      "examples": [
+        "ssh -i key.pem user@host",
+        "ssh -L 8080:localhost:80 user@host"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "start",
+      "params": [
+        "/min",
+        "/max",
+        "/wait",
+        "/d",
+        "/b"
+      ],
+      "desc": "启动新窗口/程序",
+      "examples": [
+        "start notepad",
+        "start /wait build.bat"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "subst",
+      "params": [
+        "/d"
+      ],
+      "desc": "将路径关联到驱动器号",
+      "examples": [
+        "subst X: D:\\dev\\projects",
+        "subst X: /d"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "systeminfo",
+      "params": [
+        "/fo",
+        "/s"
+      ],
+      "desc": "显示系统详细信息",
+      "examples": [
+        "systeminfo",
+        "systeminfo /fo csv"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "takeown",
+      "params": [
+        "/f",
+        "/r",
+        "/d"
+      ],
+      "desc": "以管理员身份取得文件所有权",
+      "examples": [
+        "takeown /f C:\\Windows\\System32\\x /r"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "taskkill",
+      "params": [
+        "/f",
+        "/pid",
+        "/im",
+        "/t"
+      ],
+      "desc": "结束进程",
+      "examples": [
+        "taskkill /f /im node.exe",
+        "taskkill /pid 1234 /f"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "tasklist",
+      "params": [
+        "/fi",
+        "/fo",
+        "/nh",
+        "/svc",
+        "/m",
+        "/v"
+      ],
+      "desc": "显示运行中的进程列表",
+      "examples": [
+        "tasklist /fi \"imagename eq node.exe\"",
+        "tasklist /svc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "taskmgr",
+      "params": [],
+      "desc": "打开任务管理器",
+      "examples": [
+        "taskmgr"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "taskschd.msc",
+      "params": [],
+      "desc": "打开任务计划程序",
+      "examples": [
+        "taskschd.msc"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "管理控制台"
+      ]
+    },
+    {
+      "name": "telnet",
+      "params": [],
+      "desc": "Telnet 客户端",
+      "examples": [
+        "telnet 192.168.1.1 23"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "tftp",
+      "params": [
+        "-i",
+        "get",
+        "put"
+      ],
+      "desc": "TFTP 客户端",
+      "examples": [
+        "tftp -i host get file"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "time",
+      "params": [
+        "/t"
+      ],
+      "desc": "显示或设置时间",
+      "examples": [
+        "time /t"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "timeout",
+      "params": [
+        "/t",
+        "/nobreak"
+      ],
+      "desc": "等待指定秒数",
+      "examples": [
+        "timeout /t 5 /nobreak"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "title",
+      "params": [],
+      "desc": "设置窗口标题",
+      "examples": [
+        "title build-2026"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "tracerpt",
+      "params": [
+        "-o",
+        "-f",
+        "-summary"
+      ],
+      "desc": "ETL 跟踪日志处理",
+      "examples": [
+        "tracerpt trace.etl -o report.xml"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "tracert",
+      "params": [
+        "-d",
+        "-h",
+        "-w",
+        "-j"
+      ],
+      "desc": "追踪路由",
+      "examples": [
+        "tracert -d 8.8.8.8"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "tree",
+      "params": [
+        "/f",
+        "/a"
+      ],
+      "desc": "以图形方式显示目录结构",
+      "examples": [
+        "tree /f"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "type",
+      "params": [],
+      "desc": "显示文本文件内容",
+      "examples": [
+        "type README.md",
+        "type app.log | more"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "typeperf",
+      "params": [
+        "-f",
+        "-sc",
+        "-si",
+        "-o"
+      ],
+      "desc": "性能计数器实时输出",
+      "examples": [
+        "typeperf \"\\Processor(_Total)\\% Processor Time\" -sc 5"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "ver",
+      "params": [],
+      "desc": "显示 Windows 版本",
+      "examples": [
+        "ver"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "verify",
+      "params": [
+        "on",
+        "off"
+      ],
+      "desc": "开关写盘校验",
+      "examples": [
+        "verify on"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "vol",
+      "params": [],
+      "desc": "显示磁盘卷标和序列号",
+      "examples": [
+        "vol C:"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "vssadmin",
+      "params": [
+        "list shadows",
+        "delete shadows",
+        "list providers",
+        "list volumes"
+      ],
+      "desc": "卷影复制管理",
+      "examples": [
+        "vssadmin list shadows"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "备份"
+      ]
+    },
+    {
+      "name": "waitfor",
+      "params": [
+        "/t",
+        "/si"
+      ],
+      "desc": "等待信号或发送信号",
+      "examples": [
+        "waitfor /t 10 ready"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "脚本"
+      ]
+    },
+    {
+      "name": "wbadmin",
+      "params": [
+        "start backup",
+        "get versions",
+        "start recovery",
+        "enable backup"
+      ],
+      "desc": "Windows 备份命令行",
+      "examples": [
+        "wbadmin start backup -backupTarget:E:"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "备份"
+      ]
+    },
+    {
+      "name": "where",
+      "params": [
+        "/r",
+        "/q",
+        "/f",
+        "/t"
+      ],
+      "desc": "定位可执行文件所在路径",
+      "examples": [
+        "where git",
+        "where /r C:\\ *.dll"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "whoami",
+      "params": [
+        "/all",
+        "/user",
+        "/groups",
+        "/priv"
+      ],
+      "desc": "显示当前用户信息",
+      "examples": [
+        "whoami /all"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "winver",
+      "params": [],
+      "desc": "显示 Windows 版本信息窗口",
+      "examples": [
+        "winver"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "wmic",
+      "params": [
+        "process",
+        "cpu",
+        "logicaldisk",
+        "os",
+        "service",
+        "get",
+        "call",
+        "delete"
+      ],
+      "desc": "WMI 命令行工具（已弃用，推荐 PowerShell Get-CimInstance）",
+      "examples": [
+        "wmic process list brief",
+        "wmic cpu get name,NumberOfCores"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "wusa",
+      "params": [
+        "/quiet",
+        "/norestart",
+        "/uninstall",
+        "/kb"
+      ],
+      "desc": "Windows 更新独立安装程序",
+      "examples": [
+        "wusa WindowsUpdate-KB123.msu /quiet"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "xcopy",
+      "params": [
+        "/s",
+        "/e",
+        "/i",
+        "/y",
+        "/d",
+        "/h",
+        "/r",
+        "/q",
+        "/f",
+        "/c",
+        "/exclude"
+      ],
+      "desc": "复制文件和目录树（已弃用，推荐 robocopy）",
+      "examples": [
+        "xcopy src dist /s /e /i /y"
+      ],
+      "shell": "cmd",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "aws",
+      "params": [
+        "s3 ls",
+        "s3 cp",
+        "ec2 describe-instances",
+        "sts get-caller-identity",
+        "configure"
+      ],
+      "desc": "AWS CLI",
+      "examples": [
+        "aws s3 ls",
+        "aws sts get-caller-identity"
+      ],
+      "shell": "external",
+      "tags": [
+        "云"
+      ]
+    },
+    {
+      "name": "az",
+      "params": [
+        "login",
+        "account show",
+        "group create",
+        "vm list",
+        "aks get-credentials"
+      ],
+      "desc": "Azure CLI",
+      "examples": [
+        "az login",
+        "az aks get-credentials -g rg -n cluster"
+      ],
+      "shell": "external",
+      "tags": [
+        "云"
+      ]
+    },
+    {
+      "name": "conda",
+      "params": [
+        "create",
+        "activate",
+        "deactivate",
+        "env list",
+        "install",
+        "remove"
+      ],
+      "desc": "Conda 环境管理",
+      "examples": [
+        "conda create -n myenv python=3.12",
+        "conda activate myenv"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "docker build",
+      "params": [
+        "-t",
+        "-f",
+        "--no-cache",
+        "--build-arg",
+        "."
+      ],
+      "desc": "构建镜像",
+      "examples": [
+        "docker build -t myapp:latest .",
+        "docker build --no-cache -t app ."
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker compose",
+      "params": [
+        "up",
+        "down",
+        "ps",
+        "logs",
+        "build",
+        "pull",
+        "restart",
+        "-d"
+      ],
+      "desc": "Compose 编排",
+      "examples": [
+        "docker compose up -d",
+        "docker compose down -v"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker exec",
+      "params": [
+        "-it",
+        "-u",
+        "-w"
+      ],
+      "desc": "进入运行中容器",
+      "examples": [
+        "docker exec -it web bash"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker images",
+      "params": [
+        "--filter",
+        "--format"
+      ],
+      "desc": "列出镜像",
+      "examples": [
+        "docker images"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker logs",
+      "params": [
+        "-f",
+        "--tail",
+        "-t"
+      ],
+      "desc": "查看容器日志",
+      "examples": [
+        "docker logs -f --tail 100 web"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker ps",
+      "params": [
+        "-a",
+        "-q",
+        "--filter",
+        "--format"
+      ],
+      "desc": "列出容器",
+      "examples": [
+        "docker ps -a",
+        "docker ps --filter status=exited"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker pull",
+      "params": [],
+      "desc": "拉取镜像",
+      "examples": [
+        "docker pull nginx:alpine"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker push",
+      "params": [],
+      "desc": "推送镜像",
+      "examples": [
+        "docker push user/app:tag"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker rm",
+      "params": [
+        "-f",
+        "-v"
+      ],
+      "desc": "删除容器",
+      "examples": [
+        "docker rm -f web"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker rmi",
+      "params": [
+        "-f"
+      ],
+      "desc": "删除镜像",
+      "examples": [
+        "docker rmi -f myapp"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker run",
+      "params": [
+        "-d",
+        "-it",
+        "--rm",
+        "-p",
+        "-v",
+        "--name",
+        "-e",
+        "--network",
+        "--restart"
+      ],
+      "desc": "运行容器",
+      "examples": [
+        "docker run -d -p 8080:80 --name web nginx",
+        "docker run --rm -it -v $PWD:/app node:20 bash"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker stop",
+      "params": [
+        "-t"
+      ],
+      "desc": "停止容器",
+      "examples": [
+        "docker stop web"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "docker system",
+      "params": [
+        "prune",
+        "df",
+        "events"
+      ],
+      "desc": "系统级维护",
+      "examples": [
+        "docker system prune -a",
+        "docker system df"
+      ],
+      "shell": "external",
+      "tags": [
+        "docker"
+      ]
+    },
+    {
+      "name": "fd",
+      "params": [
+        "-e",
+        "-t",
+        "-H",
+        "-x"
+      ],
+      "desc": "文件查找（fd）",
+      "examples": [
+        "fd -e go",
+        "fd -t d node_modules"
+      ],
+      "shell": "external",
+      "tags": [
+        "搜索"
+      ]
+    },
+    {
+      "name": "gh",
+      "params": [
+        "repo clone",
+        "pr create",
+        "pr list",
+        "issue create",
+        "release create",
+        "auth login"
+      ],
+      "desc": "GitHub CLI",
+      "examples": [
+        "gh repo clone owner/repo",
+        "gh pr create --fill"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git add",
+      "params": [
+        "-A",
+        "-p",
+        "-u",
+        "-f"
+      ],
+      "desc": "暂存改动",
+      "examples": [
+        "git add -A",
+        "git add -p src/"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git archive",
+      "params": [
+        "--format",
+        "-o"
+      ],
+      "desc": "打包仓库快照",
+      "examples": [
+        "git archive --format zip -o out.zip HEAD"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git blame",
+      "params": [
+        "-L",
+        "-w"
+      ],
+      "desc": "逐行追溯",
+      "examples": [
+        "git blame -L 10,20 file.go"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git branch",
+      "params": [
+        "-a",
+        "-d",
+        "-D",
+        "-vv",
+        "--merged",
+        "--no-merged"
+      ],
+      "desc": "管理分支",
+      "examples": [
+        "git branch -a",
+        "git branch -D old-feature"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git checkout",
+      "params": [
+        "-b",
+        "--track",
+        "origin/",
+        "."
+      ],
+      "desc": "切换分支/恢复文件",
+      "examples": [
+        "git checkout -b feature/x",
+        "git checkout -- file.txt"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git cherry-pick",
+      "params": [
+        "-n",
+        "-m"
+      ],
+      "desc": "挑选提交",
+      "examples": [
+        "git cherry-pick abc123"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git clean",
+      "params": [
+        "-fd",
+        "-n",
+        "-x"
+      ],
+      "desc": "清理未跟踪文件（危险）",
+      "examples": [
+        "git clean -fd",
+        "git clean -n"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git clone",
+      "params": [
+        "--depth",
+        "--branch",
+        "--recurse-submodules",
+        "--single-branch"
+      ],
+      "desc": "克隆远程仓库",
+      "examples": [
+        "git clone --depth 1 https://github.com/x/y.git",
+        "git clone -b dev git@github.com:x/y.git"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git commit",
+      "params": [
+        "-m",
+        "-am",
+        "--amend",
+        "--no-verify",
+        "-S"
+      ],
+      "desc": "提交暂存内容",
+      "examples": [
+        "git commit -m \"feat: x\"",
+        "git commit --amend"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git config",
+      "params": [
+        "--global",
+        "--list",
+        "user.name",
+        "user.email",
+        "--get"
+      ],
+      "desc": "配置 git",
+      "examples": [
+        "git config --global user.name qiutuan",
+        "git config --list"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git diff",
+      "params": [
+        "--stat",
+        "--cached",
+        "HEAD",
+        "origin/main",
+        "--word-diff"
+      ],
+      "desc": "查看差异",
+      "examples": [
+        "git diff --stat",
+        "git diff HEAD~1"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git fetch",
+      "params": [
+        "origin",
+        "--all",
+        "--prune",
+        "--tags"
+      ],
+      "desc": "获取远程引用",
+      "examples": [
+        "git fetch origin",
+        "git fetch --all --prune"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git grep",
+      "params": [
+        "-n",
+        "-i",
+        "--"
+      ],
+      "desc": "在版本库中搜索",
+      "examples": [
+        "git grep -n TODO"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git init",
+      "params": [
+        "--bare",
+        "--initial-branch"
+      ],
+      "desc": "初始化仓库",
+      "examples": [
+        "git init",
+        "git init -b main"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git log",
+      "params": [
+        "--oneline",
+        "--graph",
+        "-n",
+        "--all",
+        "--stat",
+        "--author"
+      ],
+      "desc": "查看提交历史",
+      "examples": [
+        "git log --oneline --graph -20",
+        "git log --all --oneline"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git merge",
+      "params": [
+        "--no-ff",
+        "--squash",
+        "--abort",
+        "origin/main"
+      ],
+      "desc": "合并分支",
+      "examples": [
+        "git merge --no-ff feature/x",
+        "git merge --abort"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git pull",
+      "params": [
+        "--rebase",
+        "origin",
+        "--ff-only"
+      ],
+      "desc": "拉取远程更新",
+      "examples": [
+        "git pull --rebase origin main"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git push",
+      "params": [
+        "origin",
+        "-u",
+        "--force-with-lease",
+        "--tags",
+        "-f"
+      ],
+      "desc": "推送提交到远程",
+      "examples": [
+        "git push -u origin main",
+        "git push --force-with-lease"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git rebase",
+      "params": [
+        "-i",
+        "--onto",
+        "--continue",
+        "--abort",
+        "--autostash"
+      ],
+      "desc": "变基",
+      "examples": [
+        "git rebase -i HEAD~3",
+        "git rebase --continue"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git reflog",
+      "params": [
+        "--oneline"
+      ],
+      "desc": "查看引用日志（找回丢失提交）",
+      "examples": [
+        "git reflog"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git remote",
+      "params": [
+        "-v",
+        "add",
+        "remove",
+        "set-url",
+        "rename"
+      ],
+      "desc": "管理远程",
+      "examples": [
+        "git remote -v",
+        "git remote add origin git@github.com:x/y.git"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git reset",
+      "params": [
+        "--hard",
+        "--soft",
+        "--mixed",
+        "HEAD~",
+        "origin/main"
+      ],
+      "desc": "重置提交（危险）",
+      "examples": [
+        "git reset --hard HEAD",
+        "git reset --soft HEAD~1"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git revert",
+      "params": [
+        "--no-commit",
+        "-m"
+      ],
+      "desc": "撤销提交",
+      "examples": [
+        "git revert HEAD"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git show",
+      "params": [
+        "--stat",
+        "HEAD",
+        "--format"
+      ],
+      "desc": "查看提交详情",
+      "examples": [
+        "git show HEAD --stat"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git stash",
+      "params": [
+        "push",
+        "pop",
+        "list",
+        "apply",
+        "drop",
+        "clear",
+        "show"
+      ],
+      "desc": "暂存工作区",
+      "examples": [
+        "git stash push -m wip",
+        "git stash pop"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git status",
+      "params": [
+        "--short",
+        "-b",
+        "--porcelain"
+      ],
+      "desc": "查看工作区状态",
+      "examples": [
+        "git status",
+        "git status -sb"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git submodule",
+      "params": [
+        "update",
+        "add",
+        "init",
+        "foreach",
+        "status"
+      ],
+      "desc": "管理子模块",
+      "examples": [
+        "git submodule update --init --recursive"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git switch",
+      "params": [
+        "-c",
+        "--discard-changes"
+      ],
+      "desc": "切换分支（新式）",
+      "examples": [
+        "git switch -c feature/x",
+        "git switch main"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git tag",
+      "params": [
+        "-a",
+        "-m",
+        "-d",
+        "-l",
+        "v1.0.0"
+      ],
+      "desc": "管理标签",
+      "examples": [
+        "git tag -a v1.0.0 -m release",
+        "git tag -l"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "git worktree",
+      "params": [
+        "add",
+        "list",
+        "remove"
+      ],
+      "desc": "管理多工作树",
+      "examples": [
+        "git worktree add ../hotfix hotfix"
+      ],
+      "shell": "external",
+      "tags": [
+        "git"
+      ]
+    },
+    {
+      "name": "go build",
+      "params": [
+        "-o",
+        "-ldflags",
+        "-tags",
+        "-race",
+        "./..."
+      ],
+      "desc": "编译 Go 程序",
+      "examples": [
+        "go build -o bin/app ./cmd/app",
+        "go build -race ./..."
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go env",
+      "params": [
+        "-w",
+        "GOPATH",
+        "GOMODCACHE"
+      ],
+      "desc": "查看/设置 Go 环境",
+      "examples": [
+        "go env GOPATH",
+        "go env -w GOFLAGS=-mod=mod"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go get",
+      "params": [
+        "-u",
+        "-t"
+      ],
+      "desc": "获取依赖",
+      "examples": [
+        "go get golang.org/x/sys@latest"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go install",
+      "params": [
+        "@latest",
+        "-u"
+      ],
+      "desc": "安装工具",
+      "examples": [
+        "go install golang.org/x/tools/cmd/goimports@latest"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go mod",
+      "params": [
+        "tidy",
+        "init",
+        "download",
+        "vendor",
+        "graph"
+      ],
+      "desc": "模块管理",
+      "examples": [
+        "go mod tidy",
+        "go mod init github.com/x/y"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go run",
+      "params": [
+        ".",
+        "main.go"
+      ],
+      "desc": "直接运行",
+      "examples": [
+        "go run ./cmd/server"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go test",
+      "params": [
+        "-v",
+        "-cover",
+        "-race",
+        "-run",
+        "./..."
+      ],
+      "desc": "运行测试",
+      "examples": [
+        "go test ./... -cover",
+        "go test -run TestFoo -v ./internal/x"
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "go vet",
+      "params": [
+        "./..."
+      ],
+      "desc": "静态检查",
+      "examples": [
+        "go vet ./..."
+      ],
+      "shell": "external",
+      "tags": [
+        "go"
+      ]
+    },
+    {
+      "name": "gradle",
+      "params": [
+        "build",
+        "test",
+        "clean",
+        "bootRun",
+        "--daemon",
+        "-x"
+      ],
+      "desc": "Gradle 构建",
+      "examples": [
+        "gradle build",
+        "gradle test --rerun"
+      ],
+      "shell": "external",
+      "tags": [
+        "java"
+      ]
+    },
+    {
+      "name": "helm",
+      "params": [
+        "install",
+        "upgrade",
+        "list",
+        "uninstall",
+        "repo add",
+        "template"
+      ],
+      "desc": "Helm 包管理",
+      "examples": [
+        "helm install myapp ./chart",
+        "helm upgrade --install myapp ./chart"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "java",
+      "params": [
+        "-jar",
+        "-version",
+        "-Xmx",
+        "-Xms",
+        "-cp"
+      ],
+      "desc": "Java 运行器",
+      "examples": [
+        "java -jar app.jar --spring.profiles.active=prod"
+      ],
+      "shell": "external",
+      "tags": [
+        "java"
+      ]
+    },
+    {
+      "name": "jq",
+      "params": [
+        "'.'",
+        "'.key'",
+        "-r",
+        ".[]",
+        "select()",
+        "map()"
+      ],
+      "desc": "JSON 处理",
+      "examples": [
+        "curl -s api | jq '.items[].name'",
+        "jq '.a.b' data.json"
+      ],
+      "shell": "external",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "kubectl apply",
+      "params": [
+        "-f",
+        "--dry-run",
+        "-k"
+      ],
+      "desc": "应用配置",
+      "examples": [
+        "kubectl apply -f deploy.yaml",
+        "kubectl apply -k ./overlays/prod"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl delete",
+      "params": [
+        "pod",
+        "deploy",
+        "svc",
+        "-f",
+        "--grace-period"
+      ],
+      "desc": "删除资源",
+      "examples": [
+        "kubectl delete pod web-0"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl describe",
+      "params": [
+        "pod",
+        "node",
+        "deploy",
+        "svc"
+      ],
+      "desc": "查看资源详情",
+      "examples": [
+        "kubectl describe pod web-0"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl exec",
+      "params": [
+        "-it",
+        "--",
+        "-n"
+      ],
+      "desc": "进入 Pod 执行命令",
+      "examples": [
+        "kubectl exec -it web-0 -- bash"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl get",
+      "params": [
+        "pods",
+        "deployments",
+        "services",
+        "nodes",
+        "configmaps",
+        "secrets",
+        "-n",
+        "-o",
+        "--all-namespaces"
+      ],
+      "desc": "获取 K8s 资源",
+      "examples": [
+        "kubectl get pods -n kube-system",
+        "kubectl get deploy -o wide"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl logs",
+      "params": [
+        "-f",
+        "--tail",
+        "-p",
+        "--all-containers"
+      ],
+      "desc": "查看 Pod 日志",
+      "examples": [
+        "kubectl logs -f deploy/web --tail 100"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "kubectl port-forward",
+      "params": [
+        "-n"
+      ],
+      "desc": "端口转发",
+      "examples": [
+        "kubectl port-forward svc/web 8080:80"
+      ],
+      "shell": "external",
+      "tags": [
+        "k8s"
+      ]
+    },
+    {
+      "name": "make",
+      "params": [
+        "build",
+        "test",
+        "clean",
+        "install",
+        "all",
+        "-j"
+      ],
+      "desc": "Make 构建",
+      "examples": [
+        "make build -j8"
+      ],
+      "shell": "external",
+      "tags": [
+        "构建"
+      ]
+    },
+    {
+      "name": "mvn",
+      "params": [
+        "clean",
+        "install",
+        "test",
+        "package",
+        "deploy",
+        "-DskipTests",
+        "spring-boot:run"
+      ],
+      "desc": "Maven 构建",
+      "examples": [
+        "mvn clean install -DskipTests",
+        "mvn spring-boot:run"
+      ],
+      "shell": "external",
+      "tags": [
+        "java"
+      ]
+    },
+    {
+      "name": "npm audit",
+      "params": [
+        "fix",
+        "--force"
+      ],
+      "desc": "依赖安全审计",
+      "examples": [
+        "npm audit fix"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm ci",
+      "params": [],
+      "desc": "按锁文件干净安装",
+      "examples": [
+        "npm ci"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm init",
+      "params": [
+        "-y",
+        "--scope"
+      ],
+      "desc": "初始化 npm 项目",
+      "examples": [
+        "npm init -y"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm install",
+      "params": [
+        "-g",
+        "--save-dev",
+        "--save",
+        "--no-save",
+        "-D"
+      ],
+      "desc": "安装依赖",
+      "examples": [
+        "npm install",
+        "npm install -D typescript"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm ls",
+      "params": [
+        "-g",
+        "--depth"
+      ],
+      "desc": "列出依赖树",
+      "examples": [
+        "npm ls --depth 0"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm publish",
+      "params": [
+        "--access",
+        "--tag"
+      ],
+      "desc": "发布包",
+      "examples": [
+        "npm publish --access public"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm run",
+      "params": [
+        "dev",
+        "build",
+        "test",
+        "lint",
+        "start"
+      ],
+      "desc": "运行脚本",
+      "examples": [
+        "npm run dev",
+        "npm run build -- --mode=prod"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm uninstall",
+      "params": [
+        "-g",
+        "--save-dev"
+      ],
+      "desc": "卸载依赖",
+      "examples": [
+        "npm uninstall lodash"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npm update",
+      "params": [
+        "-g",
+        "--save"
+      ],
+      "desc": "更新依赖",
+      "examples": [
+        "npm update"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "npx",
+      "params": [
+        "--yes",
+        "--package"
+      ],
+      "desc": "直接运行 npm 包",
+      "examples": [
+        "npx create-react-app my-app",
+        "npx tsc --init"
+      ],
+      "shell": "external",
+      "tags": [
+        "npm"
+      ]
+    },
+    {
+      "name": "pip check",
+      "params": [],
+      "desc": "校验依赖冲突",
+      "examples": [
+        "pip check"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip download",
+      "params": [
+        "-d",
+        "-r"
+      ],
+      "desc": "下载包不安装",
+      "examples": [
+        "pip download -d ./wheels -r requirements.txt"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip freeze",
+      "params": [],
+      "desc": "导出依赖清单",
+      "examples": [
+        "pip freeze \u003e requirements.txt"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip install",
+      "params": [
+        "-r",
+        "-U",
+        "--user",
+        "-i",
+        "--no-cache-dir",
+        "-e"
+      ],
+      "desc": "安装 Python 包",
+      "examples": [
+        "pip install -r requirements.txt",
+        "pip install -U requests"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip list",
+      "params": [
+        "--outdated",
+        "--format"
+      ],
+      "desc": "列出已装包",
+      "examples": [
+        "pip list --outdated"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip show",
+      "params": [
+        "-f"
+      ],
+      "desc": "查看包信息",
+      "examples": [
+        "pip show requests"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "pip uninstall",
+      "params": [
+        "-y"
+      ],
+      "desc": "卸载 Python 包",
+      "examples": [
+        "pip uninstall -y requests"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "rg",
+      "params": [
+        "-n",
+        "-i",
+        "-l",
+        "--type",
+        "-C",
+        "--hidden"
+      ],
+      "desc": "快速搜索（ripgrep）",
+      "examples": [
+        "rg -n TODO src/",
+        "rg --type go 'FIXME'"
+      ],
+      "shell": "external",
+      "tags": [
+        "搜索"
+      ]
+    },
+    {
+      "name": "ssh-copy-id",
+      "params": [
+        "-i"
+      ],
+      "desc": "分发公钥",
+      "examples": [
+        "ssh-copy-id -i ~/.ssh/id_ed25519.pub user@host"
+      ],
+      "shell": "external",
+      "tags": [
+        "ssh"
+      ]
+    },
+    {
+      "name": "ssh-keygen",
+      "params": [
+        "-t",
+        "-b",
+        "-C",
+        "-f",
+        "-p"
+      ],
+      "desc": "生成 SSH 密钥",
+      "examples": [
+        "ssh-keygen -t ed25519 -C you@mail.com"
+      ],
+      "shell": "external",
+      "tags": [
+        "ssh"
+      ]
+    },
+    {
+      "name": "terraform",
+      "params": [
+        "init",
+        "plan",
+        "apply",
+        "destroy",
+        "fmt",
+        "validate",
+        "workspace"
+      ],
+      "desc": "Terraform 基础设施编排",
+      "examples": [
+        "terraform init",
+        "terraform plan -out plan.tfplan"
+      ],
+      "shell": "external",
+      "tags": [
+        "云"
+      ]
+    },
+    {
+      "name": "uv",
+      "params": [
+        "venv",
+        "pip install",
+        "sync",
+        "run",
+        "add",
+        "remove",
+        "lock"
+      ],
+      "desc": "Python 包管理器（uv）",
+      "examples": [
+        "uv venv",
+        "uv pip install -r requirements.txt"
+      ],
+      "shell": "external",
+      "tags": [
+        "pip"
+      ]
+    },
+    {
+      "name": "Add-Content",
+      "params": [
+        "-Path",
+        "-Value",
+        "-Encoding",
+        "-PassThru"
+      ],
+      "desc": "向文件追加内容（别名 ac）",
+      "examples": [
+        "Add-Content log.txt \"line\"",
+        "1..10 | Add-Content nums.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Add-Member",
+      "params": [
+        "-InputObject",
+        "-MemberType",
+        "-Name",
+        "-Value",
+        "-NotePropertyName"
+      ],
+      "desc": "为对象添加成员",
+      "examples": [
+        "$o = [pscustomobject]@{a=1}; $o | Add-Member -NotePropertyName b -NotePropertyValue 2"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Add-Type",
+      "params": [
+        "-TypeDefinition",
+        "-Path",
+        "-AssemblyName"
+      ],
+      "desc": "编译/加载 .NET 类型",
+      "examples": [
+        "Add-Type -AssemblyName System.Windows.Forms"
+      ],
+      "shell": "ps",
+      "tags": [
+        "编程"
+      ]
+    },
+    {
+      "name": "Clear-Content",
+      "params": [
+        "-Path",
+        "-Force"
+      ],
+      "desc": "清空文件内容",
+      "examples": [
+        "Clear-Content -Path tmp.log"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Clear-DnsClientCache",
+      "params": [],
+      "desc": "清空 DNS 缓存",
+      "examples": [
+        "Clear-DnsClientCache"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Clear-EventLog",
+      "params": [
+        "-LogName"
+      ],
+      "desc": "清空事件日志",
+      "examples": [
+        "Clear-EventLog -LogName Application"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Clear-History",
+      "params": [
+        "-Id",
+        "-CommandLine"
+      ],
+      "desc": "清空历史",
+      "examples": [
+        "Clear-History"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Clear-Host",
+      "params": [],
+      "desc": "清空屏幕（别名 cls）",
+      "examples": [
+        "Clear-Host"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Clear-RecycleBin",
+      "params": [
+        "-DriveLetter",
+        "-Force"
+      ],
+      "desc": "清空回收站",
+      "examples": [
+        "Clear-RecycleBin -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Clear-Variable",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "清空变量值（别名 clv）",
+      "examples": [
+        "Clear-Variable -Name count"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Compare-Object",
+      "params": [
+        "-ReferenceObject",
+        "-DifferenceObject",
+        "-Property",
+        "-IncludeEqual",
+        "-ExcludeDifferent"
+      ],
+      "desc": "比较两个对象集合",
+      "examples": [
+        "Compare-Object (Get-Content a.txt) (Get-Content b.txt)"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Compress-Archive",
+      "params": [
+        "-Path",
+        "-DestinationPath",
+        "-Force",
+        "-CompressionLevel"
+      ],
+      "desc": "压缩为 ZIP",
+      "examples": [
+        "Compress-Archive -Path logs\\* -DestinationPath logs.zip"
+      ],
+      "shell": "ps",
+      "tags": [
+        "压缩"
+      ]
+    },
+    {
+      "name": "ConvertFrom-Csv",
+      "params": [
+        "-InputObject",
+        "-Delimiter"
+      ],
+      "desc": "CSV 转对象",
+      "examples": [
+        "Get-Content data.csv | ConvertFrom-Csv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertFrom-Json",
+      "params": [
+        "-InputObject",
+        "-Depth"
+      ],
+      "desc": "JSON 转对象",
+      "examples": [
+        "$data = Get-Content config.json -Raw | ConvertFrom-Json"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertFrom-SecureString",
+      "params": [
+        "-SecureString"
+      ],
+      "desc": "SecureString 转密文",
+      "examples": [
+        "ConvertFrom-SecureString $sec"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "ConvertTo-Csv",
+      "params": [
+        "-InputObject",
+        "-NoTypeInformation",
+        "-Delimiter"
+      ],
+      "desc": "对象转 CSV",
+      "examples": [
+        "Get-Process | ConvertTo-Csv -NoTypeInformation"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-Html",
+      "params": [
+        "-InputObject",
+        "-Property",
+        "-Title"
+      ],
+      "desc": "对象转 HTML",
+      "examples": [
+        "Get-Process | ConvertTo-Html -Title 'Procs' | Out-File p.html"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-Json",
+      "params": [
+        "-InputObject",
+        "-Depth",
+        "-Compress",
+        "-EnumsAsStrings"
+      ],
+      "desc": "对象转 JSON",
+      "examples": [
+        "Get-Process | Select-Object -First 3 | ConvertTo-Json -Depth 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "ConvertTo-SecureString",
+      "params": [
+        "-String",
+        "-AsPlainText",
+        "-Force"
+      ],
+      "desc": "明文转 SecureString",
+      "examples": [
+        "ConvertTo-SecureString 'abc' -AsPlainText -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "ConvertTo-Xml",
+      "params": [
+        "-InputObject",
+        "-Depth",
+        "-As"
+      ],
+      "desc": "对象转 XML",
+      "examples": [
+        "Get-Service | ConvertTo-Xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Copy-Item",
+      "params": [
+        "-Path",
+        "-Destination",
+        "-Recurse",
+        "-Force",
+        "-Container"
+      ],
+      "desc": "复制文件/目录（别名 cp/copy/ci）",
+      "examples": [
+        "Copy-Item -Recurse src dist",
+        "cp a.txt b.txt -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Debug-Process",
+      "params": [
+        "-Name",
+        "-Id"
+      ],
+      "desc": "附加调试器到进程",
+      "examples": [
+        "Debug-Process -Name app"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Disable-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "禁用防火墙规则",
+      "examples": [
+        "Disable-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Disable-PSRemoting",
+      "params": [
+        "-Force"
+      ],
+      "desc": "禁用 PS 远程",
+      "examples": [
+        "Disable-PSRemoting -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Disable-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "禁用计划任务",
+      "examples": [
+        "Disable-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Disable-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName"
+      ],
+      "desc": "禁用 Windows 可选功能",
+      "examples": [
+        "Disable-WindowsOptionalFeature -Online -FeatureName Internet-Explorer-Optional-amd64"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Enable-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "启用防火墙规则",
+      "examples": [
+        "Enable-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Enable-PSRemoting",
+      "params": [
+        "-Force",
+        "-SkipNetworkProfileCheck"
+      ],
+      "desc": "启用 PS 远程",
+      "examples": [
+        "Enable-PSRemoting -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Enable-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "启用计划任务",
+      "examples": [
+        "Enable-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Enable-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName",
+        "-All"
+      ],
+      "desc": "启用 Windows 可选功能",
+      "examples": [
+        "Enable-WindowsOptionalFeature -Online -FeatureName NetFx3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Enter-PSSession",
+      "params": [
+        "-ComputerName",
+        "-Session",
+        "-Credential"
+      ],
+      "desc": "进入远程 PS 会话",
+      "examples": [
+        "Enter-PSSession -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Exit-PSSession",
+      "params": [],
+      "desc": "退出远程会话",
+      "examples": [
+        "Exit-PSSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Expand-Archive",
+      "params": [
+        "-Path",
+        "-DestinationPath",
+        "-Force"
+      ],
+      "desc": "解压 ZIP",
+      "examples": [
+        "Expand-Archive -Path app.zip -DestinationPath app"
+      ],
+      "shell": "ps",
+      "tags": [
+        "压缩"
+      ]
+    },
+    {
+      "name": "Export-Clixml",
+      "params": [
+        "-Path",
+        "-InputObject",
+        "-Depth"
+      ],
+      "desc": "对象序列化导出",
+      "examples": [
+        "Get-Service | Export-Clixml svc.xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Export-Csv",
+      "params": [
+        "-Path",
+        "-InputObject",
+        "-NoTypeInformation",
+        "-Encoding",
+        "-Append"
+      ],
+      "desc": "导出 CSV",
+      "examples": [
+        "Get-Process | Export-Csv procs.csv -NoTypeInformation"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Export-ModuleMember",
+      "params": [
+        "-Function",
+        "-Alias",
+        "-Cmdlet"
+      ],
+      "desc": "导出模块成员",
+      "examples": [
+        "Export-ModuleMember -Function Get-*,Set-*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Export-PSSession",
+      "params": [
+        "-Session",
+        "-OutputModule",
+        "-CommandName"
+      ],
+      "desc": "导出远程会话命令到模块",
+      "examples": [
+        "Export-PSSession -Session $s -OutputModule RemoteSvc"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Find-Module",
+      "params": [
+        "-Name",
+        "-Repository",
+        "-Tag"
+      ],
+      "desc": "搜索模块",
+      "examples": [
+        "Find-Module -Name Az* | Select-Object -First 5"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Find-Package",
+      "params": [
+        "-Name",
+        "-ProviderName"
+      ],
+      "desc": "搜索软件包",
+      "examples": [
+        "Find-Package -Name jq"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    },
+    {
+      "name": "ForEach-Object",
+      "params": [
+        "-Process",
+        "-Begin",
+        "-End",
+        "-Parallel",
+        "-ThrottleLimit"
+      ],
+      "desc": "对管道对象逐一处理（别名 foreach）",
+      "examples": [
+        "Get-ChildItem *.txt | ForEach-Object { $_.Name }",
+        "1..10 | % { $_ * $_ }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Format-Hex",
+      "params": [
+        "-Path",
+        "-InputObject"
+      ],
+      "desc": "十六进制查看内容",
+      "examples": [
+        "Format-Hex -Path binary.dat"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "Format-List",
+      "params": [
+        "-Property"
+      ],
+      "desc": "以列表格式输出（别名 fl）",
+      "examples": [
+        "Get-Service | Format-List *"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Format-Table",
+      "params": [
+        "-AutoSize",
+        "-Property",
+        "-Wrap"
+      ],
+      "desc": "以表格格式输出（别名 ft）",
+      "examples": [
+        "Get-Process | Format-Table -AutoSize Name,CPU"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Format-Wide",
+      "params": [
+        "-Column",
+        "-Property"
+      ],
+      "desc": "以宽列表输出（别名 fw）",
+      "examples": [
+        "Get-Alias | Format-Wide -Column 4"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Get-ACL",
+      "params": [
+        "-Path"
+      ],
+      "desc": "获取文件/注册表 ACL",
+      "examples": [
+        "Get-ACL .\\secret.txt | Format-List"
+      ],
+      "shell": "ps",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "Get-Alias",
+      "params": [
+        "-Name",
+        "-Definition"
+      ],
+      "desc": "获取别名（别名 gal）",
+      "examples": [
+        "Get-Alias -Definition Get-ChildItem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "Get-AppxPackage",
+      "params": [
+        "-Name",
+        "-AllUsers"
+      ],
+      "desc": "获取 UWP 应用包",
+      "examples": [
+        "Get-AppxPackage -Name *Photos*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-AuthenticodeSignature",
+      "params": [
+        "-FilePath"
+      ],
+      "desc": "获取文件签名信息",
+      "examples": [
+        "Get-AuthenticodeSignature .\\app.exe"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Get-ChildItem",
+      "params": [
+        "-Path",
+        "-Filter",
+        "-Recurse",
+        "-Force",
+        "-Name",
+        "-Depth",
+        "-File",
+        "-Directory",
+        "-Hidden"
+      ],
+      "desc": "列出目录中的文件和子目录（别名 gci/ls/dir）",
+      "examples": [
+        "Get-ChildItem -Filter *.go -Recurse",
+        "gci -Name"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-CimClass",
+      "params": [
+        "-ClassName",
+        "-Namespace"
+      ],
+      "desc": "获取 CIM 类定义",
+      "examples": [
+        "Get-CimClass Win32_Process"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-CimInstance",
+      "params": [
+        "-ClassName",
+        "-Namespace",
+        "-Filter",
+        "-ComputerName"
+      ],
+      "desc": "查询 CIM/WMI 实例",
+      "examples": [
+        "Get-CimInstance Win32_Processor",
+        "Get-CimInstance -ClassName Win32_LogicalDisk -Filter \"DeviceID='C:'\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-CimSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "获取 CIM 会话",
+      "examples": [
+        "Get-CimSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Clipboard",
+      "params": [
+        "-Raw"
+      ],
+      "desc": "读取剪贴板（别名 gcb）",
+      "examples": [
+        "Get-Clipboard -Raw"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Get-Command",
+      "params": [
+        "-Name",
+        "-CommandType",
+        "-Module",
+        "-All"
+      ],
+      "desc": "查找命令（别名 gcm）",
+      "examples": [
+        "Get-Command *service*",
+        "Get-Command -CommandType Cmdlet | Measure-Object"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-ComputerInfo",
+      "params": [
+        "-Property"
+      ],
+      "desc": "获取计算机详细信息",
+      "examples": [
+        "Get-ComputerInfo | Select-Object WindowsProductName,OsVersion"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Content",
+      "params": [
+        "-Path",
+        "-Tail",
+        "-TotalCount",
+        "-Raw",
+        "-Encoding",
+        "-Wait",
+        "-Filter",
+        "-Head"
+      ],
+      "desc": "读取文件内容（别名 cat/gc/type）",
+      "examples": [
+        "Get-Content app.log -Tail 100",
+        "gc -Path file.txt -Raw"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Counter",
+      "params": [
+        "-Counter",
+        "-SampleInterval",
+        "-MaxSamples"
+      ],
+      "desc": "读取性能计数器",
+      "examples": [
+        "Get-Counter '\\Processor(_Total)\\% Processor Time' -SampleInterval 1 -MaxSamples 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Culture",
+      "params": [],
+      "desc": "获取区域设置",
+      "examples": [
+        "Get-Culture"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Date",
+      "params": [
+        "-Format",
+        "-UFormat",
+        "-Year",
+        "-Month",
+        "-Day"
+      ],
+      "desc": "获取日期时间",
+      "examples": [
+        "Get-Date -Format 'yyyy-MM-dd HH:mm'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Disk",
+      "params": [
+        "-Number"
+      ],
+      "desc": "获取磁盘信息",
+      "examples": [
+        "Get-Disk | Where-Object BusType -eq 'NVMe'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-DnsClientCache",
+      "params": [],
+      "desc": "查看 DNS 客户端缓存",
+      "examples": [
+        "Get-DnsClientCache"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Target",
+        "-Process"
+      ],
+      "desc": "获取环境变量（PS 7）",
+      "examples": [
+        "Get-EnvironmentVariable -Name PATH -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Get-Error",
+      "params": [
+        "-Newest",
+        "-Error"
+      ],
+      "desc": "获取最近错误（PS 7）",
+      "examples": [
+        "Get-Error -Newest 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "调试"
+      ]
+    },
+    {
+      "name": "Get-EventLog",
+      "params": [
+        "-LogName",
+        "-Newest",
+        "-EntryType"
+      ],
+      "desc": "获取事件日志（旧版）",
+      "examples": [
+        "Get-EventLog -LogName System -Newest 20"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Get-ExecutionPolicy",
+      "params": [
+        "-Scope",
+        "-List"
+      ],
+      "desc": "获取执行策略",
+      "examples": [
+        "Get-ExecutionPolicy -List"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Get-FileHash",
+      "params": [
+        "-Path",
+        "-Algorithm"
+      ],
+      "desc": "计算文件哈希",
+      "examples": [
+        "Get-FileHash setup.exe -Algorithm SHA256"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Get-Help",
+      "params": [
+        "-Name",
+        "-Full",
+        "-Examples",
+        "-Online",
+        "-Detailed"
+      ],
+      "desc": "显示命令帮助（别名 help/man）",
+      "examples": [
+        "Get-Help Get-Process -Examples",
+        "help Select-String -Full"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-History",
+      "params": [
+        "-Count",
+        "-Id"
+      ],
+      "desc": "获取会话历史（别名 h/ghy）",
+      "examples": [
+        "Get-History -Count 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Get-Host",
+      "params": [],
+      "desc": "获取主机信息",
+      "examples": [
+        "Get-Host | Select-Object Version"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-InstalledModule",
+      "params": [
+        "-Name"
+      ],
+      "desc": "列出已安装模块",
+      "examples": [
+        "Get-InstalledModule"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-Item",
+      "params": [
+        "-Path",
+        "-Force",
+        "-Stream"
+      ],
+      "desc": "获取文件/目录/注册表项对象（别名 gi）",
+      "examples": [
+        "Get-Item .\\README.md"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name"
+      ],
+      "desc": "获取项属性（含注册表值）",
+      "examples": [
+        "Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Get-Job",
+      "params": [
+        "-Id",
+        "-Name",
+        "-State"
+      ],
+      "desc": "获取作业",
+      "examples": [
+        "Get-Job -State Running"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Get-Location",
+      "params": [
+        "-PSDrive",
+        "-PSProvider"
+      ],
+      "desc": "显示当前工作目录（别名 pwd/gl）",
+      "examples": [
+        "Get-Location"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-Member",
+      "params": [
+        "-InputObject",
+        "-MemberType",
+        "-Name"
+      ],
+      "desc": "查看对象成员（别名 gm）",
+      "examples": [
+        "Get-Process | Get-Member",
+        "Get-Service | gm -MemberType Method"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Get-Module",
+      "params": [
+        "-Name",
+        "-ListAvailable",
+        "-All"
+      ],
+      "desc": "获取模块（别名 gmo）",
+      "examples": [
+        "Get-Module -ListAvailable",
+        "Get-Module | Select-Object Name,Version"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-NetAdapter",
+      "params": [
+        "-Name",
+        "-Physical"
+      ],
+      "desc": "获取网卡信息",
+      "examples": [
+        "Get-NetAdapter | Where-Object Status -eq 'Up'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetConnectionProfile",
+      "params": [],
+      "desc": "获取网络连接配置文件",
+      "examples": [
+        "Get-NetConnectionProfile"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetFirewallProfile",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取防火墙配置文件",
+      "examples": [
+        "Get-NetFirewallProfile"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Get-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Direction",
+        "-Action",
+        "-Enabled"
+      ],
+      "desc": "获取防火墙规则",
+      "examples": [
+        "Get-NetFirewallRule -Direction Inbound | Where-Object Enabled -eq True"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Get-NetIPAddress",
+      "params": [
+        "-AddressFamily",
+        "-InterfaceAlias"
+      ],
+      "desc": "获取 IP 地址配置",
+      "examples": [
+        "Get-NetIPAddress -AddressFamily IPv4"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetRoute",
+      "params": [
+        "-DestinationPrefix"
+      ],
+      "desc": "获取路由表",
+      "examples": [
+        "Get-NetRoute -DestinationPrefix 0.0.0.0/0"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetTCPConnection",
+      "params": [
+        "-LocalPort",
+        "-State",
+        "-RemoteAddress"
+      ],
+      "desc": "获取 TCP 连接",
+      "examples": [
+        "Get-NetTCPConnection -LocalPort 8080",
+        "Get-NetTCPConnection -State Listen"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-NetUDPEndpoint",
+      "params": [
+        "-LocalPort"
+      ],
+      "desc": "获取 UDP 端点",
+      "examples": [
+        "Get-NetUDPEndpoint -LocalPort 5353"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-PSDrive",
+      "params": [
+        "-Name",
+        "-PSProvider"
+      ],
+      "desc": "列出 PS 驱动器",
+      "examples": [
+        "Get-PSDrive -PSProvider FileSystem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Get-PSReadLineKeyHandler",
+      "params": [
+        "-Key"
+      ],
+      "desc": "查看 PSReadLine 按键绑定",
+      "examples": [
+        "Get-PSReadLineKeyHandler -Key Tab"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Get-PSReadLineOption",
+      "params": [],
+      "desc": "查看 PSReadLine 配置",
+      "examples": [
+        "Get-PSReadLineOption"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Get-PSRepository",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取 PS 仓库配置",
+      "examples": [
+        "Get-PSRepository"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Get-PSSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "获取 PS 会话",
+      "examples": [
+        "Get-PSSession"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Get-Package",
+      "params": [
+        "-Name",
+        "-ProviderName"
+      ],
+      "desc": "获取已安装软件包",
+      "examples": [
+        "Get-Package -Name *7zip*"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    },
+    {
+      "name": "Get-Partition",
+      "params": [
+        "-DiskNumber"
+      ],
+      "desc": "获取分区信息",
+      "examples": [
+        "Get-Partition -DiskNumber 0"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-PhysicalDisk",
+      "params": [],
+      "desc": "获取物理磁盘信息",
+      "examples": [
+        "Get-PhysicalDisk | Select-Object FriendlyName,MediaType,HealthStatus"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-PrintJob",
+      "params": [
+        "-PrinterName"
+      ],
+      "desc": "获取打印任务",
+      "examples": [
+        "Get-PrintJob -PrinterName 'HP LaserJet'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Printer",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取打印机",
+      "examples": [
+        "Get-Printer"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-IncludeUserName"
+      ],
+      "desc": "获取进程（别名 ps/gps）",
+      "examples": [
+        "Get-Process -Name node",
+        "Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Get-Random",
+      "params": [
+        "-Minimum",
+        "-Maximum",
+        "-Count"
+      ],
+      "desc": "生成随机数",
+      "examples": [
+        "Get-Random -Minimum 1 -Maximum 100",
+        "1..10 | Get-Random -Count 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Get-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-TaskPath"
+      ],
+      "desc": "获取计划任务",
+      "examples": [
+        "Get-ScheduledTask -TaskName 'Backup'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Get-Service",
+      "params": [
+        "-Name",
+        "-DisplayName",
+        "-ComputerName"
+      ],
+      "desc": "获取服务（别名 gsv）",
+      "examples": [
+        "Get-Service -Name wuauserv",
+        "Get-Service | Where-Object Status -eq 'Running'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Get-SmbShare",
+      "params": [
+        "-Name"
+      ],
+      "desc": "获取 SMB 共享",
+      "examples": [
+        "Get-SmbShare"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Get-TimeZone",
+      "params": [],
+      "desc": "获取时区",
+      "examples": [
+        "Get-TimeZone"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Unique",
+      "params": [
+        "-AsString",
+        "-InputObject"
+      ],
+      "desc": "返回去重后的元素",
+      "examples": [
+        "Get-Content list.txt | Get-Unique"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Get-Uptime",
+      "params": [],
+      "desc": "获取系统运行时间",
+      "examples": [
+        "Get-Uptime"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-Variable",
+      "params": [
+        "-Name",
+        "-Scope",
+        "-Include"
+      ],
+      "desc": "获取变量（别名 gv）",
+      "examples": [
+        "Get-Variable -Name PSVersionTable"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Get-Verb",
+      "params": [
+        "-Verb"
+      ],
+      "desc": "列出 PowerShell 标准动词",
+      "examples": [
+        "Get-Verb | Sort-Object Verb"
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Get-Volume",
+      "params": [
+        "-DriveLetter",
+        "-FileSystemLabel"
+      ],
+      "desc": "获取卷信息",
+      "examples": [
+        "Get-Volume -DriveLetter C"
+      ],
+      "shell": "ps",
+      "tags": [
+        "磁盘"
+      ]
+    },
+    {
+      "name": "Get-WinEvent",
+      "params": [
+        "-FilterHashtable",
+        "-LogName",
+        "-MaxEvents"
+      ],
+      "desc": "获取 Windows 事件日志",
+      "examples": [
+        "Get-WinEvent -FilterHashtable @{LogName='System'; Level=2} -MaxEvents 10"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Get-WindowsOptionalFeature",
+      "params": [
+        "-Online",
+        "-FeatureName"
+      ],
+      "desc": "查询 Windows 可选功能",
+      "examples": [
+        "Get-WindowsOptionalFeature -Online | Where-Object State -eq 'Enabled'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Get-WmiObject",
+      "params": [
+        "-Class",
+        "-Filter",
+        "-Namespace"
+      ],
+      "desc": "查询 WMI（旧版，推荐 Get-CimInstance）",
+      "examples": [
+        "Get-WmiObject Win32_BIOS"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Group-Object",
+      "params": [
+        "-Property",
+        "-AsHashTable",
+        "-NoElement"
+      ],
+      "desc": "按属性分组",
+      "examples": [
+        "Get-Process | Group-Object ProcessName"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Import-Clixml",
+      "params": [
+        "-Path"
+      ],
+      "desc": "反序列化导入",
+      "examples": [
+        "$svc = Import-Clixml svc.xml"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Import-Csv",
+      "params": [
+        "-Path",
+        "-Delimiter",
+        "-Encoding"
+      ],
+      "desc": "导入 CSV",
+      "examples": [
+        "$rows = Import-Csv users.csv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "数据"
+      ]
+    },
+    {
+      "name": "Import-Module",
+      "params": [
+        "-Name",
+        "-Force",
+        "-Global",
+        "-PassThru"
+      ],
+      "desc": "导入模块（别名 ipmo）",
+      "examples": [
+        "Import-Module ActiveDirectory",
+        "Import-Module .\\myModule.psd1 -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Import-PSSession",
+      "params": [
+        "-Session",
+        "-Module",
+        "-Prefix"
+      ],
+      "desc": "导入远程会话命令",
+      "examples": [
+        "Import-PSSession -Session $s -Prefix R"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Install-Module",
+      "params": [
+        "-Name",
+        "-Scope",
+        "-Force",
+        "-Repository",
+        "-AllowClobber"
+      ],
+      "desc": "从 PSGallery 安装模块",
+      "examples": [
+        "Install-Module -Name Pester -Scope CurrentUser",
+        "Install-Module -Name posh-git -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Install-Package",
+      "params": [
+        "-Name",
+        "-ProviderName",
+        "-Force"
+      ],
+      "desc": "安装软件包",
+      "examples": [
+        "Install-Package -Name jq -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "包管理"
+      ]
+    },
+    {
+      "name": "Invoke-CimMethod",
+      "params": [
+        "-ClassName",
+        "-MethodName",
+        "-Arguments"
+      ],
+      "desc": "调用 CIM 方法",
+      "examples": [
+        "Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='notepad'}"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Invoke-Command",
+      "params": [
+        "-ComputerName",
+        "-ScriptBlock",
+        "-Credential",
+        "-Session"
+      ],
+      "desc": "在本地/远程执行命令（别名 icm）",
+      "examples": [
+        "Invoke-Command -ComputerName srv01 -ScriptBlock { Get-Service }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Invoke-Expression",
+      "params": [
+        "-Command"
+      ],
+      "desc": "执行表达式/字符串命令（别名 iex）",
+      "examples": [
+        "Invoke-Expression (Get-Content script.ps1 -Raw)",
+        "iex \"$env:PSModulePath\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "命令"
+      ]
+    },
+    {
+      "name": "Invoke-History",
+      "params": [
+        "-Id",
+        "-CommandLine"
+      ],
+      "desc": "重新执行历史命令（别名 r/ihy）",
+      "examples": [
+        "Invoke-History -Id 5",
+        "r 3"
+      ],
+      "shell": "ps",
+      "tags": [
+        "历史"
+      ]
+    },
+    {
+      "name": "Invoke-Item",
+      "params": [
+        "-Path"
+      ],
+      "desc": "用默认程序打开项（别名 ii）",
+      "examples": [
+        "Invoke-Item .\\report.pdf",
+        "ii ."
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Invoke-RestMethod",
+      "params": [
+        "-Uri",
+        "-Method",
+        "-Headers",
+        "-Body",
+        "-ContentType",
+        "-TimeoutSec"
+      ],
+      "desc": "REST API 调用（别名 irm）",
+      "examples": [
+        "Invoke-RestMethod -Uri 'https://api.github.com/repos/qiutuan/CmdPilot'",
+        "irm -Uri http://localhost:8080/api -Method Put -Body $body -ContentType 'application/json'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Invoke-WebRequest",
+      "params": [
+        "-Uri",
+        "-Method",
+        "-Headers",
+        "-Body",
+        "-OutFile",
+        "-UseBasicParsing",
+        "-TimeoutSec"
+      ],
+      "desc": "HTTP 请求（别名 iwr/curl/wget）",
+      "examples": [
+        "Invoke-WebRequest -Uri https://example.com -OutFile page.html",
+        "iwr https://api.example.com/data -Method Post -Body $json"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Join-Path",
+      "params": [
+        "-Path",
+        "-ChildPath"
+      ],
+      "desc": "拼接路径",
+      "examples": [
+        "Join-Path $env:USERPROFILE Downloads"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Measure-Object",
+      "params": [
+        "-Property",
+        "-Sum",
+        "-Average",
+        "-Minimum",
+        "-Maximum"
+      ],
+      "desc": "计算对象统计值",
+      "examples": [
+        "Get-ChildItem | Measure-Object -Property Length -Sum -Average"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Move-Item",
+      "params": [
+        "-Path",
+        "-Destination",
+        "-Force"
+      ],
+      "desc": "移动/重命名（别名 mv/move/mi）",
+      "examples": [
+        "Move-Item old.txt new.txt",
+        "mv *.log logs\\"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "New-Alias",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "创建别名（别名 nal）",
+      "examples": [
+        "New-Alias -Name g -Value git"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "New-CimSession",
+      "params": [
+        "-ComputerName",
+        "-Credential"
+      ],
+      "desc": "创建 CIM 会话",
+      "examples": [
+        "New-CimSession -ComputerName server01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "New-Item",
+      "params": [
+        "-Path",
+        "-ItemType",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "创建文件/目录/注册表项（别名 ni）",
+      "examples": [
+        "New-Item -ItemType Directory -Path build",
+        "ni file.txt -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "New-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name",
+        "-PropertyType",
+        "-Value"
+      ],
+      "desc": "创建新注册表值",
+      "examples": [
+        "New-ItemProperty HKCU:\\Env -Name TEST -PropertyType DWord -Value 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "New-Module",
+      "params": [
+        "-Name",
+        "-ScriptBlock",
+        "-Function"
+      ],
+      "desc": "动态创建模块",
+      "examples": [
+        "New-Module -Name util -ScriptBlock { function hi { 'hi' } }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "New-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Direction",
+        "-Action",
+        "-Protocol",
+        "-LocalPort",
+        "-Profile"
+      ],
+      "desc": "创建防火墙规则",
+      "examples": [
+        "New-NetFirewallRule -DisplayName 'Allow 8080' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8080"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "New-NetIPAddress",
+      "params": [
+        "-IPAddress",
+        "-PrefixLength",
+        "-InterfaceIndex"
+      ],
+      "desc": "添加静态 IP",
+      "examples": [
+        "New-NetIPAddress -IPAddress 192.168.1.50 -PrefixLength 24 -InterfaceIndex 12"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "New-PSDrive",
+      "params": [
+        "-Name",
+        "-PSProvider",
+        "-Root"
+      ],
+      "desc": "创建 PS 驱动器映射",
+      "examples": [
+        "New-PSDrive -Name P -PSProvider FileSystem -Root D:\\projects"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "New-PSSession",
+      "params": [
+        "-ComputerName",
+        "-SessionOption",
+        "-Credential"
+      ],
+      "desc": "创建 PS 会话",
+      "examples": [
+        "New-PSSession -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "New-ScheduledTask",
+      "params": [
+        "-Action",
+        "-Trigger",
+        "-Settings"
+      ],
+      "desc": "创建计划任务定义",
+      "examples": [
+        "New-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'backup.bat') -Trigger (New-ScheduledTaskTrigger -Daily -At '02:00')"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "New-Service",
+      "params": [
+        "-Name",
+        "-BinaryPathName",
+        "-DisplayName",
+        "-StartupType"
+      ],
+      "desc": "创建服务",
+      "examples": [
+        "New-Service -Name MySvc -BinaryPathName 'C:\\app\\svc.exe'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "New-SmbShare",
+      "params": [
+        "-Name",
+        "-Path",
+        "-FullAccess"
+      ],
+      "desc": "创建 SMB 共享",
+      "examples": [
+        "New-SmbShare -Name data -Path D:\\data -FullAccess Everyone"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "New-Variable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Option"
+      ],
+      "desc": "创建变量（别名 nv）",
+      "examples": [
+        "New-Variable -Name count -Value 0 -Option ReadOnly"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Out-File",
+      "params": [
+        "-FilePath",
+        "-Append",
+        "-Encoding",
+        "-NoClobber",
+        "-Width"
+      ],
+      "desc": "输出到文件",
+      "examples": [
+        "Get-Process | Out-File procs.txt",
+        "dir | Out-File -Append list.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Out-Null",
+      "params": [],
+      "desc": "丢弃输出",
+      "examples": [
+        "Copy-Item a b | Out-Null"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Out-String",
+      "params": [
+        "-Width",
+        "-Stream"
+      ],
+      "desc": "输出为字符串",
+      "examples": [
+        "Get-Service | Out-String -Width 200"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Pop-Location",
+      "params": [
+        "-StackName",
+        "-PassThru"
+      ],
+      "desc": "弹出目录栈并切换（别名 popd）",
+      "examples": [
+        "Pop-Location"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Push-Location",
+      "params": [
+        "-Path",
+        "-StackName"
+      ],
+      "desc": "将当前目录压栈并切换（别名 pushd）",
+      "examples": [
+        "Push-Location D:\\temp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Read-Host",
+      "params": [
+        "-Prompt",
+        "-AsSecureString"
+      ],
+      "desc": "读取用户输入",
+      "examples": [
+        "$name = Read-Host 'Name'",
+        "$pwd = Read-Host -AsSecureString 'Password'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输入"
+      ]
+    },
+    {
+      "name": "Receive-Job",
+      "params": [
+        "-Id",
+        "-Wait",
+        "-Keep",
+        "-AutoRemoveJob"
+      ],
+      "desc": "接收作业输出",
+      "examples": [
+        "Receive-Job -Id 1 -Wait"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Register-PSRepository",
+      "params": [
+        "-Name",
+        "-SourceLocation",
+        "-InstallationPolicy"
+      ],
+      "desc": "注册私有仓库",
+      "examples": [
+        "Register-PSRepository -Name Corp -SourceLocation https://nuget.corp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Register-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Action",
+        "-Trigger",
+        "-User"
+      ],
+      "desc": "注册计划任务",
+      "examples": [
+        "Register-ScheduledTask -TaskName backup -Action $a -Trigger $t"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Remove-AppxPackage",
+      "params": [
+        "-Package"
+      ],
+      "desc": "卸载 UWP 应用包",
+      "examples": [
+        "Get-AppxPackage *BingNews* | Remove-AppxPackage"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Remove-CimSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "删除 CIM 会话",
+      "examples": [
+        "Remove-CimSession -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Remove-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Target"
+      ],
+      "desc": "删除环境变量（PS 7）",
+      "examples": [
+        "Remove-EnvironmentVariable -Name TEST -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Remove-Item",
+      "params": [
+        "-Path",
+        "-Recurse",
+        "-Force",
+        "-Confirm"
+      ],
+      "desc": "删除文件/目录（别名 rm/del/ri）",
+      "examples": [
+        "Remove-Item -Recurse -Force node_modules",
+        "rm *.tmp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Remove-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name"
+      ],
+      "desc": "删除注册表值",
+      "examples": [
+        "Remove-ItemProperty HKCU:\\Env -Name TEST"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Remove-Job",
+      "params": [
+        "-Id",
+        "-Force"
+      ],
+      "desc": "删除作业",
+      "examples": [
+        "Remove-Job -Id 1 -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Remove-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "卸载模块（别名 rmo）",
+      "examples": [
+        "Remove-Module ActiveDirectory"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Remove-NetFirewallRule",
+      "params": [
+        "-DisplayName"
+      ],
+      "desc": "删除防火墙规则",
+      "examples": [
+        "Remove-NetFirewallRule -DisplayName 'Allow 8080'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Remove-NetIPAddress",
+      "params": [
+        "-IPAddress",
+        "-InterfaceIndex"
+      ],
+      "desc": "删除 IP 地址",
+      "examples": [
+        "Remove-NetIPAddress -IPAddress 192.168.1.50"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Remove-PSDrive",
+      "params": [
+        "-Name"
+      ],
+      "desc": "删除 PS 驱动器",
+      "examples": [
+        "Remove-PSDrive -Name P"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Remove-PSReadLineKeyHandler",
+      "params": [
+        "-Key"
+      ],
+      "desc": "移除 PSReadLine 按键绑定",
+      "examples": [
+        "Remove-PSReadLineKeyHandler -Key Tab"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Remove-PSSession",
+      "params": [
+        "-Id",
+        "-ComputerName"
+      ],
+      "desc": "删除 PS 会话",
+      "examples": [
+        "Remove-PSSession -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Remove-SmbShare",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "删除 SMB 共享",
+      "examples": [
+        "Remove-SmbShare -Name data -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Remove-Variable",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "删除变量（别名 rv）",
+      "examples": [
+        "Remove-Variable -Name count"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Rename-Item",
+      "params": [
+        "-Path",
+        "-NewName"
+      ],
+      "desc": "重命名文件/目录（别名 ren/rni）",
+      "examples": [
+        "Rename-Item report.txt report_2026.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Resolve-DnsName",
+      "params": [
+        "-Name",
+        "-Type",
+        "-Server"
+      ],
+      "desc": "DNS 解析（别名 nslookup）",
+      "examples": [
+        "Resolve-DnsName example.com",
+        "Resolve-DnsName -Name example.com -Type MX"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Resolve-Path",
+      "params": [
+        "-Path",
+        "-Relative"
+      ],
+      "desc": "解析相对路径为绝对路径",
+      "examples": [
+        "Resolve-Path .",
+        "Resolve-Path ..\\ -Relative"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Restart-Computer",
+      "params": [
+        "-Force",
+        "-Confirm"
+      ],
+      "desc": "重启计算机",
+      "examples": [
+        "Restart-Computer -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Restart-NetAdapter",
+      "params": [
+        "-Name"
+      ],
+      "desc": "重启网卡",
+      "examples": [
+        "Restart-NetAdapter -Name 'Ethernet'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Restart-Service",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "重启服务（别名 rs）",
+      "examples": [
+        "Restart-Service -Name wuauserv"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Save-Module",
+      "params": [
+        "-Name",
+        "-Path",
+        "-Repository"
+      ],
+      "desc": "下载模块到本地",
+      "examples": [
+        "Save-Module -Name Pester -Path .\\modules"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Select-Object",
+      "params": [
+        "-Property",
+        "-First",
+        "-Last",
+        "-Unique",
+        "-Skip",
+        "-ExpandProperty"
+      ],
+      "desc": "选择对象属性（别名 select）",
+      "examples": [
+        "Get-Process | Select-Object -First 5 Name,CPU",
+        "Get-Service | select -ExpandProperty Name"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Select-String",
+      "params": [
+        "-Path",
+        "-Pattern",
+        "-CaseSensitive",
+        "-List",
+        "-AllMatches",
+        "-Context",
+        "-NotMatch"
+      ],
+      "desc": "在文本中搜索模式（别名 sls/grep）",
+      "examples": [
+        "Select-String -Path *.go -Pattern 'TODO'",
+        "Get-ChildItem -Recurse *.log | sls 'ERROR'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文本处理"
+      ]
+    },
+    {
+      "name": "Set-ACL",
+      "params": [
+        "-Path",
+        "-AclObject"
+      ],
+      "desc": "设置 ACL",
+      "examples": [
+        "Set-ACL -Path file -AclObject $acl"
+      ],
+      "shell": "ps",
+      "tags": [
+        "权限"
+      ]
+    },
+    {
+      "name": "Set-Alias",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Force"
+      ],
+      "desc": "设置别名（别名 sal）",
+      "examples": [
+        "Set-Alias -Name ll -Value Get-ChildItem"
+      ],
+      "shell": "ps",
+      "tags": [
+        "别名"
+      ]
+    },
+    {
+      "name": "Set-AuthenticodeSignature",
+      "params": [
+        "-FilePath",
+        "-Certificate"
+      ],
+      "desc": "对文件签名",
+      "examples": [
+        "Set-AuthenticodeSignature -FilePath script.ps1 -Certificate $cert"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Set-Clipboard",
+      "params": [
+        "-Value",
+        "-Append"
+      ],
+      "desc": "写入剪贴板（别名 scb）",
+      "examples": [
+        "'hello' | Set-Clipboard"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Set-Content",
+      "params": [
+        "-Path",
+        "-Value",
+        "-Encoding",
+        "-Append",
+        "-Force",
+        "-NoNewline"
+      ],
+      "desc": "写入文件内容（别名 sc）",
+      "examples": [
+        "Set-Content -Path out.txt -Value \"hello\""
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Set-Date",
+      "params": [
+        "-Date"
+      ],
+      "desc": "设置系统日期时间",
+      "examples": [
+        "Set-Date -Date '2026-01-01 08:00'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Set-EnvironmentVariable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Target"
+      ],
+      "desc": "设置环境变量（PS 7）",
+      "examples": [
+        "Set-EnvironmentVariable -Name JAVA_HOME -Value 'C:\\jdk17' -Target User"
+      ],
+      "shell": "ps",
+      "tags": [
+        "环境"
+      ]
+    },
+    {
+      "name": "Set-ExecutionPolicy",
+      "params": [
+        "-ExecutionPolicy",
+        "-Scope",
+        "-Force"
+      ],
+      "desc": "设置执行策略",
+      "examples": [
+        "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Set-ItemProperty",
+      "params": [
+        "-Path",
+        "-Name",
+        "-Value"
+      ],
+      "desc": "设置项属性/注册表值",
+      "examples": [
+        "Set-ItemProperty HKCU:\\Env -Name TEST -Value 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "注册表"
+      ]
+    },
+    {
+      "name": "Set-Location",
+      "params": [
+        "-Path",
+        "-PassThru",
+        "-StackName"
+      ],
+      "desc": "切换当前工作目录（别名 cd/sl）",
+      "examples": [
+        "Set-Location D:\\project",
+        "cd .."
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Set-NetConnectionProfile",
+      "params": [
+        "-InterfaceAlias",
+        "-NetworkCategory"
+      ],
+      "desc": "设置网络类别",
+      "examples": [
+        "Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Set-NetFirewallProfile",
+      "params": [
+        "-Name",
+        "-Enabled"
+      ],
+      "desc": "设置防火墙配置文件",
+      "examples": [
+        "Set-NetFirewallProfile -Name Public -Enabled False"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Set-NetFirewallRule",
+      "params": [
+        "-DisplayName",
+        "-Action",
+        "-Enabled"
+      ],
+      "desc": "修改防火墙规则",
+      "examples": [
+        "Set-NetFirewallRule -DisplayName 'Allow 8080' -Action Block"
+      ],
+      "shell": "ps",
+      "tags": [
+        "防火墙"
+      ]
+    },
+    {
+      "name": "Set-PSReadLineKeyHandler",
+      "params": [
+        "-Key",
+        "-Function",
+        "-ScriptBlock",
+        "-BriefDescription"
+      ],
+      "desc": "绑定 PSReadLine 按键",
+      "examples": [
+        "Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Set-PSReadLineOption",
+      "params": [
+        "-PredictionSource",
+        "-PredictionViewStyle",
+        "-Colors",
+        "-EditMode",
+        "-HistoryNoDuplicates",
+        "-MaximumHistoryCount"
+      ],
+      "desc": "配置 PSReadLine",
+      "examples": [
+        "Set-PSReadLineOption -PredictionSource History",
+        "Set-PSReadLineOption -PredictionViewStyle ListView"
+      ],
+      "shell": "ps",
+      "tags": [
+        "PSReadLine"
+      ]
+    },
+    {
+      "name": "Set-PSRepository",
+      "params": [
+        "-Name",
+        "-InstallationPolicy"
+      ],
+      "desc": "设置仓库策略",
+      "examples": [
+        "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Set-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Action",
+        "-Trigger"
+      ],
+      "desc": "修改计划任务",
+      "examples": [
+        "Set-ScheduledTask -TaskName backup -Trigger $newTrigger"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Set-Service",
+      "params": [
+        "-Name",
+        "-Status",
+        "-StartupType",
+        "-Description"
+      ],
+      "desc": "修改服务配置",
+      "examples": [
+        "Set-Service -Name X -StartupType Automatic"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Set-TimeZone",
+      "params": [
+        "-Id",
+        "-Name"
+      ],
+      "desc": "设置时区",
+      "examples": [
+        "Set-TimeZone -Id 'China Standard Time'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Set-Variable",
+      "params": [
+        "-Name",
+        "-Value",
+        "-Scope",
+        "-Force"
+      ],
+      "desc": "设置变量（别名 sv）",
+      "examples": [
+        "Set-Variable -Name DEBUG -Value $true"
+      ],
+      "shell": "ps",
+      "tags": [
+        "变量"
+      ]
+    },
+    {
+      "name": "Sort-Object",
+      "params": [
+        "-Property",
+        "-Descending",
+        "-Unique"
+      ],
+      "desc": "对象排序（别名 sort）",
+      "examples": [
+        "Get-Process | Sort-Object CPU -Descending"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Split-Path",
+      "params": [
+        "-Path",
+        "-Parent",
+        "-Leaf",
+        "-Qualifier"
+      ],
+      "desc": "拆分路径组成部分",
+      "examples": [
+        "Split-Path -Parent C:\\a\\b\\c.txt"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Start-Job",
+      "params": [
+        "-ScriptBlock",
+        "-ArgumentList",
+        "-Name"
+      ],
+      "desc": "启动后台作业",
+      "examples": [
+        "Start-Job -ScriptBlock { 1..10 | ForEach-Object { $_ * $_ } }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Start-Process",
+      "params": [
+        "-FilePath",
+        "-ArgumentList",
+        "-WorkingDirectory",
+        "-NoNewWindow",
+        "-Wait",
+        "-RedirectStandardOutput",
+        "-PassThru"
+      ],
+      "desc": "启动进程（别名 start/saps）",
+      "examples": [
+        "Start-Process notepad",
+        "Start-Process -FilePath node -ArgumentList 'server.js' -Wait"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Start-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "启动计划任务",
+      "examples": [
+        "Start-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Start-Service",
+      "params": [
+        "-Name",
+        "-PassThru"
+      ],
+      "desc": "启动服务（别名 sasv）",
+      "examples": [
+        "Start-Service -Name Spooler"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Start-Sleep",
+      "params": [
+        "-Seconds",
+        "-Milliseconds"
+      ],
+      "desc": "休眠指定时间（别名 sleep）",
+      "examples": [
+        "Start-Sleep -Seconds 5"
+      ],
+      "shell": "ps",
+      "tags": [
+        "工具"
+      ]
+    },
+    {
+      "name": "Start-ThreadJob",
+      "params": [
+        "-ScriptBlock",
+        "-ThrottleLimit"
+      ],
+      "desc": "线程级后台作业（PS 7）",
+      "examples": [
+        "Start-ThreadJob -ScriptBlock { Get-Service }"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Stop-Computer",
+      "params": [
+        "-Force"
+      ],
+      "desc": "关闭计算机",
+      "examples": [
+        "Stop-Computer"
+      ],
+      "shell": "ps",
+      "tags": [
+        "系统"
+      ]
+    },
+    {
+      "name": "Stop-Job",
+      "params": [
+        "-Id",
+        "-PassThru"
+      ],
+      "desc": "停止作业",
+      "examples": [
+        "Stop-Job -Id 1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Stop-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-Force"
+      ],
+      "desc": "停止进程（别名 kill/spps）",
+      "examples": [
+        "Stop-Process -Name node -Force",
+        "Get-Process chrome | Stop-Process"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Stop-ScheduledTask",
+      "params": [
+        "-TaskName"
+      ],
+      "desc": "停止计划任务",
+      "examples": [
+        "Stop-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Stop-Service",
+      "params": [
+        "-Name",
+        "-Force",
+        "-PassThru"
+      ],
+      "desc": "停止服务（别名 spsv）",
+      "examples": [
+        "Stop-Service -Name Spooler -Force"
+      ],
+      "shell": "ps",
+      "tags": [
+        "服务"
+      ]
+    },
+    {
+      "name": "Test-Connection",
+      "params": [
+        "-ComputerName",
+        "-Count",
+        "-Quiet",
+        "-IPv4"
+      ],
+      "desc": "Ping 测试（别名 ping）",
+      "examples": [
+        "Test-Connection -ComputerName 8.8.8.8 -Count 2"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Test-NetConnection",
+      "params": [
+        "-ComputerName",
+        "-Port",
+        "-InformationLevel",
+        "-TraceRoute"
+      ],
+      "desc": "网络连通性诊断",
+      "examples": [
+        "Test-NetConnection github.com -Port 443",
+        "Test-NetConnection -ComputerName host -InformationLevel Detailed"
+      ],
+      "shell": "ps",
+      "tags": [
+        "网络"
+      ]
+    },
+    {
+      "name": "Test-Path",
+      "params": [
+        "-Path",
+        "-PathType",
+        "-IsValid"
+      ],
+      "desc": "测试路径是否存在",
+      "examples": [
+        "Test-Path .git",
+        "Test-Path -PathType Container build"
+      ],
+      "shell": "ps",
+      "tags": [
+        "文件系统"
+      ]
+    },
+    {
+      "name": "Test-WSMan",
+      "params": [
+        "-ComputerName"
+      ],
+      "desc": "测试 WinRM 服务",
+      "examples": [
+        "Test-WSMan -ComputerName srv01"
+      ],
+      "shell": "ps",
+      "tags": [
+        "远程"
+      ]
+    },
+    {
+      "name": "Unblock-File",
+      "params": [
+        "-Path"
+      ],
+      "desc": "解除下载文件的 Mark of the Web",
+      "examples": [
+        "Unblock-File .\\downloaded.ps1"
+      ],
+      "shell": "ps",
+      "tags": [
+        "安全"
+      ]
+    },
+    {
+      "name": "Uninstall-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "卸载模块",
+      "examples": [
+        "Uninstall-Module -Name Pester"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Unregister-PSRepository",
+      "params": [
+        "-Name"
+      ],
+      "desc": "注销仓库",
+      "examples": [
+        "Unregister-PSRepository -Name Corp"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Unregister-ScheduledTask",
+      "params": [
+        "-TaskName",
+        "-Confirm"
+      ],
+      "desc": "删除计划任务",
+      "examples": [
+        "Unregister-ScheduledTask -TaskName backup"
+      ],
+      "shell": "ps",
+      "tags": [
+        "计划任务"
+      ]
+    },
+    {
+      "name": "Update-Help",
+      "params": [
+        "-Module",
+        "-Force"
+      ],
+      "desc": "更新帮助文档",
+      "examples": [
+        "Update-Help -Module Microsoft.PowerShell.Utility"
+      ],
+      "shell": "ps",
+      "tags": [
+        "帮助"
+      ]
+    },
+    {
+      "name": "Update-Module",
+      "params": [
+        "-Name",
+        "-Force"
+      ],
+      "desc": "更新模块",
+      "examples": [
+        "Update-Module -Name Pester"
+      ],
+      "shell": "ps",
+      "tags": [
+        "模块"
+      ]
+    },
+    {
+      "name": "Wait-Job",
+      "params": [
+        "-Id",
+        "-Timeout"
+      ],
+      "desc": "等待作业完成",
+      "examples": [
+        "Wait-Job -Id 1 -Timeout 30"
+      ],
+      "shell": "ps",
+      "tags": [
+        "作业"
+      ]
+    },
+    {
+      "name": "Wait-Process",
+      "params": [
+        "-Name",
+        "-Id",
+        "-Timeout"
+      ],
+      "desc": "等待进程退出",
+      "examples": [
+        "Wait-Process -Name build -Timeout 60"
+      ],
+      "shell": "ps",
+      "tags": [
+        "进程"
+      ]
+    },
+    {
+      "name": "Where-Object",
+      "params": [
+        "-Property",
+        "-Value",
+        "-FilterScript",
+        "-EQ",
+        "-Like",
+        "-Match"
+      ],
+      "desc": "按条件筛选对象（别名 where）",
+      "examples": [
+        "Get-Process | Where-Object CPU -gt 10",
+        "Get-ChildItem | where Extension -eq '.go'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "管道"
+      ]
+    },
+    {
+      "name": "Write-Debug",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入调试流",
+      "examples": [
+        "Write-Debug 'trace'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Error",
+      "params": [
+        "-Message",
+        "-Category",
+        "-ErrorId"
+      ],
+      "desc": "写入错误流",
+      "examples": [
+        "Write-Error 'file not found'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-EventLog",
+      "params": [
+        "-LogName",
+        "-Source",
+        "-EventId",
+        "-Message"
+      ],
+      "desc": "写入事件日志",
+      "examples": [
+        "Write-EventLog -LogName Application -Source MyApp -EventId 100 -Message 'ok'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "日志"
+      ]
+    },
+    {
+      "name": "Write-Host",
+      "params": [
+        "-Object",
+        "-ForegroundColor",
+        "-NoNewline",
+        "-Separator"
+      ],
+      "desc": "直接写入控制台",
+      "examples": [
+        "Write-Host 'done' -ForegroundColor Green"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Information",
+      "params": [
+        "-MessageData",
+        "-Tags"
+      ],
+      "desc": "写入信息流",
+      "examples": [
+        "Write-Information 'progress 50%' -Tags build"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Output",
+      "params": [
+        "-InputObject",
+        "-NoEnumerate"
+      ],
+      "desc": "向管道输出对象（别名 echo）",
+      "examples": [
+        "Write-Output 'hello'",
+        "echo $env:PATH"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Verbose",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入详细流",
+      "examples": [
+        "Write-Verbose 'parsing...'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    },
+    {
+      "name": "Write-Warning",
+      "params": [
+        "-Message"
+      ],
+      "desc": "写入警告流",
+      "examples": [
+        "Write-Warning 'deprecated'"
+      ],
+      "shell": "ps",
+      "tags": [
+        "输出"
+      ]
+    }
+  ]
+}
