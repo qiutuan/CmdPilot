@@ -35,3 +35,5 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+adapters/powershell/CmdPilot/bin/*
+!adapters/powershell/CmdPilot/bin/.gitkeep

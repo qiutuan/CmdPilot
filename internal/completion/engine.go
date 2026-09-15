@@ -618,12 +618,16 @@ func looksLikePath(tok string) bool {
 	return false
 }
 
-// shellRelevant filters knowledge commands for a terminal.
+// shellRelevant filters knowledge commands for a terminal. External tools
+// (git/npm/pip/docker/ssh...) work in both CMD and PowerShell.
 func shellRelevant(c knowledge.Command, shell string) bool {
+	if c.Shell == knowledge.ShellExternal {
+		return true
+	}
 	switch shell {
 	case "cmd":
 		return c.Shell == knowledge.ShellCmd
 	default:
-		return c.Shell == knowledge.ShellPS || c.Shell == knowledge.ShellExternal
+		return c.Shell == knowledge.ShellPS
 	}
 }
