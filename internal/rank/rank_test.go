@@ -72,7 +72,6 @@ func TestScoreFutureTimeClamped(t *testing.T) {
 
 // TestTopNOrdering verifies ranking puts high-frequency first and respects match ties.
 func TestTopNOrdering(t *testing.T) {
-	now := time.Now()
 	cands := []Candidate{
 		{Text: "git status", RankScore: 3.0, MatchScore: 0.9},
 		{Text: "git stash", RankScore: 5.0, MatchScore: 0.5},
