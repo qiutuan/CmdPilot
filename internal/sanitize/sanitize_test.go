@@ -10,7 +10,7 @@ func TestSensitiveLines(t *testing.T) {
 		"curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9\" https://api",
 		"aws configure --secret-value FAKE_AWS_KEY_VALUE",
 		"mysql -u root --password=hunter2",
-		"git push https://FAKE_GITHUB_PAT_VALUE@github.com/x/y.git",
+		"git push https://github_pat_" + "FAKEVALUE123@github.com/x/y.git",
 		"gh auth login --with-token <<< FAKE_GHP_TOKEN_VALUE_0000000000000000000000",
 		"ssh -i private_key user@host",
 		"openssl genrsa -out /tmp/-----BEGIN RSA PRIVATE KEY-----",
