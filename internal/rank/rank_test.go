@@ -90,8 +90,7 @@ func TestTopNOrdering(t *testing.T) {
 
 // TestTopNCaps verifies n bounds.
 func TestTopNCaps(t *testing.T) {
-	now := time.Now()
-	c := []Candidate{{Text: "a", RankScore: Score(1, now, now, false)}}
+	c := []Candidate{{Text: "a", RankScore: 1.0}}
 	if TopN(c, 0) != nil {
 		t.Error("TopN 0 should be nil")
 	}
