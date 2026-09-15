@@ -19,6 +19,18 @@ func daemonClient() *client.Client {
 	return client.New(fmt.Sprintf("http://127.0.0.1:%d", st.Port), st.Token)
 }
 
+// ensureDaemon checks health then starts the daemon if needed.
+func ensureDaemon() int {
+	c := daemonClient()
+	if c != nil {
+		if ok, _ := c.Health(); ok {
+			return 0
+		}
+		daemonstate.Remove()
+	}
+	return runEnsure()
+}
+
 // runEnsure spawns `cmdpilot daemon ensure` as a subprocess and waits.
 // Kept in a separate file so the companion stays tiny.
 func runEnsure() int {
