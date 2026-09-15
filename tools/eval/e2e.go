@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/qiutuan/CmdPilot/internal/client"
+	"github.com/qiutuan/CmdPilot/internal/secrets"
 )
 
 // runE2E drives ≥10 critical paths against the real daemon binary + CLI.
@@ -96,7 +97,7 @@ func runE2E() error {
 	}())
 
 	// 5) 收藏：增 → 参与补全
-	if _, err := cli("favorite", "add", "deploy-all", "git push origin main && npm run build", "--tag", "deploy"); err != nil {
+	if _, err := cli("favorite", "add", "--name", "deploy-all", "--command", "git push origin main && npm run build", "--tags", "deploy"); err != nil {
 		return err
 	}
 	favResp, err := c.Complete(client.CompleteReq{Input: "deploy", Shell: "cmd", CWD: dataDir})
@@ -126,11 +127,16 @@ func runE2E() error {
 	}
 	record("收藏导出/导入合并", true, exportPath)
 
-	// 8) AI 测试（mock 服务器）
+	// 8) AI 测试（mock 服务器）—— 先停旧守护进程再以新配置重启
+	if err := c.Shutdown(); err != nil {
+		return err
+	}
+	time.Sleep(300 * time.Millisecond)
+	encKey, _ := secrets.Protect("FAKE_KEY")
 	writeConfig(base, map[string]any{
 		"engine": "hybrid",
 		"ai": map[string]any{
-			"base_url": mockAI.URL, "api_key_encrypted": "FAKE_KEY", "model": "mock-llm",
+			"base_url": mockAI.URL, "api_key_encrypted": encKey, "model": "mock-llm",
 		},
 	})
 	c2, _, err := startDaemon(bin, base) // 重新加载配置
@@ -164,11 +170,15 @@ func runE2E() error {
 	favList, err := cli("favorite", "list")
 	record("清空统计保留收藏", err == nil && strings.Contains(favList, "deploy-all"), strings.ReplaceAll(strings.TrimSpace(favList), "\n", "; "))
 
-	// 12) 无效 AI 配置 → 优雅降级（非崩溃）
+	// 12) 无效 AI 配置 → 优雅降级（非崩溃）—— 同样先停旧守护进程
+	if err := c3.Shutdown(); err != nil {
+		return err
+	}
+	time.Sleep(300 * time.Millisecond)
 	writeConfig(base, map[string]any{
 		"engine": "hybrid",
 		"ai": map[string]any{
-			"base_url": "http://127.0.0.1:1/v1", "api_key_encrypted": "FAKE_KEY", "model": "mock-llm",
+			"base_url": "http://127.0.0.1:1/v1", "api_key_encrypted": encKey, "model": "mock-llm",
 		},
 	})
 	c4, _, err := startDaemon(bin, base)
@@ -213,6 +223,11 @@ func runE2E() error {
 		"pass": pass, "total": len(steps), "steps": steps, "date": time.Now().Format(time.RFC3339),
 	}, "", "  ")
 	if pass != len(steps) {
+		for _, s := range steps {
+			if !s.Ok {
+				fmt.Fprintf(os.Stderr, "E2E-FAIL: %s :: %s\n", s.Name, s.Detail)
+			}
+		}
 		return fmt.Errorf("e2e: %d/%d passed", pass, len(steps))
 	}
 	return writeReport("e2e", md, jsonData)

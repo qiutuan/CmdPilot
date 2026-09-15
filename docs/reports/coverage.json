@@ -1,0 +1,24 @@
+{
+  "ai_pct": 86.9,
+  "core_pct": 85.16666666666667,
+  "date": "2026-09-15T19:29:33+08:00",
+  "pkgs": {
+    "github.com/qiutuan/CmdPilot/cmd/cmdpilot": 0,
+    "github.com/qiutuan/CmdPilot/cmd/cmdpilot-clink": 19.3,
+    "github.com/qiutuan/CmdPilot/internal/ai": 86.9,
+    "github.com/qiutuan/CmdPilot/internal/cli": 56.9,
+    "github.com/qiutuan/CmdPilot/internal/client": 91.9,
+    "github.com/qiutuan/CmdPilot/internal/completion": 83.1,
+    "github.com/qiutuan/CmdPilot/internal/config": 80.3,
+    "github.com/qiutuan/CmdPilot/internal/daemonstate": 85.2,
+    "github.com/qiutuan/CmdPilot/internal/db": 77.7,
+    "github.com/qiutuan/CmdPilot/internal/knowledge": 83.9,
+    "github.com/qiutuan/CmdPilot/internal/logx": 77.5,
+    "github.com/qiutuan/CmdPilot/internal/match": 96.1,
+    "github.com/qiutuan/CmdPilot/internal/rank": 96.2,
+    "github.com/qiutuan/CmdPilot/internal/sanitize": 100,
+    "github.com/qiutuan/CmdPilot/internal/secrets": 90.9,
+    "github.com/qiutuan/CmdPilot/internal/server": 70.9,
+    "github.com/qiutuan/CmdPilot/internal/version": 100
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "date": "2026-09-15T19:29:52+08:00",
+  "pass": 12,
+  "steps": [
+    {
+      "Name": "daemon ensure → health",
+      "Ok": true,
+      "Detail": "CmdPilot 0.1.0 (commit dev, built unknown)"
+    },
+    {
+      "Name": "输入前缀 'git st' → 建议",
+      "Ok": true,
+      "Detail": "git stash"
+    },
+    {
+      "Name": "执行上报 → 统计可见",
+      "Ok": true,
+      "Detail": "1. git stash                                   1 次  最近 09-15 19:29  目录: /tmp/cmdpilot-e2edata-1210318323/cmdpilot"
+    },
+    {
+      "Name": "空输入 → 频率推荐",
+      "Ok": true,
+      "Detail": "git stash"
+    },
+    {
+      "Name": "收藏命令参与补全",
+      "Ok": true,
+      "Detail": "git push origin main \u0026\u0026 npm run build (favorite)"
+    },
+    {
+      "Name": "配置 set/get",
+      "Ok": true,
+      "Detail": "local"
+    },
+    {
+      "Name": "收藏导出/导入合并",
+      "Ok": true,
+      "Detail": "/tmp/cmdpilot-e2e-2597739162/favorites-export.json"
+    },
+    {
+      "Name": "AI 测试连接（mock）",
+      "Ok": true,
+      "Detail": "mock-llm"
+    },
+    {
+      "Name": "自检输出网络声明",
+      "Ok": true,
+      "Detail": "CmdPilot 自检报告; =================; 版本: CmdPilot 0.1.0 (commit dev, built unknown); 平台: linux/amd64; 配置: 正常; 引擎模式: hybrid(local+AI) / 触发模式: auto; AI 端点: http://127.0.0.1:39553 (model=mock-llm); 知识库: 496 条命令 (cmd=179 ps=224 external=93); 数据库: 完整性 ok, 位置 /tmp/cmdpilot-e2edata-1210318323/cmdpilot/cmdpilot.db; 守护进程: 运行中 CmdPilot 0.1.0 (commit dev, built unknown); 网络: 本工具发起的所有网络请求仅为用户配置的 AI base_url: http://127.0.0.1:39553;"
+    },
+    {
+      "Name": "重启后统计持久",
+      "Ok": true,
+      "Detail": "1. git stash                                   1 次  最近 09-15 19:29  目录: /tmp/cmdpilot-e2edata-1210318323/cmdpilot"
+    },
+    {
+      "Name": "清空统计保留收藏",
+      "Ok": true,
+      "Detail": "#1  deploy-all  [deploy]  git push origin main \u0026\u0026 npm run build; 共 1 条收藏"
+    },
+    {
+      "Name": "无效 AI 端点 → 本地兜底",
+      "Ok": true,
+      "Detail": "git stash"
+    }
+  ],
+  "total": 12
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-15T19:29:45+08:00",
+  "leaks": null,
+  "pass": true,
+  "requests": 1,
+  "secrets_injected": [
+    "sk-FAKE-SECRET-KEY-1234567890abcdef",
+    "AKIAFAKESECRETACCESSKEY",
+    "ghp_FAKESECRETTOKEN1234567890",
+    "Bearer FAKEBEARERTOKEN",
+    "password=super-secret-pass",
+    "token: abcdef0123456789",
+    "api_key=FAKE_API_KEY_VALUE"
+  ]
+}

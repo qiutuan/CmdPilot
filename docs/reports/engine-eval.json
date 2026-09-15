@@ -1633,7 +1633,7 @@
       ]
     }
   ],
-  "date": "2026-09-15T19:12:08+08:00",
+  "date": "2026-09-15T19:29:26+08:00",
   "pass": 231,
   "results": [
     {
@@ -1648,11 +1648,11 @@
       "Hit": true,
       "Got": [
         "dir ",
-        "diskpart",
         "driverquery",
-        "rmdir",
+        "diskpart",
+        "mkdir",
         "chdir",
-        "mkdir"
+        "rmdir"
       ],
       "Top1Hit": true
     },
@@ -1693,12 +1693,12 @@
       "Hit": true,
       "Got": [
         "cls ",
-        "docker logs",
         "cacls",
+        "docker logs",
+        "secpol.msc",
         "kubectl logs",
-        "kubectl describe",
         "icacls",
-        "secpol.msc"
+        "kubectl describe"
       ],
       "Top1Hit": true
     },
@@ -1706,13 +1706,13 @@
       "Hit": true,
       "Got": [
         "tree ",
-        "git rebase",
-        "git remote",
-        "git revert",
         "git reset",
+        "git remote",
+        "git rebase",
+        "git revert",
         "eventcreate",
         "git worktree",
-        "ren"
+        "rem"
       ],
       "Top1Hit": true
     },
@@ -1744,10 +1744,10 @@
       "Hit": true,
       "Got": [
         "sort ",
+        "more",
         "set",
-        "for",
         "start",
-        "more"
+        "for"
       ],
       "Top1Hit": true
     },
@@ -1755,12 +1755,12 @@
       "Hit": true,
       "Got": [
         "more ",
-        "mode",
         "move",
+        "mode",
         "msra",
         "make",
-        "for",
-        "sort"
+        "sort",
+        "for"
       ],
       "Top1Hit": true
     },
@@ -1827,11 +1827,11 @@
         "ver ",
         "verify",
         "verifier",
-        "eventcreate",
-        "winver",
-        "driverquery",
+        "eventvwr",
         "git revert",
-        "eventvwr"
+        "convert",
+        "eventcreate",
+        "winver"
       ],
       "Top1Hit": true
     },
@@ -1901,11 +1901,11 @@
         "sc ",
         "scp",
         "schtasks",
-        "ssh-copy-id",
         "sysdm.cpl",
-        "secpol.msc",
+        "ssh-copy-id",
         "services.msc",
-        "sfc"
+        "git switch",
+        "setlocal"
       ],
       "Top1Hit": true
     },
@@ -1976,9 +1976,9 @@
       "Hit": true,
       "Got": [
         "chcp ",
+        "scp",
         "comp",
-        "clip",
-        "scp"
+        "clip"
       ],
       "Top1Hit": true
     },
@@ -1986,9 +1986,9 @@
       "Hit": true,
       "Got": [
         "clip ",
-        "comp",
         "cls",
-        "chcp"
+        "chcp",
+        "comp"
       ],
       "Top1Hit": true
     },
@@ -2127,8 +2127,8 @@
         "cacls ",
         "icacls",
         "call",
-        "cls",
-        "calc"
+        "calc",
+        "cls"
       ],
       "Top1Hit": true
     },
@@ -2381,9 +2381,9 @@
       "Got": [
         "call ",
         "calc",
-        "curl",
+        "cls",
         "cacls",
-        "cls"
+        "curl"
       ],
       "Top1Hit": true
     },
@@ -2426,13 +2426,13 @@
       "Hit": true,
       "Got": [
         "cd ",
-        "conda",
-        "chdir",
         "ssh-copy-id",
         "kubectl describe",
         "cmd",
+        "chkdsk",
+        "chdir",
         "kubectl delete",
-        "chkdsk"
+        "conda"
       ],
       "Top1Hit": true
     },
@@ -2440,13 +2440,13 @@
       "Hit": true,
       "Got": [
         "md ",
-        "go mod",
         "mode",
         "mkdir",
+        "go mod",
+        "git submodule",
         "cmd",
-        "npm update",
-        "rmdir",
-        "git submodule"
+        "npm audit",
+        "npm update"
       ],
       "Top1Hit": true
     },
@@ -2454,8 +2454,8 @@
       "Hit": true,
       "Got": [
         "rd ",
-        "regedit",
         "rmdir",
+        "regedit",
         "gradle",
         "kubectl port-forward",
         "docker build"
@@ -2468,8 +2468,8 @@
         "del ",
         "docker logs",
         "docker build",
-        "docker pull",
-        "kubectl delete"
+        "kubectl delete",
+        "docker pull"
       ],
       "Top1Hit": true
     },
@@ -2556,8 +2556,8 @@
       "Hit": true,
       "Got": [
         "Move-Item ",
-        "Remove-Item",
-        "Remove-ItemProperty"
+        "Remove-ItemProperty",
+        "Remove-Item"
       ],
       "Top1Hit": true
     },
@@ -2619,9 +2619,9 @@
       "Hit": true,
       "Got": [
         "Get-Date ",
-        "Get-NetAdapter",
         "Get-WindowsOptionalFeature",
         "Get-AuthenticodeSignature",
+        "Get-NetAdapter",
         "Set-Date"
       ],
       "Top1Hit": true
@@ -2870,10 +2870,10 @@
     {
       "Hit": true,
       "Got": [
-        "git commit",
         "git config",
-        "git clone",
-        "git checkout"
+        "git commit",
+        "git checkout",
+        "git clone"
       ],
       "Top1Hit": false
     },
@@ -2910,10 +2910,10 @@
     {
       "Hit": true,
       "Got": [
-        "git pull",
-        "git push"
+        "git push",
+        "git pull"
       ],
-      "Top1Hit": false
+      "Top1Hit": true
     },
     {
       "Hit": true,
@@ -2933,8 +2933,8 @@
       "Hit": true,
       "Got": [
         "git merge",
-        "git remote",
         "git blame",
+        "git remote",
         "git submodule"
       ],
       "Top1Hit": true
@@ -2942,22 +2942,22 @@
     {
       "Hit": true,
       "Got": [
-        "git clean",
-        "git clone"
+        "git clone",
+        "git clean"
       ],
-      "Top1Hit": false
+      "Top1Hit": true
     },
     {
       "Hit": true,
       "Got": [
         "git reset",
-        "git rebase",
-        "git reflog",
-        "git remote",
         "git revert",
-        "git grep",
+        "git remote",
+        "git reflog",
+        "git rebase",
         "git archive",
-        "git worktree"
+        "git grep",
+        "git merge"
       ],
       "Top1Hit": true
     },
@@ -3029,8 +3029,8 @@
       "Hit": true,
       "Got": [
         "git config",
-        "git commit",
         "git cherry-pick",
+        "git commit",
         "git archive"
       ],
       "Top1Hit": false
@@ -3075,10 +3075,10 @@
       "Got": [
         "npm init",
         "npm install",
-        "npm uninstall",
+        "npm publish",
         "npm ci",
-        "npm audit",
-        "npm publish"
+        "npm uninstall",
+        "npm audit"
       ],
       "Top1Hit": false
     },
@@ -3387,9 +3387,9 @@
         "Remove-NetIPAddress",
         "Remove-NetFirewallRule",
         "Remove-EnvironmentVariable",
-        "Remove-PSSession",
+        "Remove-CimSession",
         "Remove-PSReadLineKeyHandler",
-        "Remove-CimSession"
+        "Remove-PSSession"
       ],
       "Top1Hit": true
     },
@@ -3421,12 +3421,12 @@
       "Got": [
         "gh ",
         "Get-History",
-        "Get-Host",
         "Get-Help",
+        "Get-Host",
         "git show",
         "git stash",
-        "git switch",
-        "Get-PSReadLineKeyHandler"
+        "Get-PhysicalDisk",
+        "git fetch"
       ],
       "Top1Hit": true
     },
@@ -3473,13 +3473,13 @@
       "Hit": true,
       "Got": [
         "rg ",
-        "Remove-AppxPackage",
-        "Register-ScheduledTask",
         "Register-PSRepository",
+        "Register-ScheduledTask",
+        "Remove-AppxPackage",
         "git reflog",
-        "ConvertFrom-SecureString",
-        "docker images",
-        "ConvertTo-SecureString"
+        "git merge",
+        "Unregister-ScheduledTask",
+        "Unregister-PSRepository"
       ],
       "Top1Hit": true
     },
@@ -3494,8 +3494,8 @@
       "Top1Hit": true
     }
   ],
-  "top1": 225,
-  "top1_rate": 97.40259740259741,
+  "top1": 227,
+  "top1_rate": 98.26839826839827,
   "top5_rate": 100,
   "total": 231
 }

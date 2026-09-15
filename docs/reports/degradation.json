@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-15T19:29:45+08:00",
+  "pass": 5,
+  "rows": [
+    {
+      "case": "超时（AI 10s 不响应，客户端 1s 超时）",
+      "top_full": "git stash",
+      "ai_used": false,
+      "error": ""
+    },
+    {
+      "case": "HTTP 500",
+      "top_full": "git stash",
+      "ai_used": false,
+      "error": ""
+    },
+    {
+      "case": "断网（连接被拒绝）",
+      "top_full": "git stash",
+      "ai_used": false,
+      "error": ""
+    },
+    {
+      "case": "无效 key（401）",
+      "top_full": "git stash",
+      "ai_used": false,
+      "error": ""
+    },
+    {
+      "case": "畸形响应（非 JSON 垃圾字节）",
+      "top_full": "git stash",
+      "ai_used": false,
+      "error": ""
+    }
+  ],
+  "total": 5
+}

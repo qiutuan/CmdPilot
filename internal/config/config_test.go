@@ -181,3 +181,95 @@ func TestBaseDir(t *testing.T) {
 		t.Fatal("BaseDir is empty")
 	}
 }
+
+// --- 覆盖率补充：全部 Set/Get 路径与错误分支 ---
+
+func TestSetAllPathsAndValidate(t *testing.T) {
+	dir := t.TempDir()
+	old := BaseDirOverrideForTest(dir)
+	defer BaseDirOverrideForTest(old)
+	cfg, _, err := Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	sets := map[string]string{
+		"engine":               "ai",
+		"trigger":              "tab",
+		"ai.base_url":          "https://api.openai.com/",
+		"ai.model":             "gpt-4o-mini",
+		"ai.temperature":       "0.7",
+		"ai.max_tokens":        "128",
+		"ai.timeout_ms":        "8000",
+		"debounce_ms":          "250",
+		"ai_cache_ttl_minutes": "10",
+		"history_lines":        "20",
+		"recommend_weighting":  "false",
+		"enable_prompt_line":   "false",
+		"log_enabled":          "false",
+		"log_level":            "warn",
+	}
+	for k, v := range sets {
+		if err := cfg.Set(k, v); err != nil {
+			t.Fatalf("Set(%s): %v", k, err)
+		}
+		got, err := cfg.Get(k)
+		if err != nil {
+			t.Fatalf("Get(%s): %v", k, err)
+		}
+		if k == "ai.base_url" && got != "https://api.openai.com" {
+			t.Errorf("base_url not trimmed: %q", got)
+		}
+	}
+	// 错误分支
+	bad := map[string]string{
+		"engine": "nope", "trigger": "nope", "ai.temperature": "9",
+		"ai.max_tokens": "0", "ai.timeout_ms": "-1", "debounce_ms": "-1",
+		"ai_cache_ttl_minutes": "0", "history_lines": "-1",
+		"recommend_weighting": "x", "enable_prompt_line": "x",
+		"log_enabled": "x", "log_level": "nope", "bogus.path": "1",
+	}
+	for k, v := range bad {
+		if err := cfg.Set(k, v); err == nil {
+			t.Errorf("Set(%s=%q) should fail", k, v)
+		}
+	}
+	if _, err := cfg.Get("bogus.path"); err == nil {
+		t.Error("Get bogus should fail")
+	}
+	if cfg.Effective() != "AI+local" {
+		t.Errorf("Effective = %q", cfg.Effective())
+	}
+}
+
+func TestAPIKeyEnvOverrideAndGet(t *testing.T) {
+	dir := t.TempDir()
+	old := BaseDirOverrideForTest(dir)
+	defer BaseDirOverrideForTest(old)
+	t.Setenv("CMDPILOT_AI_API_KEY", "sk-env-whatever")
+	cfg, _, err := Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.AI.APIKeyEnv != "sk-env-whatever" {
+		t.Fatalf("env key not loaded: %q", cfg.AI.APIKeyEnv)
+	}
+	k, err := cfg.APIKey()
+	if err != nil || k != "sk-env-whatever" {
+		t.Fatalf("APIKey: %v %v", k, err)
+	}
+	got, err := cfg.Get("ai.api_key")
+	if err != nil || got != "(set, hidden)" {
+		t.Errorf("get ai.api_key: %q %v", got, err)
+	}
+}
+
+func TestAPIKeyNotSetGet(t *testing.T) {
+	dir := t.TempDir()
+	old := BaseDirOverrideForTest(dir)
+	defer BaseDirOverrideForTest(old)
+	cfg, _, _ := Load()
+	got, err := cfg.Get("ai.api_key")
+	if err != nil || got != "(not set)" {
+		t.Errorf("get ai.api_key: %q %v", got, err)
+	}
+}

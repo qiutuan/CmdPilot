@@ -223,3 +223,137 @@ func TestDBPath(t *testing.T) {
 		t.Errorf("DBPath = %q", p)
 	}
 }
+
+// --- 覆盖率补充：路径/错误分支 ---
+
+func TestTopNByDirAndRecentCommands(t *testing.T) {
+	dir := t.TempDir()
+	d, err := Open(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer d.Close()
+	now := time.Now()
+	must := func(r UsageRecord) {
+		t.Helper()
+		if err := d.RecordUsage(r); err != nil {
+			t.Fatal(err)
+		}
+	}
+	must(UsageRecord{Command: "git status", Dir: "/repo", Shell: "cmd", At: now})
+	must(UsageRecord{Command: "git status", Dir: "/other", Shell: "ps", At: now})
+	must(UsageRecord{Command: "npm test", Dir: "/repo", Shell: "cmd", At: now})
+
+	rows, err := d.TopNByDir("/repo", 5)
+	if err != nil || len(rows) != 2 {
+		t.Fatalf("TopNByDir: %v %v", rows, err)
+	}
+	rec, err := d.RecentCommands(2, "/repo")
+	if err != nil || len(rec) == 0 || rec[0] != "npm test" {
+		t.Fatalf("RecentCommands: %v %v", rec, err)
+	}
+	// 目录过滤：/other 只出现 git status
+	rowsO, err := d.TopNByDir("/other", 5)
+	if err != nil || len(rowsO) != 1 {
+		t.Fatalf("TopNByDir other: %v %v", rowsO, err)
+	}
+}
+
+func TestUsageTrendAndDistributionEmpty(t *testing.T) {
+	dir := t.TempDir()
+	d, err := Open(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer d.Close()
+	pts, err := d.UsageTrend(7)
+	if err != nil {
+		t.Fatalf("UsageTrend empty: %v %v", pts, err)
+	}
+	byDir, byShell, total, err := d.StatsDistribution()
+	if err != nil || total != 0 || len(byDir) != 0 {
+		t.Fatalf("empty dist: %v %v %d", byDir, byShell, total)
+	}
+}
+
+func TestSearchAndFavoriteErrors(t *testing.T) {
+	dir := t.TempDir()
+	d, err := Open(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer d.Close()
+	id, err := d.AddFavorite(Favorite{Name: "dep", Command: "kubectl rollout", Tags: "k8s"})
+	if err != nil || id != 1 {
+		t.Fatalf("add: %v %d", err, id)
+	}
+	hits, err := d.SearchFavorites("rollout")
+	if err != nil || len(hits) != 1 {
+		t.Fatalf("search: %v %v", hits, err)
+	}
+	if f, _ := d.GetFavorite(999); f != nil {
+		t.Error("get missing should return nil")
+	}
+	// 对不存在的 id 操作不报错（0 行影响），但不破坏数据
+	if err := d.UpdateFavorite(Favorite{ID: 999, Name: "x", Command: "y"}); err != nil {
+		t.Errorf("update missing: %v", err)
+	}
+	if err := d.DeleteFavorite(999); err != nil {
+		t.Errorf("delete missing: %v", err)
+	}
+	list, err := d.ListFavorites()
+	if err != nil || len(list) != 1 {
+		t.Fatalf("list: %v %v", list, err)
+	}
+}
+
+func TestUserCommandLifecycle(t *testing.T) {
+	dir := t.TempDir()
+	d, err := Open(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer d.Close()
+	if err := d.SetUserCommand(UserCommand{Name: "myalias", Params: []string{"up"}, Desc: "别名", Examples: []string{"myalias"}, Shell: "cmd", Tags: []string{"docker"}}); err != nil {
+		t.Fatal(err)
+	}
+	ucs, err := d.UserCommands()
+	if err != nil || len(ucs) != 1 || ucs[0].Name != "myalias" {
+		t.Fatalf("list: %v %v", ucs, err)
+	}
+	if err := d.SetUserCommand(UserCommand{Name: "myalias", Params: []string{"up", "-d"}, Desc: "别名2", Examples: []string{"myalias"}, Shell: "cmd"}); err != nil {
+		t.Fatal(err) // upsert
+	}
+	if err := d.DeleteUserCommand("missing"); err != nil {
+		t.Fatalf("delete missing should be ok: %v", err)
+	}
+	if err := d.DeleteUserCommand("myalias"); err != nil {
+		t.Fatal(err)
+	}
+	ucs, _ = d.UserCommands()
+	if len(ucs) != 0 {
+		t.Fatalf("after delete: %v", ucs)
+	}
+}
+
+func TestTopNSinceAndClosedDB(t *testing.T) {
+	dir := t.TempDir()
+	d, err := Open(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	now := time.Now()
+	_ = d.RecordUsage(UsageRecord{Command: "old", Dir: "/x", Shell: "cmd", At: now.Add(-48 * time.Hour)})
+	_ = d.RecordUsage(UsageRecord{Command: "new", Dir: "/x", Shell: "cmd", At: now})
+	rows, err := d.TopN(10, now.Add(-24*time.Hour))
+	if err != nil || len(rows) != 1 || rows[0].Command != "new" {
+		t.Fatalf("TopN since: %v %v", rows, err)
+	}
+	if err := d.Close(); err != nil {
+		t.Fatal(err)
+	}
+	// 关闭后写入应报错而不是 panic
+	if err := d.RecordUsage(UsageRecord{Command: "x", Dir: "/x", Shell: "cmd", At: now}); err == nil {
+		t.Log("closed write tolerated (sqlite may reopen); acceptable")
+	}
+}

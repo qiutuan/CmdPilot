@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/qiutuan/CmdPilot/internal/config"
 	"github.com/qiutuan/CmdPilot/internal/db"
@@ -21,13 +22,13 @@ func setBaseDir(t *testing.T) string {
 	return dir
 }
 
-// run captures CLI stdout for a command.
+// run captures CLI stdout+stderr for a command.
 func run(t *testing.T, args ...string) (string, int) {
 	t.Helper()
 	var buf bytes.Buffer
-	old := Stdout
-	Stdout = &buf
-	defer func() { Stdout = old }()
+	oldOut, oldErr := Stdout, Stderr
+	Stdout, Stderr = &buf, &buf
+	defer func() { Stdout, Stderr = oldOut, oldErr }()
 	code := Run(args)
 	return buf.String(), code
 }
@@ -179,5 +180,149 @@ func TestUnknownCommand(t *testing.T) {
 	setBaseDir(t)
 	if _, code := run(t, "nonsense-cmd"); code == 0 {
 		t.Error("unknown command should fail")
+	}
+}
+
+// --- 覆盖率补充测试 ---
+
+func TestAITestNotConfiguredAndUsage(t *testing.T) {
+	setBaseDir(t)
+	if out, code := run(t, "ai", "test"); code != 1 || !strings.Contains(out, "未配置") {
+		t.Errorf("ai test (no cfg): code=%d out=%q", code, out)
+	}
+	if _, code := run(t, "ai"); code != 2 {
+		t.Error("ai without subcommand should return 2")
+	}
+	// 配了 base_url/model 但没有 key 且无守护进程 → 守护进程不可用
+	run(t, "config", "set", "ai.base_url", "http://127.0.0.1:1")
+	run(t, "config", "set", "ai.model", "mock")
+	if _, code := run(t, "ai", "test"); code == 0 {
+		t.Error("ai test should fail without daemon")
+	}
+}
+
+func TestFavoriteGetUpdateDeleteAndErrors(t *testing.T) {
+	setBaseDir(t)
+	if _, code := run(t, "favorite"); code != 2 {
+		t.Error("favorite bare should return 2")
+	}
+	if _, code := run(t, "favorite", "add"); code != 2 {
+		t.Error("favorite add without flags should return 2")
+	}
+	run(t, "favorite", "add", "--name", "alias", "--command", "git push", "--note", "n", "--tags", "git,ci")
+	if out, code := run(t, "favorite", "list"); code != 0 || !strings.Contains(out, "alias") {
+		t.Fatalf("add+list: code=%d out=%q", code, out)
+	}
+	if out, code := run(t, "favorite", "get", "1"); code != 0 || !strings.Contains(out, "git push") {
+		t.Errorf("get: code=%d out=%q", code, out)
+	}
+	if _, code := run(t, "favorite", "get", "99"); code != 1 {
+		t.Error("get missing should return 1")
+	}
+	if _, code := run(t, "favorite", "get", "abc"); code != 1 {
+		t.Error("get invalid id should return 1")
+	}
+	if out, code := run(t, "favorite", "update", "--id", "1", "--command", "git push --force"); code != 0 {
+		t.Errorf("update: code=%d out=%q", code, out)
+	}
+	if out, code := run(t, "favorite", "list"); code != 0 || !strings.Contains(out, "git push --force") {
+		t.Errorf("list after update: code=%d out=%q", code, out)
+	}
+	if out, code := run(t, "favorite", "delete", "1"); code != 0 {
+		t.Errorf("delete: code=%d out=%q", code, out)
+	}
+	if out, _ := run(t, "favorite", "list"); strings.Contains(out, "alias") {
+		t.Errorf("delete failed: %s", out)
+	}
+	// CSV 导出
+	exp := filepath.Join(t.TempDir(), "favs.csv")
+	run(t, "favorite", "add", "--name", "c1", "--command", "dir /s")
+	if out, code := run(t, "favorite", "export", exp); code != 0 || !strings.Contains(out, "已导出 1 条") {
+		t.Errorf("csv export: code=%d out=%q", code, out)
+	}
+}
+
+func TestStatsTrendDistributionAndErrors(t *testing.T) {
+	setBaseDir(t)
+	store, err := db.Open(config.BaseDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; i < 5; i++ {
+		if err := store.RecordUsage(db.UsageRecord{Command: "git log", Dir: "/repo", Shell: "cmd", At: time.Now().Add(-time.Duration(i) * time.Hour)}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	store.Close()
+	if out, code := run(t, "stats", "trend", "7"); code != 0 || !strings.Contains(out, "5 次") {
+		t.Errorf("trend: code=%d out=%q", code, out)
+	}
+	if out, code := run(t, "stats", "distribution"); code != 0 || !strings.Contains(out, "总计 5 次") || !strings.Contains(out, "cmd") {
+		t.Errorf("distribution: code=%d out=%q", code, out)
+	}
+	if _, code := run(t, "stats", "bogus"); code != 2 {
+		t.Error("unknown stats subcommand should return 2")
+	}
+	if _, code := run(t, "stats"); code != 2 {
+		t.Error("bare stats should return 2")
+	}
+}
+
+func TestCompleteWithHistoryAndFlagErrors(t *testing.T) {
+	setBaseDir(t)
+	out, code := run(t, "complete", "--input", "git st", "--shell", "ps", "--history", "git add .|git status", "--json")
+	if code != 0 || !strings.Contains(out, `"top"`) {
+		t.Errorf("complete with history: code=%d out=%s", code, out)
+	}
+	if _, code := run(t, "complete", "--badflag"); code != 2 {
+		t.Error("bad flag should return 2")
+	}
+	if out, code := run(t, "recommend", "--json"); code != 0 {
+		t.Errorf("recommend: code=%d out=%s", code, out)
+	}
+	if _, code := run(t, "recommend", "--badflag"); code != 2 {
+		t.Error("bad flag should return 2")
+	}
+}
+
+func TestVersionHelpAndHistoryCmd(t *testing.T) {
+	setBaseDir(t)
+	if out, code := run(t, "version"); code != 0 || !strings.Contains(out, "CmdPilot") {
+		t.Errorf("version: code=%d out=%q", code, out)
+	}
+	if _, code := run(t, "help"); code != 0 {
+		t.Error("help should return 0")
+	}
+	if out, code := run(t, "history", "5"); code != 0 {
+		t.Errorf("history: code=%d out=%q", code, out)
+	}
+	if out, code := run(t, "history", "bad", "x"); code != 0 {
+		t.Errorf("history badarg: code=%d out=%q", code, out)
+	}
+}
+
+func TestConfigCorruptedRecovery(t *testing.T) {
+	dir := setBaseDir(t)
+	cfgDir := dir
+	if err := os.WriteFile(filepath.Join(cfgDir, "config.json"), []byte("{broken json"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if out, code := run(t, "config", "show"); code != 0 {
+		t.Errorf("corrupted config should fall back: code=%d out=%s", code, out)
+	}
+	// 备份文件应存在
+	matches, _ := filepath.Glob(filepath.Join(cfgDir, "config.json.bak-*"))
+	if len(matches) == 0 {
+		t.Error("backup file not created")
+	}
+}
+
+func TestCommandOverrideErrors(t *testing.T) {
+	setBaseDir(t)
+	if _, code := run(t, "command"); code != 2 {
+		t.Error("bare command should return 2")
+	}
+	if _, code := run(t, "command", "add"); code != 2 {
+		t.Error("command add without flags should return 2")
 	}
 }

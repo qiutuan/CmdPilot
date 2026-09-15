@@ -153,3 +153,86 @@ func TestStateFileWritten(t *testing.T) {
 		t.Errorf("port=%d token len=%d", srv.Port(), len(srv.token))
 	}
 }
+
+// --- 覆盖率补充 ---
+
+func TestCompleteEndpointBadBodyAndRecommend(t *testing.T) {
+	srv, _ := startTestServer(t)
+	// 非法 JSON → 400/500 但不崩溃
+	resp := authedReq(t, srv, http.MethodPost, "/complete", "{bad")
+	if resp.StatusCode == http.StatusOK {
+		t.Error("bad body accepted")
+	}
+	resp.Body.Close()
+	// 合法请求
+	body := `{"input":"git st","shell":"cmd","cwd":"/tmp"}`
+	resp = authedReq(t, srv, http.MethodPost, "/complete", body)
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("complete: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+	// recommend 端点
+	resp = authedReq(t, srv, http.MethodPost, "/recommend", `{"cwd":"/tmp","shell":"cmd"}`)
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("recommend: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+	// stats 端点
+	resp = authedReq(t, srv, http.MethodGet, "/stats", "")
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("stats: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+}
+
+func TestReportAndStatsFlow(t *testing.T) {
+	srv, _ := startTestServer(t)
+	resp := authedReq(t, srv, http.MethodPost, "/report", `{"command":"git log","dir":"/r","shell":"cmd"}`)
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("report: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+	resp = authedReq(t, srv, http.MethodGet, "/stats", "")
+	var out struct {
+		Total int `json:"total"`
+	}
+	_ = json.NewDecoder(resp.Body).Decode(&out)
+	resp.Body.Close()
+	if out.Total < 1 {
+		t.Errorf("stats total = %d", out.Total)
+	}
+}
+
+func TestAITestNotConfigured(t *testing.T) {
+	srv, _ := startTestServer(t) // aiClient=nil（EngineLocal）
+	resp := authedReq(t, srv, http.MethodPost, "/ai/test", "")
+	var out struct {
+		OK    bool   `json:"ok"`
+		Error string `json:"error"`
+	}
+	_ = json.NewDecoder(resp.Body).Decode(&out)
+	resp.Body.Close()
+	if out.OK || !strings.Contains(out.Error, "not configured") {
+		t.Errorf("ai/test = %+v", out)
+	}
+}
+
+func TestAuthMissingAndWrongToken(t *testing.T) {
+	srv, _ := startTestServer(t)
+	req, _ := http.NewRequest(http.MethodGet, "http://127.0.0.1:"+strconv.Itoa(srv.Port())+"/complete", nil)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Errorf("missing auth: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+	req, _ = http.NewRequest(http.MethodGet, "http://127.0.0.1:"+strconv.Itoa(srv.Port())+"/complete", nil)
+	req.Header.Set("Authorization", "Bearer wrong")
+	resp, _ = http.DefaultClient.Do(req)
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Errorf("wrong token: %d", resp.StatusCode)
+	}
+	resp.Body.Close()
+}

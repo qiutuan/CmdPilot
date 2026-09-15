@@ -210,3 +210,16 @@ func errorsAs(err error, target **ErrNon200) bool {
 	}
 	return ok
 }
+
+func TestEndpointErrors(t *testing.T) {
+	if _, err := New("", "k", "m", time.Second).Endpoint(); err == nil {
+		t.Error("empty base_url should error")
+	}
+	if _, err := New("://bad", "k", "m", time.Second).Endpoint(); err == nil {
+		t.Error("bad base_url should error")
+	}
+	e, err := New("https://api.example.com", "k", "m", time.Second).Endpoint()
+	if err != nil || e != "https://api.example.com/v1/chat/completions" {
+		t.Errorf("endpoint = %q %v", e, err)
+	}
+}
