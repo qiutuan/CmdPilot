@@ -1,0 +1,103 @@
+name: Windows CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  unit-and-eval:
+    name: Unit + Eval (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+      - name: Unit tests
+        run: go test -count=1 ./...
+      - name: Full evaluation suite (engine/coverage/degrade/sanitize/stable/e2e/perf)
+        run: go run ./tools/eval all
+
+  powershell-integration:
+    name: PowerShell 5.1 + 7.x integration
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        pwsh_major: [5.1, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+      - name: Build binaries
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force bin | Out-Null
+          go build -trimpath -o bin/cmdpilot.exe ./cmd/cmdpilot
+          go build -trimpath -o bin/cmdpilot-clink.exe ./cmd/cmdpilot-clink
+      - name: Copy binaries into module bin
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force adapters/powershell/CmdPilot/bin | Out-Null
+          Copy-Item bin/cmdpilot.exe adapters/powershell/CmdPilot/bin/
+          Copy-Item bin/cmdpilot-clink.exe adapters/powershell/CmdPilot/bin/
+      - name: Integration on PS ${{ matrix.pwsh_major }}
+        shell: pwsh
+        run: |
+          if ("${{ matrix.pwsh_major }}" -eq "5.1") {
+            $out = powershell -NoProfile -ExecutionPolicy Bypass -Command @"
+`$ErrorActionPreference = 'Stop'
+Import-Module .\adapters\powershell\CmdPilot\CmdPilot.psd1 -Force
+`$s = Get-CmdPilotStatus
+if (`$s -notmatch 'Predictor') { throw 'no status' }
+Disable-CmdPilot
+`$s2 = Get-CmdPilotStatus
+if (`$s2 -notmatch '未启用') { throw 'disable failed' }
+'PS51-OK'
+"@
+            if ($LASTEXITCODE -ne 0 -or $out -notmatch 'PS51-OK') { throw "PS 5.1 integration failed: $out" }
+            Write-Host "PS5.1 OK"
+          } else {
+            Import-Module ./adapters/powershell/CmdPilot/CmdPilot.psd1 -Force
+            $s = Get-CmdPilotStatus
+            if ($s -notmatch 'Predictor') { throw 'no status' }
+            Disable-CmdPilot
+            $s2 = Get-CmdPilotStatus
+            if ($s2 -notmatch '未启用') { throw 'disable failed' }
+            Write-Host "PS7 OK"
+          }
+
+  clink-integration:
+    name: CMD + Clink integration
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+      - name: Build companion
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force bin | Out-Null
+          go build -trimpath -o bin/cmdpilot-clink.exe ./cmd/cmdpilot-clink
+      - name: Install Clink (portable)
+        shell: pwsh
+        run: |
+          $url = "https://github.com/chrisant996/clink/releases/latest/download/clink.zip"
+          Invoke-WebRequest -Uri $url -OutFile "$env:RUNNER_TEMP\clink.zip"
+          Expand-Archive "$env:RUNNER_TEMP\clink.zip" "$env:RUNNER_TEMP\clink" -Force
+          "$env:RUNNER_TEMP\clink" | Out-File -Append $env:GITHUB_PATH
+      - name: Clink inject + companion line-protocol smoke
+        shell: pwsh
+        run: |
+          clink inject --profile "$env:RUNNER_TEMP\clink-profile" --scripts "$PWD\adapters\clink"
+          if ($LASTEXITCODE -ne 0) { throw "clink inject failed" }
+          "cmdpilot-req-v1`ninput=git st`nshell=cmd`ncwd=$env:RUNNER_TEMP" | Out-File -Encoding ascii "$env:RUNNER_TEMP\req.txt"
+          & ".\bin\cmdpilot-clink.exe" --plain --request "$env:RUNNER_TEMP\req.txt" --output "$env:RUNNER_TEMP\out.txt"
+          if ($LASTEXITCODE -ne 0) { throw "companion failed" }
+          $out = Get-Content "$env:RUNNER_TEMP\out.txt" -Raw
+          if ($out -notmatch 'cmdpilot-resp-v1') { throw "line protocol failed: $out" }
+          Write-Host "Clink OK"

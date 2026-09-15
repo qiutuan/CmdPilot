@@ -1,0 +1,33 @@
+{
+  "format": "cmdpilot-favorites",
+  "version": 1,
+  "favorites": [
+    {
+      "ID": 1,
+      "Name": "deploy-prod",
+      "Command": "git push origin main \u0026\u0026 npm run build \u0026\u0026 npm run deploy",
+      "Note": "生产发布",
+      "Tags": "deploy,ci",
+      "Shell": "cmd",
+      "CreatedAt": "2026-09-15T19:34:50+08:00"
+    },
+    {
+      "ID": 2,
+      "Name": "docker-logs",
+      "Command": "docker logs -f --tail 100 {{container}}",
+      "Note": "跟踪容器日志",
+      "Tags": "docker",
+      "Shell": "both",
+      "CreatedAt": "2026-09-15T19:34:50+08:00"
+    },
+    {
+      "ID": 3,
+      "Name": "grep-history",
+      "Command": "Get-History | Where-Object CommandLine -match {{pattern}}",
+      "Note": "搜索历史命令",
+      "Tags": "ps,utility",
+      "Shell": "ps",
+      "CreatedAt": "2026-09-15T19:34:50+08:00"
+    }
+  ]
+}
