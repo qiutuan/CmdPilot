@@ -170,7 +170,7 @@ if (-not $ClinkExe) {
 }
 
 # ---------- 4. $PROFILE 自动加载 ----------
-Write-Step "写入 \$PROFILE 自动加载"
+Write-Step "写入 `$PROFILE 自动加载"
 $profilePath = $PROFILE.CurrentUserAllHosts
 New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
 if (-not (Test-Path $profilePath)) { New-Item -ItemType File -Path $profilePath | Out-Null }
@@ -193,7 +193,7 @@ if ($DataDir) {
 Write-Step "安装完成。"
 Write-Host ""
 Write-Host "下一步："
-Write-Host "  1. 打开新 PowerShell 窗口（或 . \$PROFILE）——启用提示一行并开始幽灵文本补全"
+Write-Host "  1. 打开新 PowerShell 窗口（或 . `$PROFILE）——启用提示一行并开始幽灵文本补全"
 Write-Host "  2. 配置 AI（可选）：cmdpilot config set ai.base_url <url>; cmdpilot config set ai.api_key <key>; cmdpilot config set ai.model <model>"
 Write-Host "  3. CMD：安装 Clink 后即生效；验证：clink inject"
 Write-Host "  4. 卸载：.\uninstall.ps1"

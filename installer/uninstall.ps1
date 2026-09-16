@@ -51,7 +51,7 @@ $profilePath = $PROFILE.CurrentUserAllHosts
 if (Test-Path $profilePath) {
     $lines = Get-Content $profilePath | Where-Object { $_ -notmatch "CmdPilot" }
     Set-Content $profilePath $lines
-    Write-OK "已清理 \$PROFILE 中的 CmdPilot 加载行"
+    Write-OK "已清理 `$PROFILE 中的 CmdPilot 加载行"
 }
 
 # 5. 数据目录（可选）
