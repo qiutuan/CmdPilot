@@ -22,7 +22,7 @@
 | 13 | **评测口径采用官方 go test 覆盖率**（此前自研解析与 go tool cover 不一致，已修正） | 报告必须与权威工具一致，可复现 | tools/eval |
 | 15 | **DPAPI 实现直接使用 x/sys/windows.DataBlob**；daemon stop 兜底 kill 用 os.Process.Kill（跨平台） | Windows 交叉编译实测发现自定义 dataBlob 类型不兼容、syscall.Kill 在 Windows 不存在，均为真实 bug，已修复并加交叉编译验证 | secrets_windows.go / cli.go |
 | 14 | **token 无 workflow 权限时 CI 以示例文件入库** | GitHub 拒绝 PAT 更新 .github/workflows；获得相应权限后复制即启用 | docs/windows-ci.example.yml |
-| 16 | **Tab = "有内联建议则接受、无则退回原生菜单"**，接受前校验光标在行尾 | 只弹菜单不落字对灰色建议等于无效，与 README 承诺不符；建议是整行后缀、插入点在光标，行中插入会破坏输入。列表菜单仍在 Ctrl+Space / Ctrl+@ | 提交 `bb40821` |
+| 16 | **Tab = "有内联建议则接受、无则退回原生菜单"，接受动作委托引擎 `AcceptSuggestion`** | 只弹菜单不落字对灰色建议等于无效，与 README 承诺不符。接受必须走引擎 API：它一次覆盖插件建议与**历史**建议（HistoryAndPlugin 下历史建议同步立刻出现），并自带插入语义与状态同步；本模块自己读快照插入等于维护第二份真相，实测必然打架（"看得见幽灵文本但 Tab 无效"，按 Tab 得到 MenuComplete 的 `Display all N possibilities?`） | 提交 `bb40821` → `55f99c3` |
 | 17 | **预测器 worker 每代输入只取一次结果**（`$lastGen` 记账，取前先记账） | 写完快照不改变 `gen`/`pending`，"输入未变"判断会对同一输入无限重取——实测空闲 6 秒起 18 个 companion 进程，是输入延迟的根源；取前记账可避免失败重试风暴 | 提交 `97fd6ec` |
 | 18 | **模块内不抛异常**（探测/启用/注销一律走正常分支） | 异常的记录进的是**宿主** `$Error`，与模块 `$Error` 是两份列表（`ReferenceEquals` 实测 False），模块内清不掉；用户会看到红字 | 提交 `1e8f598` |
 
@@ -79,6 +79,10 @@
   判据取自 PSReadLine 2.2.5 源码（`_console` 为 `LegacyWin32Console` 即抛）。
 - `Enable-CmdPilotPredictionOptions` 属性/参数名笔误：真名 `PredictionViewStyle`
   （2.4.5 反射实证，无 `PredictionView` 亦无别名），旧写法使该段恒不执行。
+- Tab 接受建议不能自建实现（第一版读自家快照后 `Insert` 失败）：内联视图里的建议
+  有两个来源，`PredictionSource=HistoryAndPlugin` 下历史建议同步立刻出现，自建快照
+  对不上就退回菜单；改调引擎 `AcceptSuggestion`（无建议时为空操作，用缓冲区前后
+  比对区分）后一次覆盖两者。
 
 ## 五、已知限制
 

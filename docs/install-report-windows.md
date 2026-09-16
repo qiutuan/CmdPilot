@@ -119,15 +119,34 @@ companion 进程，永远停不下来。实测：空闲 6 秒内创建 **18 个*
 加 `$lastGen` 记账（每代只取一次，取前先记账以免失败重试风暴）后，
 同样条件下 **6 秒内 1 次**。
 
-### 2. Tab 语义——"有则接受，无则菜单"（提交 `bb40821`）
+### 2. Tab 语义——"有则接受，无则菜单"（提交 `bb40821`，**二次修正 `55f99c3`**）
 
 原实现把 Tab 固定绑 `MenuComplete`：只弹候选列表、不落字，对灰色建议等于"无效"，
-与本模块 README 承诺的"按 Tab 或 → 接受"不一致。现改为：
+与本模块 README 承诺的"按 Tab 或 → 接受"不一致。改为"有内联建议则接受、否则退回
+原生菜单"。
 
-- 光标在**行尾**且快照已有该输入的建议 → `Insert` 落下幽灵文本（零成本：复用
-  worker 早已取好的快照，新增只读的 `PeekSuggestion`，不起进程、不阻塞）；
-- 其余情况（光标在行中、无建议）→ 退回 PSReadLine 原生菜单。
-  光标校验是必需的：建议是**整行后缀**，插入点在光标处，行中插入会破坏输入。
+**第一版（`bb40821`）走了弯路**：接受动作由本模块自己做（读快照 → `Insert` 后缀），
+为此加了 `PeekSuggestion`。但鼠标键盘实测仍"Tab 无效"，按 Tab 得到 PSReadLine 的
+`Display all {0} possibilities? (y or n) _`（该串出自 PSReadLine 资源
+`get_DisplayAllPossibilities`，是 `MenuComplete` 在候选数超过 `CompletionQueryItems`
+时的确认提示）——说明处理器绑好了、只是**接受分支没命中**，落回了菜单。
+
+根因：`PredictionSource=HistoryAndPlugin` 时内联视图里**同时**有插件建议和
+**历史**建议，而历史建议是同步立刻出现的；本模块只认自家快照，输入一多、或按键早于
+worker 出结果，快照就对不上 → 判为"无建议" → 弹菜单。**同一份事实存在两个来源，
+必然打架。**
+
+**第二版（`55f99c3`，现行）改为委托引擎**：
+
+- 接受动作调 `[Microsoft.PowerShell.PSConsoleReadLine]::AcceptSuggestion($key, $null)`
+  —— 2.4.5 `Prediction.cs` 里它是"内联视图有活动建议则插入其后缀"，**一次覆盖插件
+  建议与历史建议**，并自带引擎语义（`_current = _buffer.Length` 后插入）与状态同步
+  （`OnSuggestionAccepted`），不会留下陈旧建议；
+- 无建议时同一份源码显示它是**空操作**（`HasActiveSuggestion` 为假直接返回、不移动
+  光标），故用 `Get-CmdPilotBuffer` 比对**调用前后的行内容**：变了=已接受，没变=
+  本来就没有建议 → 才退回 `MenuComplete`；缓冲区读不到（`cursor < 0`）时直接走菜单，
+  与改动前行为一致、不做猜测；
+- 随之**删除 `PeekSuggestion`** —— 与引擎重复的第二份真相正是本 bug 的来源。
 - 列表菜单仍留在 PSReadLine 默认键位 **Ctrl+@**，能力未丢。
 
 **→ 不需要绑定**：PSReadLine 默认 `RightArrow` → `ForwardChar`，而 `ForwardChar`
@@ -173,14 +192,15 @@ text when the cursor is at the end of the line."，与 Tab 的判据完全一致
 
 | 场景 | 结果 |
 |---|---|
-| 真实控制台 pwsh 7.6.6 | `ApiKind=new`、`PredictionSource=HistoryAndPlugin`、`PredictionViewStyle=InlineView`、`registered=True`、`Tab 绑定=CmdPilotAcceptOrMenu`；导入 / 二次导入 / `Disable`×2 后 `global Error count` 均为 **0** |
-| 输出被重定向的 pwsh 7 | 6 条建议、inline 为 `'atus'`，`PeekSuggestion('git st')` → ready/`'atus'`/`'git status'`，`PeekSuggestion('git stq')` → not ready，`Error count=0`（修复前为 2） |
+| 真实控制台 pwsh 7.6.6 | `Console.IsOutputRedirected=False`（确系真控制台）、`ApiKind=new`、`PredictionSource=HistoryAndPlugin`、`PredictionViewStyle=InlineView`、`Tab 绑定=CmdPilotAcceptOrMenu`、`AcceptSuggestion` 方法存在且 `$psr::AcceptSuggestion($null,$null)` **不抛绑定异常**、`Get-CmdPilotBuffer` 可用（`cursor=0`）；导入 / 二次导入 / `Disable`×2 后 `global Error count` 均为 **0** |
+| 输出被重定向的 pwsh 7 | 6 条建议、inline 为 `'atus'`；`Tab=CmdPilotAcceptOrMenu`、`PeekSuggestion` 已移除、`Get-CmdPilotBuffer` 可用、`AcceptSuggestion` 调用不抛，`Error count=0`（修复前为 2） |
 | PS 5.1 | `ApiKind=none`、`TabFallback=True`、`PromptWrapped=True`、`Tab→CmdPilotAITab`，`Error count=0`（修复前为 1） |
 | 模块完整性 | `CmdPilot.psm1`/`PredictorNew.ps1` 的 UTF-8 BOM 保留；仓库、PS7 安装目录、PS5.1 安装目录三方 SHA256 一致 |
 
 **未独立验证**：Tab **按键**路径的端到端效果（向用户控制台注入按键会抢焦点，无法
-无干扰完成）。已分别验证处理函数绑定、`PeekSuggestion` 的 ready/text/full 与光标
-行尾校验逻辑，仍需在真实会话中按一次 Tab 确认。
+无干扰完成）。已验证处理函数绑定、`AcceptSuggestion` 的调用绑定与存在性、缓冲区
+读写与变化判定所依赖的 `Get-CmdPilotBuffer`，以及 PS 5.1 的降级路径；接受动作本身
+由引擎执行，仍需在真实会话中按一次 Tab 确认。
 
 ---
 
