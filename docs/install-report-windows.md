@@ -312,6 +312,19 @@ worker 在自己的 runspace 里 `Get-Location` 拿到的是**进程工作目录
 
 GitHub 认证凭据经 **Windows 凭据管理器（GCM）** 存储，未以明文写入仓库或配置文件。
 
+后续修复同样按功能/模块拆分（每项一个聚焦提交）：
+
+| 提交 | 内容 |
+|---|---|
+| `97fd6ec` | `perf(ps):` worker 每代输入只取一次（`$lastGen` 记账），修空转重取 |
+| `bb40821`→`55f99c3` | `fix(ps):` Tab 改走引擎 `AcceptSuggestion`，修"看得见幽灵文本但 Tab 无效" |
+| `1e8f598` | `fix(ps):` 三处"异常当控制流"改正常分支，清掉宿主 `$Error` 红字 |
+| `a7f4c60` | `fix(ps):` 去掉 `new` 分支重复的 prompt 统计钩子（命令重复上报） |
+| `5a333ed` | `feat(ps):` 新增编译版预测器核心 `PredictorCore.cs` |
+| `da23e45` | `perf(ps):` 回调改走编译核心，消除每键 31ms 超时（长命令卡顿根因） |
+| `0cd8c95` | `fix(ps):` worker 改用控制台当前位置拼请求 |
+| `7f07bad` | `docs(ps):` 根因、决策 19/20 与三层验证记录 |
+
 ---
 
 ## 总结
