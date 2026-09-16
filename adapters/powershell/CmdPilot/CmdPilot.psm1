@@ -45,7 +45,9 @@ if (-not (Test-Path -LiteralPath $script:CmdPilotMain)) {
     $script:CmdPilotMain = 'cmdpilot'
 }
 $script:CmdPilotPredictor = $null
-$script:CmdPilotApiKind = 'legacy'   # 'new' | 'legacy'
+$script:CmdPilotApiKind = 'none'     # 'new' | 'legacy' | 'none'（无预测器 API，退化为 Tab 补全）
+$script:CmdPilotPSRStatic = $null    # PSReadLine 静态类（版本探测后缓存）
+$script:CmdPilotTabFallback = $false # 无预测器 API 时已启用 Tab 降级补全
 $script:CmdPilotPromptWrapped = $false
 $script:CmdPilotOriginalPrompt = $null
 $script:CmdPilotLastHistoryCount = 0
@@ -62,6 +64,43 @@ function Get-CmdPilotConfig {
 }
 
 # ---- 伴侣进程调用（供 Tab 模式等公共命令使用） ------------------------------
+function Start-CmdPilotProcess {
+    <#
+    .SYNOPSIS
+    以 CreateNoWindow 方式启动可执行文件并等待退出，返回退出码（失败返回 -1）。
+    # 不用 ProcessStartInfo.ArgumentList —— PS 5.1 + .NET Framework 运行时缺失该
+    # 属性（PropertyNotFoundException，本机实证），改为手工拼参数串并逐参加引号。
+    # 参数名不能用 $Args（与自动变量 $args 冲突，实测绑定后取到空数组）。
+    #>
+    param(
+        [string] $Exe,
+        [string[]] $ArgList,
+        [int] $TimeoutMs = 0
+    )
+    try {
+        $psi = [System.Diagnostics.ProcessStartInfo]::new()
+        $psi.FileName = $Exe
+        # .NET 命令行解析规则：参数用双引号包裹，参数内双引号以 "" 转义
+        $psi.Arguments = ($ArgList | ForEach-Object { '"' + $_.Replace('"', '""') + '"' }) -join ' '
+        $psi.UseShellExecute = $false
+        $psi.CreateNoWindow = $true
+        $p = [System.Diagnostics.Process]::new()
+        $p.StartInfo = $psi
+        if (-not $p.Start()) { return -1 }
+        if ($TimeoutMs -gt 0) {
+            if (-not $p.WaitForExit($TimeoutMs)) {
+                try { $p.Kill() } catch { }
+                return -1
+            }
+        } else {
+            $p.WaitForExit() | Out-Null
+        }
+        return $p.ExitCode
+    } catch {
+        return -1
+    }
+}
+
 function Invoke-CmdPilotCompanion {
     param(
         [hashtable] $Request,
@@ -72,22 +111,15 @@ function Invoke-CmdPilotCompanion {
         $out = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-ps-' + [guid]::NewGuid().ToString('N') + '.out.json')
         $json = $Request | ConvertTo-Json -Compress -Depth 5
         [System.IO.File]::WriteAllText($tmp, $json)
-        $psi = [System.Diagnostics.ProcessStartInfo]::new()
-        $psi.FileName = $script:CmdPilotCompanion
-        $psi.ArgumentList.Add('--request'); $psi.ArgumentList.Add($tmp)
-        $psi.ArgumentList.Add('--output'); $psi.ArgumentList.Add($out)
-        $psi.UseShellExecute = $false
-        $psi.CreateNoWindow = $true
-        $p = [System.Diagnostics.Process]::new()
-        $p.StartInfo = $psi
-        if (-not $p.Start()) { return $null }
-        if (-not $p.WaitForExit($TimeoutMs)) {
-            try { $p.Kill() } catch { }
-            return $null
-        }
+        $code = Start-CmdPilotProcess -Exe $script:CmdPilotCompanion `
+            -ArgList @('--request', $tmp, '--output', $out) -TimeoutMs $TimeoutMs
+        if ($code -lt 0) { return $null }
         if (-not (Test-Path -LiteralPath $out)) { return $null }
         $obj = [System.IO.File]::ReadAllText($out) | ConvertFrom-Json
-        if ($obj.error) { return $null }
+        # 模块开了 Set-StrictMode 2.0：裸属性访问不存在的字段会抛
+        # PropertyNotFoundException，必须经 PSObject.Properties 探测。
+        $errProp = $obj.PSObject.Properties['error']
+        if ($null -ne $errProp -and $null -ne $errProp.Value) { return $null }
         return $obj
     } catch {
         return $null
@@ -101,17 +133,82 @@ function Send-CmdPilotReport {
     param([string] $Command, [string] $Dir, [string] $Shell)
     if (-not $Command) { return }
     try {
-        $psi = [System.Diagnostics.ProcessStartInfo]::new()
-        $psi.FileName = $script:CmdPilotCompanion
-        $psi.ArgumentList.Add('--report'); $psi.ArgumentList.Add($Command)
-        $psi.ArgumentList.Add('--report-dir'); $psi.ArgumentList.Add($Dir)
-        $psi.ArgumentList.Add('--report-shell'); $psi.ArgumentList.Add($Shell)
-        $psi.UseShellExecute = $false
-        $psi.CreateNoWindow = $true
-        $p = [System.Diagnostics.Process]::new()
-        $p.StartInfo = $psi
-        if ($p.Start()) { $p.WaitForExit(1000) | Out-Null }
+        Start-CmdPilotProcess -Exe $script:CmdPilotCompanion `
+            -ArgList @('--report', $Command, '--report-dir', $Dir, '--report-shell', $Shell) -TimeoutMs 1000 | Out-Null
     } catch { }
+}
+
+# ---- PSReadLine 静态 API 兼容层 -------------------------------------------
+# PSReadLine 2.3.0 起把静态类 Microsoft.PowerShell.PSReadLine.PSReadLine 更名为
+# Microsoft.PowerShell.PSConsoleReadLine，并移除 GetLineState()（改为
+# GetBufferState([ref],[ref])）。以下函数按版本解析正确的类型与入口，使 Tab
+# 补全在 PSReadLine 2.2.x / 2.3+ 上都能工作。
+function Resolve-CmdPilotPSReadLineStatic {
+    <#
+    .SYNOPSIS
+    返回提供当前缓冲静态方法的 PSReadLine 类型（2.3+ 为 PSConsoleReadLine，2.2 为 PSReadLine.PSReadLine）。
+    #>
+    if ($script:CmdPilotPSRStatic) { return $script:CmdPilotPSRStatic }
+    $asm = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GetName().Name -eq 'Microsoft.PowerShell.PSReadLine' }
+    if ($null -ne $asm) {
+        foreach ($n in @('Microsoft.PowerShell.PSConsoleReadLine', 'Microsoft.PowerShell.PSReadLine.PSReadLine')) {
+            $t = $asm.GetType($n)
+            if ($null -ne $t) {
+                $script:CmdPilotPSRStatic = $t
+                return $t
+            }
+        }
+    }
+    return $null
+}
+
+function Get-CmdPilotLineState {
+    <#
+    .SYNOPSIS
+    读取当前输入行：PSReadLine 2.3+ 用 GetBufferState([ref])，2.2 用 GetLineState()。
+    #>
+    $line = ''
+    $psr = Resolve-CmdPilotPSReadLineStatic
+    if ($null -eq $psr) { return $line }
+    # PSReadLine 2.3+ 的 GetBufferState 有两个重载（无参与 out string/out int），
+    # 必须按参数类型精确选型，否则 GetMethod 抛 AmbiguousMatchException。
+    $gm = $psr.GetMethod('GetBufferState', [type[]]@([string].MakeByRefType(), [int].MakeByRefType()))
+    if ($null -ne $gm) {
+        $cursor = 0
+        try { $psr::GetBufferState([ref]$line, [ref]$cursor) } catch { $line = '' }
+    } else {
+        try {
+            $ls = $psr::GetLineState()
+            if ($null -ne $ls) { $line = [string]$ls.Buffer }
+        } catch { $line = '' }
+    }
+    return $line
+}
+
+function Set-CmdPilotTabKey {
+    <#
+    .SYNOPSIS
+    绑定/还原 Tab 键：-AiTab 时按 Tab 调 companion 补全，否则还原为 PSReadLine 默认 MenuComplete。
+    #>
+    [CmdletBinding()]
+    param([switch] $AiTab)
+    if ($AiTab) {
+        Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAITab' -ScriptBlock {
+            $line = Get-CmdPilotLineState
+            $req = @{ input = $line; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'tab' }
+            $result = Invoke-CmdPilotCompanion -Request $req -TimeoutMs 1500
+            $tp = $null
+            if ($result) { $tp = $result.PSObject.Properties['top'] }
+            $psr = Resolve-CmdPilotPSReadLineStatic
+            if ($tp -and $tp.Value -and $tp.Value.PSObject.Properties['text'] -and $psr) {
+                $psr::Insert([string]$tp.Value.text)
+            } elseif ($psr) {
+                $psr::MenuComplete($args[0], $null)
+            }
+        }
+    } else {
+        Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+    }
 }
 
 # ============================================================================
@@ -217,10 +314,12 @@ class CmdPilotPredictorBase {
                 $out = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-w-' + [guid]::NewGuid().ToString('N') + '.out.json')
                 try {
                     [System.IO.File]::WriteAllText($tmp, $json)
+                    # 不用 ArgumentList（PS 5.1 缺失该属性）：手工拼参数串
+                    $argList = @('--request', $tmp, '--output', $out) |
+                        ForEach-Object { '"' + $_.Replace('"', '""') + '"' }
                     $psi = [System.Diagnostics.ProcessStartInfo]::new()
                     $psi.FileName = $companion
-                    $psi.ArgumentList.Add('--request'); $psi.ArgumentList.Add($tmp)
-                    $psi.ArgumentList.Add('--output'); $psi.ArgumentList.Add($out)
+                    $psi.Arguments = $argList -join ' '
                     $psi.UseShellExecute = $false
                     $psi.CreateNoWindow = $true
                     $p = [System.Diagnostics.Process]::new()
@@ -274,20 +373,70 @@ class CmdPilotPredictorBase {
 }
 
 # ============================================================================
-# API 探测与实现加载：只 dot-source 当前主机可用的一份
+# API 探测与实现加载：只 dot-source 当前主机可用的一份。
+# PSReadLine 预测 API 分两代：2.3.4+ / PS 7.4+ 的 Subsystem API，与 2.2.x 的
+# legacy ICommandPredictor。PS 5.1 + PSReadLine 2.3+ 两代皆无（2.3 移除 legacy
+# 且 PS 5.1 无 Subsystem），归为 'none'：不加载任何预测器类，退化为 Tab 补全
+# （见 Enable-CmdPilot），模块仍可用而不报错。
 # ============================================================================
-$script:CmdPilotApiKind = 'legacy'
-try {
-    if ($null -ne [System.Management.Automation.Subsystem.Prediction.ICommandPredictor]) {
-        $script:CmdPilotApiKind = 'new'
-    }
-} catch {
-    $script:CmdPilotApiKind = 'legacy'
+function Get-CmdPilotPSReadLineModule {
+    # 画廊版模块名是 PSReadLine；Windows 11 内建版也叫 PSReadLine（位于
+    # Program Files\WindowsPowerShell\Modules\PSReadLine\2.0.0），只有个别旧系统
+    # 才叫 Microsoft.PowerShell.PSReadLine。按名称逐一探测，取最高版本。
+    return Get-Module -ListAvailable |
+        Where-Object { $_.Name -in @('PSReadLine', 'Microsoft.PowerShell.PSReadLine') } |
+        Sort-Object Version -Descending | Select-Object -First 1
 }
+
+function Test-CmdPilotPredictorApi {
+    # 先探引擎级 Subsystem API（PS 7.4+ / PSReadLine 2.3.4+）
+    try {
+        if ($null -ne [type]::GetType('System.Management.Automation.Subsystem.Prediction.ICommandPredictor')) {
+            return 'new'
+        }
+    } catch { }
+    # legacy API：类型位于 PSReadLine 程序集，需先确保模块已加载再探测
+    $psr = Get-CmdPilotPSReadLineModule
+    if ($psr -and $psr.Version -ge [version]'2.2.0' `
+        -and -not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
+        try { Import-Module $psr.Name -ErrorAction Stop } catch { }
+    }
+    $asm = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GetName().Name -eq 'Microsoft.PowerShell.PSReadLine' }
+    if ($null -ne $asm -and $null -ne $asm.GetType('Microsoft.PowerShell.PSReadLine.ICommandPredictor')) {
+        return 'legacy'
+    }
+    return 'none'
+}
+
+$script:CmdPilotApiKind = Test-CmdPilotPredictorApi
 if ($script:CmdPilotApiKind -eq 'new') {
     . (Join-Path $PSScriptRoot 'PredictorNew.ps1')
-} else {
+} elseif ($script:CmdPilotApiKind -eq 'legacy') {
     . (Join-Path $PSScriptRoot 'PredictorLegacy.ps1')
+}
+
+function Enable-CmdPilotPromptStats {
+    # 旧 API（legacy / 'none' 降级）无"命令已执行"事件：用 prompt 钩子补统计
+    # （新 API 用 OnCommandLineExecuted）。幂等。
+    if ($script:CmdPilotPromptWrapped) { return }
+    $script:CmdPilotOriginalPrompt = $function:prompt
+    $script:CmdPilotLastHistoryCount = @(Get-History).Count
+    $function:prompt = {
+        try {
+            $h = @(Get-History)
+            if ($h.Count -gt $script:CmdPilotLastHistoryCount) {
+                $new = @($h | Select-Object -Skip $script:CmdPilotLastHistoryCount)
+                $script:CmdPilotLastHistoryCount = $h.Count
+                foreach ($c in $new) {
+                    if ($c.CommandLine) {
+                        Send-CmdPilotReport -Command $c.CommandLine -Dir (Get-Location).Path -Shell 'ps'
+                    }
+                }
+            }
+        } catch { }
+        & $script:CmdPilotOriginalPrompt
+    }
+    $script:CmdPilotPromptWrapped = $true
 }
 
 # ============================================================================
@@ -311,6 +460,28 @@ function Enable-CmdPilot {
         Write-Verbose 'CmdPilot: already enabled'
         return
     }
+    # 无预测器 API 的主机（PS 5.1 + PSReadLine 2.3+）：退化为 Tab 补全，不创建预测器类。
+    if ($script:CmdPilotApiKind -eq 'none') {
+        if ($script:CmdPilotTabFallback) { return }
+        $psr = Get-CmdPilotPSReadLineModule
+        if (-not $psr -or $psr.Version -lt [version]'2.2.0') {
+            Write-Warning 'CmdPilot: 需要 PSReadLine >= 2.2（运行: Install-Module PSReadLine -Force -Scope CurrentUser），未启用。'
+            return
+        }
+        if (-not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
+            try { Import-Module $psr.Name -ErrorAction Stop } catch {
+                Write-Warning 'CmdPilot: 无法加载 PSReadLine，未启用。'
+                return
+            }
+        }
+        Set-CmdPilotTabKey -AiTab
+        $script:CmdPilotTabFallback = $true
+        Enable-CmdPilotPromptStats
+        if (-not $Silent) {
+            Write-Host 'CmdPilot 已启用 [Tab 降级] — 当前宿主无预测器 API（PS 5.1 + PSReadLine 2.3+），Tab 触发本地/AI 补全可用；inline 幽灵文本需 PSReadLine 2.2.x 或 PowerShell 7.4+（cmdpilot help）' -ForegroundColor Yellow
+        }
+        return
+    }
     $predictor = [CmdPilotPredictor]::new()
     $predictor.SetTabOnly($Mode -eq 'Tab')
     try {
@@ -318,14 +489,13 @@ function Enable-CmdPilot {
             [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
                 [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor)
         } else {
-            $psr = Get-Module Microsoft.PowerShell.PSReadLine -ListAvailable |
-                Sort-Object Version -Descending | Select-Object -First 1
+            $psr = Get-CmdPilotPSReadLineModule
             if (-not $psr -or $psr.Version -lt [version]'2.2.0') {
                 Write-Warning 'CmdPilot: 需要 PSReadLine >= 2.2（运行: Install-Module PSReadLine -Force -Scope CurrentUser），未启用。'
                 return
             }
-            if (-not (Get-Module PSReadLine)) {
-                try { Import-Module PSReadLine -ErrorAction Stop } catch {
+            if (-not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
+                try { Import-Module $psr.Name -ErrorAction Stop } catch {
                     Write-Warning 'CmdPilot: 无法加载 PSReadLine，未启用。'
                     return
                 }
@@ -338,42 +508,12 @@ function Enable-CmdPilot {
     }
     $script:CmdPilotPredictor = $predictor
     if ($Mode -eq 'Tab') {
-        Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAITab' -ScriptBlock {
-            $line = [Microsoft.PowerShell.PSReadLine]::GetLineState() | ForEach-Object { $_.Buffer }
-            $req = @{ input = $line; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'tab' }
-            $result = Invoke-CmdPilotCompanion -Request $req -TimeoutMs 1500
-            $tp = $null
-            if ($result) { $tp = $result.PSObject.Properties['top'] }
-            if ($tp -and $tp.Value -and $tp.Value.PSObject.Properties['text']) {
-                [Microsoft.PowerShell.PSReadLine]::Insert([string]$tp.Value.text)
-            } else {
-                [Microsoft.PowerShell.PSReadLine]::MenuComplete($args[0], $null)
-            }
-        }
+        Set-CmdPilotTabKey -AiTab
     } else {
-        Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+        Set-CmdPilotTabKey
     }
-    # 旧 API 无"命令已执行"事件：用 prompt 钩子补统计（新 API 用 OnCommandLineExecuted）。
-    if ($script:CmdPilotApiKind -eq 'legacy' -and -not $script:CmdPilotPromptWrapped) {
-        $script:CmdPilotOriginalPrompt = $function:prompt
-        $script:CmdPilotLastHistoryCount = @(Get-History).Count
-        $function:prompt = {
-            try {
-                $h = @(Get-History)
-                if ($h.Count -gt $script:CmdPilotLastHistoryCount) {
-                    $new = @($h | Select-Object -Skip $script:CmdPilotLastHistoryCount)
-                    $script:CmdPilotLastHistoryCount = $h.Count
-                    foreach ($c in $new) {
-                        if ($c.CommandLine) {
-                            Send-CmdPilotReport -Command $c.CommandLine -Dir (Get-Location).Path -Shell 'ps'
-                        }
-                    }
-                }
-            } catch { }
-            & $script:CmdPilotOriginalPrompt
-        }
-        $script:CmdPilotPromptWrapped = $true
-    }
+    # 旧 API（legacy / 'none' 降级）无"命令已执行"事件：用 prompt 钩子补统计（新 API 用 OnCommandLineExecuted）。
+    Enable-CmdPilotPromptStats
     if (-not $Silent) {
         $cfg = Get-CmdPilotConfig
         $engine = 'hybrid'
@@ -420,6 +560,7 @@ function Disable-CmdPilot {
         $function:prompt = $script:CmdPilotOriginalPrompt
         $script:CmdPilotPromptWrapped = $false
     }
+    $script:CmdPilotTabFallback = $false
     Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete -ErrorAction SilentlyContinue
     Write-Host 'CmdPilot 已禁用（当前会话）。重启会话可完全清除。' -ForegroundColor DarkGray
 }
@@ -437,20 +578,9 @@ function Set-CmdPilotMode {
     }
     $script:CmdPilotPredictor.SetTabOnly($Mode -eq 'Tab')
     if ($Mode -eq 'Tab') {
-        Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAITab' -ScriptBlock {
-            $line = [Microsoft.PowerShell.PSReadLine]::GetLineState() | ForEach-Object { $_.Buffer }
-            $req = @{ input = $line; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'tab' }
-            $result = Invoke-CmdPilotCompanion -Request $req -TimeoutMs 1500
-            $tp = $null
-            if ($result) { $tp = $result.PSObject.Properties['top'] }
-            if ($tp -and $tp.Value -and $tp.Value.PSObject.Properties['text']) {
-                [Microsoft.PowerShell.PSReadLine]::Insert([string]$tp.Value.text)
-            } else {
-                [Microsoft.PowerShell.PSReadLine]::MenuComplete($args[0], $null)
-            }
-        }
+        Set-CmdPilotTabKey -AiTab
     } else {
-        Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+        Set-CmdPilotTabKey
     }
     Write-Host "CmdPilot 模式: $Mode"
 }
@@ -464,6 +594,8 @@ function Get-CmdPilotStatus {
     param()
     $mode = if ($script:CmdPilotPredictor) {
         if ($script:CmdPilotPredictor.GetTabOnly()) { 'Tab' } else { 'Auto' }
+    } elseif ($script:CmdPilotTabFallback) {
+        'Tab 降级'
     } else { '未启用' }
     Write-Host "Predictor: $mode  (API: $script:CmdPilotApiKind)" -ForegroundColor Cyan
     $cfg = Get-CmdPilotConfig
@@ -508,14 +640,8 @@ function Sync-CmdPilotHistory {
     $batch = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-history-' + [guid]::NewGuid().ToString('N') + '.txt')
     try {
         $lines | Set-Content -LiteralPath $batch -Encoding UTF8
-        $psi = [System.Diagnostics.ProcessStartInfo]::new()
-        $psi.FileName = $script:CmdPilotCompanion
-        $psi.ArgumentList.Add('--report-batch'); $psi.ArgumentList.Add($batch)
-        $psi.UseShellExecute = $false
-        $psi.CreateNoWindow = $true
-        $p = [System.Diagnostics.Process]::new()
-        $p.StartInfo = $psi
-        if ($p.Start()) { $p.WaitForExit(3000) | Out-Null }
+        Start-CmdPilotProcess -Exe $script:CmdPilotCompanion `
+            -ArgList @('--report-batch', $batch) -TimeoutMs 3000 | Out-Null
         Write-Host "已导入最近 $($lines.Count) 条历史到统计。"
     } finally {
         Remove-Item -LiteralPath $batch -Force -ErrorAction SilentlyContinue
