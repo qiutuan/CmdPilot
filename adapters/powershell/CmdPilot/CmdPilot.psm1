@@ -602,8 +602,10 @@ function Enable-CmdPilot {
     } else {
         Set-CmdPilotTabKey
     }
-    # 'none' 降级无"命令已执行"事件：用 prompt 钩子补统计（新 API 用 OnCommandLineExecuted）。
-    Enable-CmdPilotPromptStats
+    # 此处**不**调用 Enable-CmdPilotPromptStats：prompt 钩子是为 'none' 降级路径
+    # 补"命令已执行"事件用的（新 API 有 OnCommandLineExecuted）。在本分支再挂一层
+    # 只会让每条命令被上报两次（usage_stats 计数翻倍），并给每次 prompt 渲染加上
+    # 一次 Get-History 的固定开销。
     if (-not $Silent) {
         $cfg = Get-CmdPilotConfig
         $engine = 'hybrid'
