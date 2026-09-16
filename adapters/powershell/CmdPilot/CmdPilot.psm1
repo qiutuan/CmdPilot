@@ -185,6 +185,29 @@ function Get-CmdPilotLineState {
     return $line
 }
 
+function Get-CmdPilotBuffer {
+    <#
+    .SYNOPSIS
+    读取当前输入行与光标位置。Tab 接受建议前必须知道光标是否在行尾：建议是整行的
+    后缀，插入发生在光标处，光标在行中时插入会破坏输入。取不到时 cursor = -1
+    （调用方按"不可接受"处理，退回原生菜单）。
+    #>
+    $r = @{ line = ''; cursor = -1 }
+    $psr = Resolve-CmdPilotPSReadLineStatic
+    if ($null -eq $psr) { return $r }
+    # 与 Get-CmdPilotLineState 同理：GetBufferState 有重载，反射取型避免歧义。
+    $gm = $psr.GetMethod('GetBufferState', [type[]]@([string].MakeByRefType(), [int].MakeByRefType()))
+    if ($null -eq $gm) { return $r }
+    $line = ''
+    $cursor = 0
+    try {
+        $psr::GetBufferState([ref]$line, [ref]$cursor)
+        $r.line = [string]$line
+        $r.cursor = [int]$cursor
+    } catch { }
+    return $r
+}
+
 function Set-CmdPilotTabKey {
     <#
     .SYNOPSIS
@@ -207,7 +230,27 @@ function Set-CmdPilotTabKey {
             }
         }
     } else {
-        Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+        # 幽灵文本已出现时 Tab = 接受（把快照里的后缀插入当前行）；没有才退回 PSReadLine
+        # 原生候选菜单。快照是 worker 早已取好的结果，接受零成本、不起进程、不阻塞
+        # （此前 Tab 固定绑 MenuComplete：只弹列表、不落字，对灰色建议等于"无效"，
+        #  与本模块 README 承诺的"按 Tab 或 → 接受"不一致）。
+        # 列表菜单仍在 PSReadLine 默认键位上（Ctrl+Space / Ctrl+@）。
+        Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAcceptOrMenu' -ScriptBlock {
+            $psr = Resolve-CmdPilotPSReadLineStatic
+            if (-not $psr) { return }
+            $buf = Get-CmdPilotBuffer
+            $line = [string]$buf['line']
+            $p = $script:CmdPilotPredictor
+            # 光标在行尾才接受：建议是整行后缀，插入点即光标，光标在行中会插错位置。
+            if ($p -and $line -and $buf['cursor'] -eq $line.Length) {
+                $peek = $p.PeekSuggestion($line)
+                if ($peek['ready'] -and $peek['text']) {
+                    $psr::Insert([string]$peek['text'])
+                    return
+                }
+            }
+            $psr::MenuComplete($args[0], $null)
+        }
     }
 }
 
@@ -269,6 +312,27 @@ class CmdPilotPredictorBase {
 
     [void] SetTabOnly([bool] $v) { $this.Sync.tabOnly = $v }
     [bool] GetTabOnly() { return [bool]$this.Sync.tabOnly }
+
+    # 只读查询：当前快照是否已对 $input 算好（供 Tab 接受内联建议用）。
+    # 不登记新一轮输入、不起进程——worker 早已取好的结果直接复用，故接受是零成本。
+    [hashtable] PeekSuggestion([string] $input) {
+        $s = $this.Sync
+        $r = @{ ready = $false; text = ''; full = '' }
+        [System.Threading.Monitor]::Enter($s.lock)
+        try {
+            if ($s.snapInput -eq $input -and $null -ne $s.snapTop) {
+                $tp = $s.snapTop.PSObject.Properties['text']
+                if ($tp -and -not [string]::IsNullOrEmpty([string]$tp.Value)) {
+                    $r.ready = $true
+                    $r.text = [string]$tp.Value
+                    $r.full = [string]$s.snapFull
+                }
+            }
+        } finally {
+            [System.Threading.Monitor]::Exit($s.lock)
+        }
+        return $r
+    }
 
     # 登记新一轮输入并返回当前快照（只读锁内拷贝）。
     hidden [hashtable] RegisterAndGetSnapshot([string] $input) {
