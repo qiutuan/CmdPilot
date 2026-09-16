@@ -311,6 +311,11 @@ class CmdPilotPredictorBase {
         $cmp = $this.CompanionPath
         $sb = {
             param($s, $companion)
+            # 已经为哪一代输入取过结果。写完快照并不改变 gen/pending，若无此标记，
+            # 下一轮循环会判定"输入没变"从而对**同一个输入**再次起进程，形成永久空转
+            # 重取——实测空闲 6 秒仍触发 18 次 companion 进程创建（每次约 22ms 进程创建
+            # + 两个临时文件 + Defender 扫描），是窗口卡顿/输入延迟的根源。每代只取一次。
+            $lastGen = -1
             while ($true) {
                 Start-Sleep -Milliseconds 150
                 if (-not $s.running) { break }
@@ -324,6 +329,7 @@ class CmdPilotPredictorBase {
                     [System.Threading.Monitor]::Exit($s.lock)
                 }
                 if ([string]::IsNullOrEmpty($input)) { continue }
+                if ($gen -eq $lastGen) { continue }   # 本代已取过：不再起进程
                 Start-Sleep -Milliseconds 150   # debounce：确认输入稳定
                 $stillCurrent = $false
                 [System.Threading.Monitor]::Enter($s.lock)
@@ -333,6 +339,9 @@ class CmdPilotPredictorBase {
                     [System.Threading.Monitor]::Exit($s.lock)
                 }
                 if (-not $stillCurrent) { continue }
+                # 取之前先记账：本代即使取失败（守护进程不可用/超时）也不再重试，
+                # 避免失败时形成重试风暴；下一次按键会产生新 gen，届时自然重试。
+                $lastGen = $gen
 
                 # inline 伴侣调用（纯脚本，不依赖模块函数/类方法）
                 $req = @{ input = $input; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'auto' }
