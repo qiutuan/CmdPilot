@@ -188,9 +188,9 @@ function Get-CmdPilotLineState {
 function Get-CmdPilotBuffer {
     <#
     .SYNOPSIS
-    读取当前输入行与光标位置。Tab 接受建议前必须知道光标是否在行尾：建议是整行的
-    后缀，插入发生在光标处，光标在行中时插入会破坏输入。取不到时 cursor = -1
-    （调用方按"不可接受"处理，退回原生菜单）。
+    读取当前输入行与光标位置。Tab 用它做"接受建议前后是否变化"的比对：PSReadLine 的
+    AcceptSuggestion 在无建议可接受时是空操作，缓冲区没变即说明本来就没有建议，该退回
+    原生候选菜单。取不到时 cursor = -1，调用方据此放弃判断、退回原生菜单。
     #>
     $r = @{ line = ''; cursor = -1 }
     $psr = Resolve-CmdPilotPSReadLineStatic
@@ -230,27 +230,31 @@ function Set-CmdPilotTabKey {
             }
         }
     } else {
-        # 幽灵文本已出现时 Tab = 接受（把快照里的后缀插入当前行）；没有才退回 PSReadLine
-        # 原生候选菜单。快照是 worker 早已取好的结果，接受零成本、不起进程、不阻塞
-        # （此前 Tab 固定绑 MenuComplete：只弹列表、不落字，对灰色建议等于"无效"，
-        #  与本模块 README 承诺的"按 Tab 或 → 接受"不一致）。
+        # Tab = 接受当前内联建议（幽灵文本）；没有可接受的就退回 PSReadLine 原生候选菜单。
+        # 接受交给 PSReadLine 自己的 AcceptSuggestion，而不是本模块复刻插入动作：
+        #   ① 一次覆盖两种来源。PredictionSource=HistoryAndPlugin 时内联视图里既有插件
+        #      建议、也有**历史**建议，而历史建议是同步立刻出现的——此前只认自家快照，
+        #      于是明明看得见幽灵文本、Tab 却"无效"（显示的是历史建议，快照对不上）。
+        #   ② 用引擎自己的插入语义（2.4.5 Prediction.cs：先把 _current 移到 _buffer.Length
+        #      再插入后缀）并同步预测器状态（OnSuggestionAccepted），不会留下陈旧建议。
+        # 无建议可接受时 AcceptSuggestion 是空操作（同源：HasActiveSuggestion 为假即直接
+        # 返回、不移动光标），故以"缓冲区是否变化"区分"接受了"与"没建议"两种情形。
         # 列表菜单仍在 PSReadLine 默认键位上（Ctrl+@；物理按 Ctrl+Space 即产生该键，
         # 但 PSReadLine 不认 'Ctrl+Space' 这个键名）。
         Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAcceptOrMenu' -ScriptBlock {
             $psr = Resolve-CmdPilotPSReadLineStatic
             if (-not $psr) { return }
-            $buf = Get-CmdPilotBuffer
-            $line = [string]$buf['line']
-            $p = $script:CmdPilotPredictor
-            # 光标在行尾才接受：建议是整行后缀，插入点即光标，光标在行中会插错位置。
-            if ($p -and $line -and $buf['cursor'] -eq $line.Length) {
-                $peek = $p.PeekSuggestion($line)
-                if ($peek['ready'] -and $peek['text']) {
-                    $psr::Insert([string]$peek['text'])
-                    return
-                }
+            $before = Get-CmdPilotBuffer
+            if ($before['cursor'] -lt 0) {
+                # 读不到缓冲区（无 PSReadLine / 反射取不到方法）就无从判断是否落下，
+                # 退回改动前的行为，不猜。
+                $psr::MenuComplete($args[0], $null)
+                return
             }
-            $psr::MenuComplete($args[0], $null)
+            $psr::AcceptSuggestion($args[0], $null)
+            if ((Get-CmdPilotBuffer)['line'] -eq $before['line']) {
+                $psr::MenuComplete($args[0], $null)
+            }
         }
     }
 }
@@ -323,27 +327,6 @@ class CmdPilotPredictorBase {
 
     [void] SetTabOnly([bool] $v) { $this.Sync.tabOnly = $v }
     [bool] GetTabOnly() { return [bool]$this.Sync.tabOnly }
-
-    # 只读查询：当前快照是否已对 $input 算好（供 Tab 接受内联建议用）。
-    # 不登记新一轮输入、不起进程——worker 早已取好的结果直接复用，故接受是零成本。
-    [hashtable] PeekSuggestion([string] $input) {
-        $s = $this.Sync
-        $r = @{ ready = $false; text = ''; full = '' }
-        [System.Threading.Monitor]::Enter($s.lock)
-        try {
-            if ($s.snapInput -eq $input -and $null -ne $s.snapTop) {
-                $tp = $s.snapTop.PSObject.Properties['text']
-                if ($tp -and -not [string]::IsNullOrEmpty([string]$tp.Value)) {
-                    $r.ready = $true
-                    $r.text = [string]$tp.Value
-                    $r.full = [string]$s.snapFull
-                }
-            }
-        } finally {
-            [System.Threading.Monitor]::Exit($s.lock)
-        }
-        return $r
-    }
 
     # 登记新一轮输入并返回当前快照（只读锁内拷贝）。
     hidden [hashtable] RegisterAndGetSnapshot([string] $input) {
