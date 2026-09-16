@@ -211,6 +211,33 @@ function Set-CmdPilotTabKey {
     }
 }
 
+function Enable-CmdPilotPredictionOptions {
+    <#
+    .SYNOPSIS
+    确保 PSReadLine 真正启用预测器：PredictionSource 含 Plugin、PredictionView 为 InlineView。
+    #>
+    # 注册 ICommandPredictor 只是让引擎"知道"存在预测器；PSReadLine 仅当
+    # PredictionSource 含 Plugin 时才会调用它。默认可能是 None/History——此时注册了
+    # 也毫无效果：无幽灵文本、Tab 的 MenuComplete 也没有候选。必须显式开启。
+    # 尽力而为：非交互 / 不支持 VT 的宿主会抛错，静默忽略（不影响模块加载）。
+    try {
+        $opt = Get-PSReadLineOption -ErrorAction Stop
+        $ps = $opt.PSObject.Properties['PredictionSource']
+        if ($ps) {
+            $v = [string]$ps.Value
+            if ($v -ne 'Plugin' -and $v -ne 'HistoryAndPlugin') {
+                Set-PSReadLineOption -PredictionSource HistoryAndPlugin -ErrorAction Stop
+            }
+        }
+        $pv = $opt.PSObject.Properties['PredictionView']
+        if ($pv -and [string]$pv.Value -ne 'InlineView') {
+            Set-PSReadLineOption -PredictionView InlineView -ErrorAction Stop
+        }
+    } catch {
+        Write-Verbose "CmdPilot: 启用 PSReadLine 预测器失败（宿主可能非交互）: $($_.Exception.Message)"
+    }
+}
+
 # ============================================================================
 # 公共基类：状态、后台 worker（debounce + 快照）、伴侣调用
 # ============================================================================
@@ -482,6 +509,12 @@ function Enable-CmdPilot {
     $predictor = [CmdPilotPredictor]::new()
     $predictor.SetTabOnly($Mode -eq 'Tab')
     try {
+        # 幂等：同名 Id 若已注册（-Force 重载 / 重复 Import-Module），先注销再注册，
+        # 使新实例成为生效实例，避免"already registered"告警与脚本变量指向失效实例。
+        [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
+            [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, [guid]'7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f')
+    } catch { }
+    try {
         [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
             [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor)
     } catch {
@@ -489,6 +522,8 @@ function Enable-CmdPilot {
         return
     }
     $script:CmdPilotPredictor = $predictor
+    # 注册预测器 ≠ 被调用：须让 PSReadLine 的 PredictionSource 含 Plugin，否则无幽灵文本。
+    Enable-CmdPilotPredictionOptions
     if ($Mode -eq 'Tab') {
         Set-CmdPilotTabKey -AiTab
     } else {
