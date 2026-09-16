@@ -11,15 +11,15 @@ Set-StrictMode -Version 2.0
 #   * 建议计算完全异步：后台线程按 debounce（默认 300ms）拉取快照，
 #     GetSuggestion 只读快照，绝不阻塞键盘输入；AI 增强由守护进程异步完成
 #     并缓存（同前缀 5 分钟）。
-#   * 双 API 兼容（PSReadLine ≥ 2.2 全覆盖）：
-#       - PS 7.4+ / PSReadLine 2.3.4+：引擎级 Subsystem API
-#         (System.Management.Automation.Subsystem.Prediction.ICommandPredictor)，
-#         经 SubsystemManager 注册；
-#       - PS 5.1 / PS 7.0-7.3 + PSReadLine 2.2.x：经典
-#         Microsoft.PowerShell.PSReadLine.ICommandPredictor，经
-#         [PSReadLine]::RegisterPredictor 注册。
-#     PredictorNew.ps1 / PredictorLegacy.ps1 分别定义同名 CmdPilotPredictor
-#     类（继承 CmdPilotPredictorBase），按探测结果只 dot-source 一份。
+#   * 预测器插件 API 只有一代（引擎级）：System.Management.Automation.
+#     Subsystem.Prediction.ICommandPredictor，仅 PS 7.4+ / PSReadLine 2.3.4+
+#     的宿主引擎提供，经 SubsystemManager 注册。PredictorNew.ps1 定义
+#     CmdPilotPredictor 类（继承 CmdPilotPredictorBase），仅在探测到该 API
+#     时 dot-source。
+#   * PS 5.1（及 PS 7.0-7.3）无任何可用的预测器插件 API——PSReadLine 2.2.x
+#     无 ICommandPredictor/RegisterPredictor（已按 2.2.5 二进制与源码实证），
+#     2.3+ 的引擎 Subsystem 类型在旧宿主不存在。探测结果为 'none'：不加载
+#     预测器类，退化为 Tab 补全（见 Enable-CmdPilot），模块仍可用而不报错。
 # ============================================================================
 
 # ---- 路径与全局状态 ------------------------------------------------------
@@ -45,7 +45,7 @@ if (-not (Test-Path -LiteralPath $script:CmdPilotMain)) {
     $script:CmdPilotMain = 'cmdpilot'
 }
 $script:CmdPilotPredictor = $null
-$script:CmdPilotApiKind = 'none'     # 'new' | 'legacy' | 'none'（无预测器 API，退化为 Tab 补全）
+$script:CmdPilotApiKind = 'none'     # 'new' | 'none'（无引擎级预测器 API 时退化为 Tab 补全）
 $script:CmdPilotPSRStatic = $null    # PSReadLine 静态类（版本探测后缓存）
 $script:CmdPilotTabFallback = $false # 无预测器 API 时已启用 Tab 降级补全
 $script:CmdPilotPromptWrapped = $false
@@ -373,10 +373,9 @@ class CmdPilotPredictorBase {
 }
 
 # ============================================================================
-# API 探测与实现加载：只 dot-source 当前主机可用的一份。
-# PSReadLine 预测 API 分两代：2.3.4+ / PS 7.4+ 的 Subsystem API，与 2.2.x 的
-# legacy ICommandPredictor。PS 5.1 + PSReadLine 2.3+ 两代皆无（2.3 移除 legacy
-# 且 PS 5.1 无 Subsystem），归为 'none'：不加载任何预测器类，退化为 Tab 补全
+# API 探测与实现加载：只 dot-source 当前主机可用的一份（PredictorNew.ps1）。
+# 预测器插件 API 只有引擎级 Subsystem 一种（PS 7.4+ / PSReadLine 2.3.4+）；
+# PS 5.1 / PS 7.0-7.3 探测恒为 'none'：不加载任何预测器类，退化为 Tab 补全
 # （见 Enable-CmdPilot），模块仍可用而不报错。
 # ============================================================================
 function Get-CmdPilotPSReadLineModule {
@@ -389,34 +388,26 @@ function Get-CmdPilotPSReadLineModule {
 }
 
 function Test-CmdPilotPredictorApi {
-    # 先探引擎级 Subsystem API（PS 7.4+ / PSReadLine 2.3.4+）
+    # 仅探测引擎级 Subsystem API（PS 7.4+ / PSReadLine 2.3.4+ 的宿主引擎提供）。
+    # 注意：PS 5.1 上任何 PSReadLine 版本都没有插件预测器 API——2.2.x 无
+    # ICommandPredictor/RegisterPredictor（2.2.5 二进制与源码实证，且
+    # -PredictionSource Plugin 在 .NET Framework 上直接抛异常），2.3+ 的
+    # Subsystem 类型仅在 PS 7.4 引擎中存在。故 5.1 / 7.0-7.3 恒为 'none'。
     try {
         if ($null -ne [type]::GetType('System.Management.Automation.Subsystem.Prediction.ICommandPredictor')) {
             return 'new'
         }
     } catch { }
-    # legacy API：类型位于 PSReadLine 程序集，需先确保模块已加载再探测
-    $psr = Get-CmdPilotPSReadLineModule
-    if ($psr -and $psr.Version -ge [version]'2.2.0' `
-        -and -not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
-        try { Import-Module $psr.Name -ErrorAction Stop } catch { }
-    }
-    $asm = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GetName().Name -eq 'Microsoft.PowerShell.PSReadLine' }
-    if ($null -ne $asm -and $null -ne $asm.GetType('Microsoft.PowerShell.PSReadLine.ICommandPredictor')) {
-        return 'legacy'
-    }
     return 'none'
 }
 
 $script:CmdPilotApiKind = Test-CmdPilotPredictorApi
 if ($script:CmdPilotApiKind -eq 'new') {
     . (Join-Path $PSScriptRoot 'PredictorNew.ps1')
-} elseif ($script:CmdPilotApiKind -eq 'legacy') {
-    . (Join-Path $PSScriptRoot 'PredictorLegacy.ps1')
 }
 
 function Enable-CmdPilotPromptStats {
-    # 旧 API（legacy / 'none' 降级）无"命令已执行"事件：用 prompt 钩子补统计
+    # 'none' 降级无"命令已执行"事件：用 prompt 钩子补统计
     # （新 API 用 OnCommandLineExecuted）。幂等。
     if ($script:CmdPilotPromptWrapped) { return }
     $script:CmdPilotOriginalPrompt = $function:prompt
@@ -460,7 +451,8 @@ function Enable-CmdPilot {
         Write-Verbose 'CmdPilot: already enabled'
         return
     }
-    # 无预测器 API 的主机（PS 5.1 + PSReadLine 2.3+）：退化为 Tab 补全，不创建预测器类。
+    # 无引擎级预测器 API 的主机（PS 5.1 / PS 7.0-7.3，任何 PSReadLine 版本均无
+    # 插件 API）：退化为 Tab 补全，不创建预测器类。
     if ($script:CmdPilotApiKind -eq 'none') {
         if ($script:CmdPilotTabFallback) { return }
         $psr = Get-CmdPilotPSReadLineModule
@@ -478,30 +470,15 @@ function Enable-CmdPilot {
         $script:CmdPilotTabFallback = $true
         Enable-CmdPilotPromptStats
         if (-not $Silent) {
-            Write-Host 'CmdPilot 已启用 [Tab 降级] — 当前宿主无预测器 API（PS 5.1 + PSReadLine 2.3+），Tab 触发本地/AI 补全可用；inline 幽灵文本需 PSReadLine 2.2.x 或 PowerShell 7.4+（cmdpilot help）' -ForegroundColor Yellow
+            Write-Host 'CmdPilot 已启用 [Tab 降级] — 当前宿主（PS 5.1）无预测器插件 API，Tab 触发本地/AI 补全可用；inline 幽灵文本需 PowerShell 7.4+（cmdpilot help）' -ForegroundColor Yellow
         }
         return
     }
     $predictor = [CmdPilotPredictor]::new()
     $predictor.SetTabOnly($Mode -eq 'Tab')
     try {
-        if ($script:CmdPilotApiKind -eq 'new') {
-            [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
-                [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor)
-        } else {
-            $psr = Get-CmdPilotPSReadLineModule
-            if (-not $psr -or $psr.Version -lt [version]'2.2.0') {
-                Write-Warning 'CmdPilot: 需要 PSReadLine >= 2.2（运行: Install-Module PSReadLine -Force -Scope CurrentUser），未启用。'
-                return
-            }
-            if (-not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
-                try { Import-Module $psr.Name -ErrorAction Stop } catch {
-                    Write-Warning 'CmdPilot: 无法加载 PSReadLine，未启用。'
-                    return
-                }
-            }
-            [Microsoft.PowerShell.PSReadLine]::RegisterPredictor($predictor)
-        }
+        [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
+            [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor)
     } catch {
         Write-Warning "CmdPilot: 注册 Predictor 失败: $($_.Exception.Message)"
         return
@@ -512,7 +489,7 @@ function Enable-CmdPilot {
     } else {
         Set-CmdPilotTabKey
     }
-    # 旧 API（legacy / 'none' 降级）无"命令已执行"事件：用 prompt 钩子补统计（新 API 用 OnCommandLineExecuted）。
+    # 'none' 降级无"命令已执行"事件：用 prompt 钩子补统计（新 API 用 OnCommandLineExecuted）。
     Enable-CmdPilotPromptStats
     if (-not $Silent) {
         $cfg = Get-CmdPilotConfig
@@ -540,17 +517,9 @@ function Disable-CmdPilot {
     if ($script:CmdPilotPredictor) {
         $script:CmdPilotPredictor.StopWorker()
         try {
-            if ($script:CmdPilotApiKind -eq 'new') {
-                # UnregisterSubsystem 以实现 Id（Guid）为参，不以实例为参。
-                [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
-                    [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, [guid]'7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f')
-            } else {
-                try {
-                    [Microsoft.PowerShell.PSReadLine]::UnregisterPredictor($script:CmdPilotPredictor)
-                } catch {
-                    # PSReadLine 2.2 无公开注销 API：predictor 随会话结束自然清除。
-                }
-            }
+            # UnregisterSubsystem 以实现 Id（Guid）为参，不以实例为参。
+            [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
+                [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, [guid]'7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f')
         } catch {
             Write-Verbose "CmdPilot: unregister failed: $($_.Exception.Message)"
         }
