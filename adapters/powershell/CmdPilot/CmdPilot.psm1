@@ -8,14 +8,19 @@ Set-StrictMode -Version 2.0
 #   * 核心引擎以独立守护进程运行；本模块通过 cmdpilot-clink.exe 伴侣二进制
 #     与守护进程通信（JSON 请求/输出文件模式），模块不 import 任何 core 逻辑，
 #     Remove-Module 后无残留。
-#   * 建议计算完全异步：后台线程按 debounce（默认 300ms）拉取快照，
-#     GetSuggestion 只读快照，绝不阻塞键盘输入；AI 增强由守护进程异步完成
-#     并缓存（同前缀 5 分钟）。
+#   * 建议计算完全异步：后台 worker 按 debounce 拉取快照，预测器回调只读快照，
+#     绝不阻塞键盘输入；AI 增强由守护进程异步完成并缓存（同前缀 5 分钟）。
 #   * 预测器插件 API 只有一代（引擎级）：System.Management.Automation.
 #     Subsystem.Prediction.ICommandPredictor，仅 PS 7.4+ / PSReadLine 2.3.4+
-#     的宿主引擎提供，经 SubsystemManager 注册。PredictorNew.ps1 定义
-#     CmdPilotPredictor 类（继承 CmdPilotPredictorBase），仅在探测到该 API
-#     时 dot-source。
+#     的宿主引擎提供，经 SubsystemManager 注册。实现分两半，都在探测到该 API
+#     后才加载（PredictorNew.ps1）：
+#       - 预测器本体是**编译**代码（PredictorCore.cs，模块加载时 Add-Type）；
+#       - 取建议的 worker 是 PowerShell 脚本（专用 runspace，不在回调路径上）。
+#     为什么必须这样切分：引擎把预测器回调丢到线程池并只等 20ms，超时即丢弃
+#     结果，而 PowerShell 类方法每次都踩满超时——实测同一段 40 次引擎调用，
+#     PS 类 31ms/次且 predictors=0（建议全被丢弃），编译实现 0.25ms、
+#     predictors=1。真机按键回声 44.5-48.4ms/键 vs 基线 15.5ms 即源于此。
+#     详见 PredictorCore.cs 头部的实测表。
 #   * PS 5.1（及 PS 7.0-7.3）无任何可用的预测器插件 API——PSReadLine 2.2.x
 #     无 ICommandPredictor/RegisterPredictor（已按 2.2.5 二进制与源码实证），
 #     2.3+ 的引擎 Subsystem 类型在旧宿主不存在。探测结果为 'none'：不加载
@@ -297,176 +302,6 @@ function Enable-CmdPilotPredictionOptions {
 }
 
 # ============================================================================
-# 公共基类：状态、后台 worker（debounce + 快照）、伴侣调用
-# ============================================================================
-class CmdPilotPredictorBase {
-    # 跨 runspace 共享状态：后台 worker 与 GetSuggestion 都在一个进程内，
-    # 通过同一 hashtable 引用 + Monitor 锁交换数据（in-proc 不序列化）。
-    hidden [hashtable] $Sync
-    hidden [System.Management.Automation.Runspaces.Runspace] $WorkerRS = $null
-    hidden [System.Management.Automation.PowerShell] $WorkerPS = $null
-    hidden [System.IAsyncResult] $WorkerHandle = $null
-    hidden [string] $CompanionPath = ''
-
-    CmdPilotPredictorBase() {
-        $this.CompanionPath = $script:CmdPilotCompanion
-        $this.Sync = @{
-            lock     = [object]::new()
-            pending  = ''
-            gen      = 0
-            snapInput = ''
-            snapTop  = $null
-            snapFull = ''
-            snapList = [System.Collections.Generic.List[object]]::new()
-            running  = $false
-            tabOnly  = $false
-        }
-    }
-
-    [bool] IsRunning() { return [bool]$this.Sync.running }
-
-    [void] SetTabOnly([bool] $v) { $this.Sync.tabOnly = $v }
-    [bool] GetTabOnly() { return [bool]$this.Sync.tabOnly }
-
-    # 登记新一轮输入并返回当前快照（只读锁内拷贝）。
-    hidden [hashtable] RegisterAndGetSnapshot([string] $input) {
-        $s = $this.Sync
-        $needWorker = $false
-        $snap = @{ current = $false; top = $null; full = ''; list = @() }
-        [System.Threading.Monitor]::Enter($s.lock)
-        try {
-            $snap.top = $s.snapTop
-            $snap.full = $s.snapFull
-            $snap.list = @($s.snapList)
-            if ($s.snapInput -eq $input) {
-                $snap.current = $true
-            }
-            if (-not $s.tabOnly) {
-                $s.pending = $input
-                $s.gen += 1
-            }
-            $needWorker = ($null -eq $this.WorkerPS -and -not $s.running)
-        } finally {
-            [System.Threading.Monitor]::Exit($s.lock)
-        }
-        if ($needWorker) { $this.StartWorker() }
-        return $snap
-    }
-
-    hidden [void] StartWorker() {
-        # 专用 runspace：PowerShell scriptblock 不能在 raw .NET 线程执行。
-        # worker 是纯脚本（不调类方法），通过共享 hashtable 读写状态，
-        # 避免跨 runspace 类方法/隐藏成员可见性问题。
-        if ($null -ne $this.WorkerPS) { return }
-        $this.Sync.running = $true
-        $rs = [runspacefactory]::CreateRunspace()
-        $rs.Open()
-        $this.WorkerRS = $rs
-        $ps = [powershell]::Create()
-        $ps.Runspace = $rs
-        $this.WorkerPS = $ps
-        $state = $this.Sync
-        $cmp = $this.CompanionPath
-        $sb = {
-            param($s, $companion)
-            # 已经为哪一代输入取过结果。写完快照并不改变 gen/pending，若无此标记，
-            # 下一轮循环会判定"输入没变"从而对**同一个输入**再次起进程，形成永久空转
-            # 重取——实测空闲 6 秒仍触发 18 次 companion 进程创建（每次约 22ms 进程创建
-            # + 两个临时文件 + Defender 扫描），是窗口卡顿/输入延迟的根源。每代只取一次。
-            $lastGen = -1
-            while ($true) {
-                Start-Sleep -Milliseconds 150
-                if (-not $s.running) { break }
-                $gen = 0
-                $input = ''
-                [System.Threading.Monitor]::Enter($s.lock)
-                try {
-                    $gen = $s.gen
-                    $input = $s.pending
-                } finally {
-                    [System.Threading.Monitor]::Exit($s.lock)
-                }
-                if ([string]::IsNullOrEmpty($input)) { continue }
-                if ($gen -eq $lastGen) { continue }   # 本代已取过：不再起进程
-                Start-Sleep -Milliseconds 150   # debounce：确认输入稳定
-                $stillCurrent = $false
-                [System.Threading.Monitor]::Enter($s.lock)
-                try {
-                    $stillCurrent = ($gen -eq $s.gen)
-                } finally {
-                    [System.Threading.Monitor]::Exit($s.lock)
-                }
-                if (-not $stillCurrent) { continue }
-                # 取之前先记账：本代即使取失败（守护进程不可用/超时）也不再重试，
-                # 避免失败时形成重试风暴；下一次按键会产生新 gen，届时自然重试。
-                $lastGen = $gen
-
-                # inline 伴侣调用（纯脚本，不依赖模块函数/类方法）
-                $req = @{ input = $input; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'auto' }
-                $json = $req | ConvertTo-Json -Compress -Depth 5
-                $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-w-' + [guid]::NewGuid().ToString('N') + '.json')
-                $out = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-w-' + [guid]::NewGuid().ToString('N') + '.out.json')
-                try {
-                    [System.IO.File]::WriteAllText($tmp, $json)
-                    # 不用 ArgumentList（PS 5.1 缺失该属性）：手工拼参数串
-                    $argList = @('--request', $tmp, '--output', $out) |
-                        ForEach-Object { '"' + $_.Replace('"', '""') + '"' }
-                    $psi = [System.Diagnostics.ProcessStartInfo]::new()
-                    $psi.FileName = $companion
-                    $psi.Arguments = $argList -join ' '
-                    $psi.UseShellExecute = $false
-                    $psi.CreateNoWindow = $true
-                    $p = [System.Diagnostics.Process]::new()
-                    $p.StartInfo = $psi
-                    if ($p.Start() -and $p.WaitForExit(2000)) {
-                        if (Test-Path -LiteralPath $out) {
-                            $obj = [System.IO.File]::ReadAllText($out) | ConvertFrom-Json
-                            [System.Threading.Monitor]::Enter($s.lock)
-                            try {
-                                if ($gen -eq $s.gen) {
-                                    $s.snapInput = $input
-                                    $s.snapTop = $obj.top
-                                    if ($obj.top) { $s.snapFull = [string]$obj.top.full }
-                                    $s.snapList.Clear()
-                                    foreach ($it in @($obj.list)) {
-                                        if ($it) { $s.snapList.Add($it) }
-                                    }
-                                }
-                            } finally {
-                                [System.Threading.Monitor]::Exit($s.lock)
-                            }
-                        }
-                    }
-                } catch {
-                    # 守护进程不可用/超时/解析失败：静默降级，保留旧快照
-                } finally {
-                    if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }
-                    if (Test-Path -LiteralPath $out) { Remove-Item -LiteralPath $out -Force -ErrorAction SilentlyContinue }
-                }
-            }
-        }
-        $this.WorkerHandle = $ps.AddScript($sb).AddArgument($state).AddArgument($cmp).BeginInvoke()
-    }
-
-    hidden [void] StopWorker() {
-        $s = $this.Sync
-        [System.Threading.Monitor]::Enter($s.lock)
-        try { $s.running = $false } finally { [System.Threading.Monitor]::Exit($s.lock) }
-        if ($null -ne $this.WorkerPS) {
-            try { $this.WorkerPS.Stop() } catch { }
-            try { $this.WorkerHandle.WaitOne(500) | Out-Null } catch { }
-            try { $this.WorkerPS.Dispose() } catch { }
-            $this.WorkerPS = $null
-        }
-        if ($null -ne $this.WorkerRS) {
-            try { $this.WorkerRS.Close() } catch { }
-            try { $this.WorkerRS.Dispose() } catch { }
-            $this.WorkerRS = $null
-        }
-    }
-}
-
-# ============================================================================
 # API 探测与实现加载：只 dot-source 当前主机可用的一份（PredictorNew.ps1）。
 # 预测器插件 API 只有引擎级 Subsystem 一种（PS 7.4+ / PSReadLine 2.3.4+）；
 # PS 5.1 / PS 7.0-7.3 探测恒为 'none'：不加载任何预测器类，退化为 Tab 补全
@@ -569,6 +404,41 @@ function Enable-CmdPilotPromptStats {
 # ============================================================================
 # 公共命令
 # ============================================================================
+function Enable-CmdPilotTabFallback {
+    <#
+    .SYNOPSIS
+    退化为 Tab 补全（无预测器可用时）：绑 Tab 键 + 用 prompt 钩子补统计。
+    .PARAMETER Reason
+    退化原因，用于提示行——两条退化路径（宿主无 API、预测器核心加载失败）
+    除此之外行为完全一致，故共用本函数。
+    .PARAMETER Silent
+    不打印降级提示行（跟随 Enable-CmdPilot -Silent）。
+    #>
+    [CmdletBinding()]
+    param(
+        [string] $Reason = '无预测器插件 API',
+        [switch] $Silent
+    )
+    if ($script:CmdPilotTabFallback) { return }
+    $psr = Get-CmdPilotPSReadLineModule
+    if (-not $psr -or $psr.Version -lt [version]'2.2.0') {
+        Write-Warning 'CmdPilot: 需要 PSReadLine >= 2.2（运行: Install-Module PSReadLine -Force -Scope CurrentUser），未启用。'
+        return
+    }
+    if (-not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
+        try { Import-Module $psr.Name -ErrorAction Stop } catch {
+            Write-Warning 'CmdPilot: 无法加载 PSReadLine，未启用。'
+            return
+        }
+    }
+    Set-CmdPilotTabKey -AiTab
+    $script:CmdPilotTabFallback = $true
+    Enable-CmdPilotPromptStats
+    if (-not $Silent) {
+        Write-Host "CmdPilot 已启用 [Tab 降级] — $Reason；Tab 触发本地/AI 补全可用；inline 幽灵文本需 PowerShell 7.4+（cmdpilot help）" -ForegroundColor Yellow
+    }
+}
+
 function Enable-CmdPilot {
     <#
     .SYNOPSIS
@@ -590,27 +460,16 @@ function Enable-CmdPilot {
     # 无引擎级预测器 API 的主机（PS 5.1 / PS 7.0-7.3，任何 PSReadLine 版本均无
     # 插件 API）：退化为 Tab 补全，不创建预测器类。
     if ($script:CmdPilotApiKind -eq 'none') {
-        if ($script:CmdPilotTabFallback) { return }
-        $psr = Get-CmdPilotPSReadLineModule
-        if (-not $psr -or $psr.Version -lt [version]'2.2.0') {
-            Write-Warning 'CmdPilot: 需要 PSReadLine >= 2.2（运行: Install-Module PSReadLine -Force -Scope CurrentUser），未启用。'
-            return
-        }
-        if (-not (Get-Module PSReadLine) -and -not (Get-Module Microsoft.PowerShell.PSReadLine)) {
-            try { Import-Module $psr.Name -ErrorAction Stop } catch {
-                Write-Warning 'CmdPilot: 无法加载 PSReadLine，未启用。'
-                return
-            }
-        }
-        Set-CmdPilotTabKey -AiTab
-        $script:CmdPilotTabFallback = $true
-        Enable-CmdPilotPromptStats
-        if (-not $Silent) {
-            Write-Host 'CmdPilot 已启用 [Tab 降级] — 当前宿主（PS 5.1）无预测器插件 API，Tab 触发本地/AI 补全可用；inline 幽灵文本需 PowerShell 7.4+（cmdpilot help）' -ForegroundColor Yellow
-        }
+        Enable-CmdPilotTabFallback -Reason '当前宿主（PS 5.1）无预测器插件 API' -Silent:$Silent
         return
     }
-    $predictor = [CmdPilotPredictor]::new()
+    $predictor = New-CmdPilotPredictor
+    # 有 API 但核心没编译出来（缺 PredictorCore.cs / 编译报错）：同样退化为 Tab
+    # 补全而不是让模块报错——用户至少还有 Tab 可用，原因写进提示行。
+    if (-not $predictor) {
+        Enable-CmdPilotTabFallback -Reason "预测器核心加载失败（$script:CmdPilotCoreError）" -Silent:$Silent
+        return
+    }
     $predictor.SetTabOnly($Mode -eq 'Tab')
     try {
         # 幂等：同名 Id 若已注册（-Force 重载 / 重复 Import-Module），先注销再注册，
@@ -628,10 +487,17 @@ function Enable-CmdPilot {
         [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
             [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor)
     } catch {
+        # 构造核心时已把运行标志置真、并把自己记为当前实例（旧实例的 worker 会因此
+        # 退出）；注册失败就把它停掉，否则"上一位 worker 已退、这一位又没起"会让
+        # 幽灵文本静默失效。
+        $predictor.StopWorker()
         Write-Warning "CmdPilot: 注册 Predictor 失败: $($_.Exception.Message)"
         return
     }
     $script:CmdPilotPredictor = $predictor
+    # 立刻起 worker（幂等）：它的 runspace 不阻塞进程退出（实测 import-only 577ms /
+    # 带 worker 653ms），提前起可让首个建议不必再等一次 runspace 创建与首轮 sleep。
+    Start-CmdPilotWorker -Predictor $predictor
     # 注册预测器 ≠ 被调用：须让 PSReadLine 的 PredictionSource 含 Plugin，否则无幽灵文本。
     Enable-CmdPilotPredictionOptions
     if ($Mode -eq 'Tab') {
@@ -667,7 +533,10 @@ function Disable-CmdPilot {
     [CmdletBinding()]
     param()
     if ($script:CmdPilotPredictor) {
-        $script:CmdPilotPredictor.StopWorker()
+        # Stop-CmdPilotWorker 内部先 StopWorker()（置运行标志，worker 一轮内自行退出）
+        # 再收 runspace；随后清快照，避免已禁用的建议还能被下一次 Register 命中。
+        Stop-CmdPilotWorker
+        $script:CmdPilotPredictor.ResetSnapshot()
         try {
             # UnregisterSubsystem 以实现 Id（Guid）为参，不以实例为参。未注册时它会抛
             # （例如已 Disable 过再 Disable），故先查再注销。
@@ -722,6 +591,12 @@ function Get-CmdPilotStatus {
         'Tab 降级'
     } else { '未启用' }
     Write-Host "Predictor: $mode  (API: $script:CmdPilotApiKind)" -ForegroundColor Cyan
+    if ($script:CmdPilotPredictor) {
+        # 诊断一行（编译核心里计数，无锁）：calls=引擎回调次数，hits=真的给出建议的次数
+        # （长命令后 hits 不涨即说明快照没命中），published=worker 写回快照次数，
+        # gen=输入代数，entries=当前快照条数，current=快照是否对应当前输入。
+        Write-Host "  预测器状态: $($script:CmdPilotPredictor.StateStats())"
+    }
     $cfg = Get-CmdPilotConfig
     if ($cfg) {
         $engine = 'hybrid'; $trigger = 'auto'
