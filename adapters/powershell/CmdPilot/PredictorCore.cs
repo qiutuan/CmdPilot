@@ -81,6 +81,7 @@ namespace CmdPilot
     {
         private static readonly object Gate = new object();
         private static string _pending = string.Empty;
+        private static string _pendingCwd = string.Empty;
         private static long _gen;
         private static bool _tabOnly;
         private static bool _running;
@@ -118,6 +119,17 @@ namespace CmdPilot
             get { lock (Gate) { return _pending; } }
         }
 
+        /// <summary>
+        /// 待取建议那一代的当前目录（worker 读）。
+        /// 必须是控制台侧传来的：worker 在自己的 runspace 里 Get-Location 拿到的是
+        /// 进程工作目录，与控制台当前位置无关（用户 cd 过之后就完全是另一个目录），
+        /// 路径类建议与会话上报都会用错上下文。
+        /// </summary>
+        public static string PendingCwd
+        {
+            get { lock (Gate) { return _pendingCwd; } }
+        }
+
         /// <summary>已发布快照对应的输入（Tab 兜底路径与诊断用）。</summary>
         public static string SnapshotInput
         {
@@ -134,7 +146,7 @@ namespace CmdPilot
         /// 登记一轮输入并返回当前快照。只做锁内拷贝 + 代次自增，微秒级。
         /// Tab 模式（tabOnly）不登记：那条路径由 Tab 键处理器直接调伴侣进程。
         /// </summary>
-        public static PredictionSnapshot Register(string input)
+        public static PredictionSnapshot Register(string input, string cwd)
         {
             var snap = new PredictionSnapshot();
             lock (Gate)
@@ -146,6 +158,8 @@ namespace CmdPilot
                 if (!_tabOnly)
                 {
                     _pending = input;
+                    // 与输入同代存：worker 校验过代次后再读，拿到的就是这一代的目录。
+                    _pendingCwd = cwd ?? string.Empty;
                     _gen++;
                 }
             }
@@ -275,7 +289,7 @@ namespace CmdPilot
             string input = context.InputAst.Extent.Text;
             if (string.IsNullOrWhiteSpace(input)) { return NoSuggestion; }
 
-            PredictionSnapshot snap = CmdPilotPredictionState.Register(input);
+            PredictionSnapshot snap = CmdPilotPredictionState.Register(input, CurrentDirectory(client));
             if (CmdPilotPredictionState.TabOnly || !snap.Current) { return NoSuggestion; }
 
             var entries = new List<PredictiveSuggestion>(1 + snap.Entries.Length);
@@ -378,6 +392,16 @@ namespace CmdPilot
         public bool WorkerIsCurrent(long gen)
         {
             return CmdPilotPredictionState.IsCurrent(gen);
+        }
+
+        /// <summary>
+        /// 待取建议那一代的当前目录（worker 拼请求用）。
+        /// 不要用 worker 自己 runspace 的 Get-Location：那是进程工作目录，用户 cd 过
+        /// 之后就是错的。查过 WorkerIsCurrent 之后再读，拿到的必然是这一代的目录。
+        /// </summary>
+        public string WorkerCwd()
+        {
+            return CmdPilotPredictionState.PendingCwd;
         }
 
         /// <summary>

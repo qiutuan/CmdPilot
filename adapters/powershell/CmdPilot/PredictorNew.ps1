@@ -94,7 +94,10 @@ $script:CmdPilotWorkerScript = {
         $lastGen = $gen
 
         # inline 伴侣调用（纯脚本，不依赖模块函数/类方法）
-        $req = @{ input = $input; shell = 'ps'; cwd = (Get-Location).Path; history = @(); trigger = 'auto' }
+        # cwd 取自核心登记的那一代目录（= 引擎回调时控制台的位置），不是本 runspace 的
+        # Get-Location：worker 跑在自己的 runspace 里，Get-Location 给的是进程工作目录，
+        # 用户 cd 过之后就是错的（路径类建议与会话上下文的 cwd 会一直用到启动时那个）。
+        $req = @{ input = $input; shell = 'ps'; cwd = $pred.WorkerCwd(); history = @(); trigger = 'auto' }
         $json = $req | ConvertTo-Json -Compress -Depth 5
         $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-w-' + [guid]::NewGuid().ToString('N') + '.json')
         $out = Join-Path ([System.IO.Path]::GetTempPath()) ('cmdpilot-w-' + [guid]::NewGuid().ToString('N') + '.out.json')
