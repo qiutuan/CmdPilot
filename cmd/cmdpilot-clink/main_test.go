@@ -65,6 +65,32 @@ func TestParseLineRequestDefaults(t *testing.T) {
 	}
 }
 
+func TestIsLineRequest(t *testing.T) {
+	cases := []struct {
+		name string
+		raw  string
+		want bool
+	}{
+		{"lf", "cmdpilot-req-v1\ninput=x\n", true},
+		{"crlf", "cmdpilot-req-v1\r\ninput=x\r\n", true},
+		{"magic-only", "cmdpilot-req-v1", true},
+		{"json", "{\"input\":\"x\"}", false},
+		{"json-pretty", "{\r\n  \"input\": \"x\"\r\n}", false},
+		{"magic-with-suffix", "cmdpilot-req-v1x\ninput=x\n", false},
+	}
+	for _, c := range cases {
+		if got := isLineRequest(c.raw); got != c.want {
+			t.Fatalf("%s: got %v want %v", c.name, got, c.want)
+		}
+		if c.want {
+			// 判定为行模式后，解析必须真的拿到字段（CRLF 时曾因入口判定失败而走不到这里）
+			if req := parseLineRequest(c.raw); strings.HasPrefix(c.raw, reqMagic) && req.Input != "x" && c.name != "magic-only" {
+				t.Fatalf("%s: parse lost input: %+v", c.name, req)
+			}
+		}
+	}
+}
+
 func TestParseLineRequestHistoryStuffedSep(t *testing.T) {
 	// history 值内本身含 \x1f（经 stuffing）不应被误拆。
 	h := stuff("echo a\x1fb")

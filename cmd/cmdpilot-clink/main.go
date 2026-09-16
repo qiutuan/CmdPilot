@@ -74,7 +74,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "read request: %v", err)
 			os.Exit(1)
 		}
-		if strings.HasPrefix(string(raw), reqMagic+"\n") {
+		if isLineRequest(string(raw)) {
 			req = parseLineRequest(string(raw))
 		} else {
 			var rf requestFile
@@ -128,6 +128,18 @@ func main() {
 }
 
 // parseLineRequest decodes the Clink line format.
+// isLineRequest 判断请求文件是行模式（cmdpilot-req-v1）还是 JSON 模式。
+// 必须容忍 CRLF：Lua 侧此前用 io.open(path,"w") 文本模式写文件，\n 会被改写成 \r\n，
+// 直接 HasPrefix(raw, magic+"\n") 判不出来，于是掉进 JSON 分支报 "bad request"，
+// 插件静默失效（实测）。parseLineRequest 本身已逐行 TrimSuffix("\r")，这里补上入口判定。
+func isLineRequest(raw string) bool {
+	first := raw
+	if i := strings.IndexByte(raw, '\n'); i >= 0 {
+		first = raw[:i]
+	}
+	return strings.TrimSuffix(first, "\r") == reqMagic
+}
+
 func parseLineRequest(raw string) client.CompleteReq {
 	req := client.CompleteReq{Shell: "cmd", Trigger: "auto"}
 	var hist []string
