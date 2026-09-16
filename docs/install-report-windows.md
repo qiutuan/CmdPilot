@@ -106,6 +106,74 @@
 
 ---
 
+## 补记（2026-09-16 二次）：幽灵文本可用后的 Tab 失效与卡顿
+
+**现象**：幽灵文本已出现，但 ①按 Tab 无反应 ②窗口变卡、输入延迟高。
+
+### 1. 卡顿根因——worker 空转重取（提交 `97fd6ec`）
+
+预测器后台 worker 每 150ms 轮询输入行，判断依据是"`gen`/`pending` 是否变化"。
+但**写完快照并不改变这两个量**，于是"输入没变"成立 → 对**同一个输入**再起一次
+companion 进程，永远停不下来。实测：空闲 6 秒内创建 **18 个** `cmdpilot-clink.exe`
+（每次约 22ms 进程创建 + 两个临时文件 + Defender 扫描），这就是输入延迟的来源。
+加 `$lastGen` 记账（每代只取一次，取前先记账以免失败重试风暴）后，
+同样条件下 **6 秒内 1 次**。
+
+### 2. Tab 语义——"有则接受，无则菜单"（提交 `bb40821`）
+
+原实现把 Tab 固定绑 `MenuComplete`：只弹候选列表、不落字，对灰色建议等于"无效"，
+与本模块 README 承诺的"按 Tab 或 → 接受"不一致。现改为：
+
+- 光标在**行尾**且快照已有该输入的建议 → `Insert` 落下幽灵文本（零成本：复用
+  worker 早已取好的快照，新增只读的 `PeekSuggestion`，不起进程、不阻塞）；
+- 其余情况（光标在行中、无建议）→ 退回 PSReadLine 原生菜单。
+  光标校验是必需的：建议是**整行后缀**，插入点在光标处，行中插入会破坏输入。
+- 列表菜单仍留在 PSReadLine 默认键位 **Ctrl+Space / Ctrl+@**，能力未丢。
+
+### 3. 宿主 `$Error` 红字——三处"异常当控制流"（提交 `1e8f598`）
+
+异常即使被 `catch`，也会作为一条记录留在**宿主**的 `$Error` 里（用户敲 `$Error`
+看到红字）。实测关键事实：**模块的 `$Error` 与宿主的 `$Error` 是两份列表**
+（`[object]::ReferenceEquals($Error, $global:Error)` = `False`），在模块内无论怎么
+`Clear`/摘除都清不掉宿主那份——唯一正确的做法是**不抛**。三处来源与改法：
+
+| 位置 | 原做法 | 现做法 |
+|---|---|---|
+| 引擎 API 探测 | 类型字面量，5.1/7.0–7.3 必抛"无法找到类型" | 扫 `AppDomain.CurrentDomain.GetAssemblies()`，`$asm.GetType($name, $false)` 不抛（跳过 `IsDynamic`）；结论与类型字面量一致：7.6.6 命中 SMA、5.1 未命中 |
+| 启用预测 | 直接 `Set-PSReadLineOption -PredictionSource`，由 PSReadLine 抛 `ArgumentException` | 先 `Test-CmdPilotInlinePredictionSupported` 按 PSReadLine **自己的判据**提前返回 |
+| 注册/注销 | 直接 `UnregisterSubsystem`，对未注册 Id 抛 | 先 `Test-CmdPilotPredictorRegistered` 查 Id（`GetSubsystemInfo` 只查询、不抛） |
+
+其中第二条的判据来自 PSReadLine 源码（2.2.5 / `PlatformWindows.OneTimeInit`）：
+`_enableVtOutput = !Console.IsOutputRedirected && SetConsoleOutputVirtualTerminalProcessing()`，
+`_console` 非 VT 即为 `LegacyWin32Console`，而 `Options.cs` 的 `predictionSource` 分支
+正是对它抛异常。PowerShell 侧可观察的等价量：`[Console]::IsOutputRedirected` 与
+`$Host.UI.SupportsVirtualTerminal`（后者取不到时不拦，宁可真试一次）。
+
+**顺带修掉的潜在 bug**：`Enable-CmdPilotPredictionOptions` 原读写 `PredictionView`，
+但 2.4.5 反射实证属性名是 **`PredictionViewStyle`**、参数名 `-PredictionViewStyle`
+且**无别名**——即该段从未执行（属性查空），一旦执行就是 `ParameterBindingException`。
+
+### 4. 命令重复上报（提交 `a7f4c60`）
+
+`prompt` 钩子是为 `none` 降级路径补"命令已执行"事件用的（新 API 有
+`OnCommandLineExecuted`）。在 `new` 分支再挂一层会让每条命令被上报两次
+（`usage_stats` 计数翻倍），并给每次 prompt 渲染加一次 `Get-History` 的固定开销。
+
+### 5. 验证结论
+
+| 场景 | 结果 |
+|---|---|
+| 真实控制台 pwsh 7.6.6 | `ApiKind=new`、`PredictionSource=HistoryAndPlugin`、`PredictionViewStyle=InlineView`、`registered=True`、`Tab 绑定=CmdPilotAcceptOrMenu`；导入 / 二次导入 / `Disable`×2 后 `global Error count` 均为 **0** |
+| 输出被重定向的 pwsh 7 | 6 条建议、inline 为 `'atus'`，`PeekSuggestion('git st')` → ready/`'atus'`/`'git status'`，`PeekSuggestion('git stq')` → not ready，`Error count=0`（修复前为 2） |
+| PS 5.1 | `ApiKind=none`、`TabFallback=True`、`PromptWrapped=True`、`Tab→CmdPilotAITab`，`Error count=0`（修复前为 1） |
+| 模块完整性 | `CmdPilot.psm1`/`PredictorNew.ps1` 的 UTF-8 BOM 保留；仓库、PS7 安装目录、PS5.1 安装目录三方 SHA256 一致 |
+
+**未独立验证**：Tab **按键**路径的端到端效果（向用户控制台注入按键会抢焦点，无法
+无干扰完成）。已分别验证处理函数绑定、`PeekSuggestion` 的 ready/text/full 与光标
+行尾校验逻辑，仍需在真实会话中按一次 Tab 确认。
+
+---
+
 ## Git 管理
 
 按功能/模块拆分为 4 个聚焦提交（非一次性大提交），已推送到 `origin/main`：
