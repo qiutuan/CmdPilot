@@ -123,9 +123,13 @@ func (l *Logger) open() error {
 }
 
 // rotate renames the current file to prefix.N.log and prunes old ones.
+// The handle is closed before renaming: Windows cannot rename an open file.
 func (l *Logger) rotate() error {
-	if err := l.open(); err != nil {
-		return err
+	if l.file != nil {
+		if err := l.file.Close(); err != nil {
+			return fmt.Errorf("logx: close before rotate: %w", err)
+		}
+		l.file = nil
 	}
 	base := filepath.Join(l.dir, l.prefix)
 	// Shift existing rotated files: keep-1 -> keep, ..., 1 -> 2, current -> 1.
@@ -135,7 +139,11 @@ func (l *Logger) rotate() error {
 		os.Rename(old, next) //nolint:errcheck // best-effort pruning
 	}
 	cur := base + ".log"
-	os.Rename(cur, base+".1.log") //nolint:errcheck
+	if err := os.Rename(cur, base+".1.log"); err != nil {
+		// Roll back so logging continues against the still-present current file.
+		_ = l.open()
+		return fmt.Errorf("logx: rotate: %w", err)
+	}
 	return l.open()
 }
 
