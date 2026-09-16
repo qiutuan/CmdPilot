@@ -70,3 +70,21 @@ class CmdPilotPredictor : CmdPilotPredictorBase, System.Management.Automation.Su
 
     [void] Dispose() { $this.StopWorker() }
 }
+
+# 我们的 Predictor 是否已注册在引擎里（按 Id 比对）。
+# 用途：把"幂等重注册"的第一步（先注销同名 Id 再注册）从异常路径变成正常判断——
+# SubsystemManager::UnregisterSubsystem 对**未注册**的 Id 会抛
+#     "No implementation was registered for the subsystem 'CommandPredictor'."
+# 异常即使被 catch 也会在宿主 $Error 里留一条记录（用户敲 $Error 看到红字），而
+# GetSubsystemInfo 只是查询、不抛。2026-09-16 实测：SubsystemInfo.Implementations
+# 元素类型为 SubsystemInfo+ImplementationInfo，属性 Id/Kind/Name/Description/ImplementationType。
+function Test-CmdPilotPredictorRegistered {
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][guid] $Id)
+    $info = [System.Management.Automation.Subsystem.SubsystemManager]::GetSubsystemInfo(
+        [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor)
+    foreach ($impl in $info.Implementations) {
+        if ([guid]$impl.Id -eq $Id) { return $true }
+    }
+    return $false
+}

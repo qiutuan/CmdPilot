@@ -257,12 +257,18 @@ function Set-CmdPilotTabKey {
 function Enable-CmdPilotPredictionOptions {
     <#
     .SYNOPSIS
-    确保 PSReadLine 真正启用预测器：PredictionSource 含 Plugin、PredictionView 为 InlineView。
+    确保 PSReadLine 真正启用预测器：PredictionSource 含 Plugin、PredictionViewStyle 为 InlineView。
     #>
     # 注册 ICommandPredictor 只是让引擎"知道"存在预测器；PSReadLine 仅当
     # PredictionSource 含 Plugin 时才会调用它。默认可能是 None/History——此时注册了
     # 也毫无效果：无幽灵文本、Tab 的 MenuComplete 也没有候选。必须显式开启。
-    # 尽力而为：非交互 / 不支持 VT 的宿主会抛错，静默忽略（不影响模块加载）。
+    # 先判断宿主能力再调用：这类宿主（输出被重定向 / 不支持 VT）本来就不可能显示幽灵
+    # 文本，PSReadLine 会抛异常拒绝设置——提前返回，既不产生错误记录也不做无意义设置。
+    if (-not (Test-CmdPilotInlinePredictionSupported)) {
+        Write-Verbose 'CmdPilot: 宿主输出被重定向或不支持 VT，跳过启用预测（该宿主本也无法显示幽灵文本）'
+        return
+    }
+    # 兜底：能力判断若有偏差（极端宿主），也不能影响模块加载。
     try {
         $opt = Get-PSReadLineOption -ErrorAction Stop
         $ps = $opt.PSObject.Properties['PredictionSource']
@@ -272,12 +278,16 @@ function Enable-CmdPilotPredictionOptions {
                 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -ErrorAction Stop
             }
         }
-        $pv = $opt.PSObject.Properties['PredictionView']
+        # 属性名是 PredictionViewStyle，参数名也是 -PredictionViewStyle 且**没有别名**
+        # （2.4.5 反射实证：Set-PSReadLineOption 无 PredictionView 参数）。此前写的
+        # 'PredictionView' 两头都不匹配——读取恒为 $null 使这段从未执行，而一旦执行到
+        # 就是 ParameterBindingException。现按真名读写。
+        $pv = $opt.PSObject.Properties['PredictionViewStyle']
         if ($pv -and [string]$pv.Value -ne 'InlineView') {
-            Set-PSReadLineOption -PredictionView InlineView -ErrorAction Stop
+            Set-PSReadLineOption -PredictionViewStyle InlineView -ErrorAction Stop
         }
     } catch {
-        Write-Verbose "CmdPilot: 启用 PSReadLine 预测器失败（宿主可能非交互）: $($_.Exception.Message)"
+        Write-Verbose "CmdPilot: 启用 PSReadLine 预测器失败（宿主能力判断未覆盖到的情形）: $($_.Exception.Message)"
     }
 }
 
@@ -487,23 +497,60 @@ function Get-CmdPilotPSReadLineModule {
         Sort-Object Version -Descending | Select-Object -First 1
 }
 
+function Test-CmdPilotInlinePredictionSupported {
+    <#
+    .SYNOPSIS
+    当前宿主是否可能启用并渲染 PSReadLine 预测（幽灵文本）。
+    #>
+    # 为什么要先判断：Set-PSReadLineOption -PredictionSource 在 PSReadLine 判定
+    # "本控制台无法渲染预测"时**抛 ArgumentException**（PredictiveSuggestionNotSupported），
+    # 异常即使被 catch 也会在宿主 $Error 里留一条记录（用户看到红字）。所以用 PSReadLine
+    # 自己的判据提前判断，把异常路径变成正常分支。
+    # PSReadLine 的决定（PlatformWindows.OneTimeInit）：
+    #     _enableVtOutput = !Console.IsOutputRedirected && SetConsoleOutputVirtualTerminalProcessing();
+    #     _console = _enableVtOutput ? VirtualTerminal : LegacyWin32Console;
+    # 而抛异常的条件就是 _console 为 LegacyWin32Console（Options.cs 的 predictionSource 分支）。
+    # 两个条件在 PowerShell 侧都观察得到，且一一对应：
+    #   IsOutputRedirected —— 同一个 Console 属性。此时 PSReadLine 连 ReadLine 都直接抛
+    #       NotSupportedException，幽灵文本本就不可能存在，跳过它不损失任何能力。
+    #   宿主不支持 VT 处理 —— PSHostUserInterface.SupportsVirtualTerminal，与
+    #       SetConsoleOutputVirtualTerminalProcessing() 探的是同一份控制台能力。
+    #       实测该属性在 PS 5.1 / 7.6.6 上均存在；万一取不到就不拦（宁可真去试一次，
+    #       也不因误判而白白丢掉幽灵文本）。
+    if ([Console]::IsOutputRedirected) { return $false }
+    $ui = $Host.UI
+    if ($ui) {
+        $vt = $ui.PSObject.Properties['SupportsVirtualTerminal']
+        if ($vt -and -not [bool]$vt.Value) { return $false }
+    }
+    return $true
+}
+
 function Test-CmdPilotPredictorApi {
     # 仅探测引擎级 Subsystem API（PS 7.4+ / PSReadLine 2.3.4+ 的宿主引擎提供）。
     # 注意：PS 5.1 上任何 PSReadLine 版本都没有插件预测器 API——2.2.x 无
     # ICommandPredictor/RegisterPredictor（2.2.5 二进制与源码实证，且
     # -PredictionSource Plugin 在 .NET Framework 上直接抛异常），2.3+ 的
     # Subsystem 类型仅在 PS 7.4 引擎中存在。故 5.1 / 7.0-7.3 恒为 'none'。
-    # 探测方式修正（2026-09-16 实测）：不能用 [type]::GetType('...') —— 它只查
-    # 调用程序集与核心库，不扫全部已加载程序集；pwsh 7.6.6 下该接口明明存在于
-    # System.Management.Automation.dll 却返回 $null，导致误判 'none'（永远走 Tab
-    # 降级）。改用 PowerShell 类型字面量：解析器扫描全部已加载程序集，
-    # 7.4+ 命中 → 'new'；5.1 / 7.0-7.3 未命中抛"无法找到类型"被捕获 → 'none'。
-    try {
-        $null = [System.Management.Automation.Subsystem.Prediction.ICommandPredictor]
-        return 'new'
-    } catch {
-        return 'none'
+    # 探测方式（2026-09-16 二次修正）——要求既准确、又**不抛异常**：
+    #   ① [type]::GetType('...') 只查调用程序集与核心库，不扫全部已加载程序集；
+    #      pwsh 7.6.6 下该接口就在 System.Management.Automation.dll 里却返回 $null，
+    #      误判 'none'（幽灵文本永远启不来），已弃用。
+    #   ② 改用类型字面量能命中，但 5.1 / 7.0-7.3 上必然抛"无法找到类型"。异常即使被
+    #      catch，也会作为一条记录留在**宿主**的 $Error 里（用户敲 $Error 看到红字）。
+    #      而模块内的 $Error 与宿主的是两个不同列表（实测 ReferenceEquals 为 False，
+    #      模块内 Count=0 时宿主 Count=1），在模块内摘不干净——别再走这条路。
+    #   ③ 现用程序集扫描：与②结论完全一致（实测 7.6.6 = FOUND in
+    #      System.Management.Automation，扫 81 个程序集；5.1 = NOT FOUND，扫 27 个），
+    #      但全程不产生任何错误记录。
+    $typeName = 'System.Management.Automation.Subsystem.Prediction.ICommandPredictor'
+    foreach ($asm in [AppDomain]::CurrentDomain.GetAssemblies()) {
+        # 动态程序集的 GetType 会抛 NotSupportedException，先排除；throwOnError = $false
+        # 让"本程序集没有这个类型"返回 $null 而不是抛——本函数不允许出现异常。
+        if ($asm.IsDynamic) { continue }
+        if ($asm.GetType($typeName, $false)) { return 'new' }
     }
+    return 'none'
 }
 
 $script:CmdPilotApiKind = Test-CmdPilotPredictorApi
@@ -584,8 +631,14 @@ function Enable-CmdPilot {
     try {
         # 幂等：同名 Id 若已注册（-Force 重载 / 重复 Import-Module），先注销再注册，
         # 使新实例成为生效实例，避免"already registered"告警与脚本变量指向失效实例。
-        [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
-            [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, [guid]'7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f')
+        # 必须先查：UnregisterSubsystem 对未注册的 Id 会抛异常（见
+        # Test-CmdPilotPredictorRegistered），而这个异常同样会污染宿主 $Error。
+        # 注销以实现 Id（Guid）为参，不以实例为参——Id 只从实例取，不再写字面量，
+        # 避免与 PredictorNew.ps1 里的类定义各写一份而漂移。
+        if (Test-CmdPilotPredictorRegistered -Id $predictor.Id) {
+            [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
+                [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $predictor.Id)
+        }
     } catch { }
     try {
         [System.Management.Automation.Subsystem.SubsystemManager]::RegisterSubsystem(
@@ -632,9 +685,12 @@ function Disable-CmdPilot {
     if ($script:CmdPilotPredictor) {
         $script:CmdPilotPredictor.StopWorker()
         try {
-            # UnregisterSubsystem 以实现 Id（Guid）为参，不以实例为参。
-            [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
-                [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, [guid]'7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f')
+            # UnregisterSubsystem 以实现 Id（Guid）为参，不以实例为参。未注册时它会抛
+            # （例如已 Disable 过再 Disable），故先查再注销。
+            if (Test-CmdPilotPredictorRegistered -Id $script:CmdPilotPredictor.Id) {
+                [System.Management.Automation.Subsystem.SubsystemManager]::UnregisterSubsystem(
+                    [System.Management.Automation.Subsystem.SubsystemKind]::CommandPredictor, $script:CmdPilotPredictor.Id)
+            }
         } catch {
             Write-Verbose "CmdPilot: unregister failed: $($_.Exception.Message)"
         }
