@@ -50,7 +50,9 @@ class CmdPilotPredictor : CmdPilotPredictorBase, Microsoft.PowerShell.PSReadLine
 
     [void] IgnoreSuggestion([PredictionContext] $context, [string] $suggestion) { }
 
-    [void] Start() { $this.StartWorker() }
+    # 注意：方法名不能是 End/Begin/Process —— 它们是 PowerShell 高级函数具名块
+    # 关键字，PS 5.1 的类解析器会因此解析失败（本文件在 PS 5.1 上曾无法加载）。
+    [void] OnStart() { $this.StartWorker() }
 
-    [void] End() { $this.StopWorker() }
+    [void] OnEnd() { $this.StopWorker() }
 }
