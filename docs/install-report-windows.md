@@ -86,6 +86,26 @@
 
 ---
 
+## 补记（2026-09-16）：安装 PowerShell 7 实现 inline 幽灵文本
+
+- **背景**：按"问题 2 补记"实证，PS 5.1 无任何插件预测 API，inline 幽灵文本仅
+  PowerShell 7.4+ 的引擎级 Subsystem API 可用（`ICommandPredictor`）。
+- **安装**：winget/MSI 安装失败（exit 34，`0x80070422`：msiserver 服务被禁用），
+  改用官方 zip 解压到 `%LOCALAPPDATA%\Programs\PowerShell\7.6.6`，追加到用户级
+  PATH；创建 PS7 all-hosts profile（`Documents\PowerShell\profile.ps1`），镜像
+  PS5.1 的 `Import-Module CmdPilot -ErrorAction SilentlyContinue`。
+- **发现并修复探测 bug**：模块原用 `[type]::GetType('...ICommandPredictor')`
+  探测引擎 API。实测 pwsh 7.6.6 下该接口明明存在于 System.Management.Automation.dll
+  却返回 `$null` —— `Type.GetType(string)` 只搜索**调用程序集与核心库**，不扫
+  全部已加载程序集，导致恒判 `none`、inline 永不启用。改为 PowerShell 类型字面量
+  （解析器扫描全部已加载程序集）：7.6.6 命中 `new`，5.1 抛"无法找到类型"被捕获
+  仍为 `none`。提交 `77f88f2`。
+- **端到端验证（pwsh 7.6.6）**：`ApiKind=new` → `SubsystemManager` 注册成功 →
+  注册实例 `GetSuggestion` 对 `git st` 返回 top=`git status`（幽灵文本 "atus"）
+  + 6 条列表；`PS 5.1` 回归无损（`none` + Tab 降级，零报错）。
+
+---
+
 ## Git 管理
 
 按功能/模块拆分为 4 个聚焦提交（非一次性大提交），已推送到 `origin/main`：

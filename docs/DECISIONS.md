@@ -41,9 +41,10 @@
 
 以下仅能在 Windows 真机/CI runner 验证，本开发环境（Linux 沙箱）未实测：
 
-1. **PS 5.1 与 PS 7.0–7.3 经典 API 路径**：本地仅有 PS 7.4.6（Subsystem API
-   路径已实机验证：注册→GetSuggestion→注销零残留）。经典路径按官方文档
-   实现，验证依赖 CI（docs/windows-ci.example.yml）。
+1. **PS 5.1 与 PS 7.0–7.3 路径**：Windows 真机 pwsh 7.6.6 已实机验证 Subsystem
+   API 路径（注册→GetSuggestion 幽灵文本→注销零残留，见 install 报告补记）。
+   PS 5.1 已实测无任何插件预测 API（2.2.5 源码/二进制实证），退化为 Tab；
+   7.0–7.3 同 5.1（无引擎级 API），无需旧路径实现。
 2. **Clink 真机交互**：Lua 语法与行协议已本地冒烟；Tab 菜单交互依赖 CI。
 3. **DPAPI 加密**：Windows 专属路径（secrets_windows.go），非 Windows 为
    dev 占位；单测覆盖占位路径。
