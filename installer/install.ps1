@@ -33,16 +33,33 @@ Write-Step "CmdPilot 安装开始 (PowerShell $($PSVersionTable.PSVersion.ToStri
 $BinDir = Join-Path $Root "bin"
 if (-not $SkipBuild) {
     Write-Step "构建 Go 二进制（需要 Go ≥1.22）"
-    if (-not (Get-Command go -ErrorAction SilentlyContinue)) {
+    # go 未必在 PATH 上（实测本机 GOROOT=D:\Program Files\Go，但 PATH 里没有 go）
+    $GoExe = $null
+    $goCmd = Get-Command go -ErrorAction SilentlyContinue
+    if ($goCmd) { $GoExe = $goCmd.Source }
+    if (-not $GoExe) {
+        $goCands = @()
+        if ($env:GOROOT)       { $goCands += (Join-Path $env:GOROOT "bin\go.exe") }
+        if ($env:ProgramFiles) { $goCands += (Join-Path $env:ProgramFiles "Go\bin\go.exe") }
+        if (${env:ProgramFiles(x86)}) { $goCands += (Join-Path ${env:ProgramFiles(x86)} "Go\bin\go.exe") }
+        if ($env:LOCALAPPDATA) { $goCands += (Join-Path $env:LOCALAPPDATA "Programs\Go\bin\go.exe") }
+        foreach ($p in $goCands) { if (Test-Path $p) { $GoExe = $p; break } }
+    }
+    if (-not $GoExe) {
         throw "未找到 go 命令。请安装 Go 或使用 -SkipBuild 配合预编译二进制。"
     }
+    # 用所选 go 自身的根目录覆盖 GOROOT：本机存在与实际工具链不匹配的 GOROOT
+    # （User=…\Programs\go 是 go1.27.1、Machine=D:\Program Files\Go 是 go1.26.0），
+    # 不覆盖会报 "compile: version ... does not match go tool version ..."
+    $env:GOROOT = Split-Path (Split-Path $GoExe -Parent) -Parent
+    Write-OK "使用 $GoExe（GOROOT=$env:GOROOT）"
     New-Item -ItemType Directory -Force -Path $BinDir | Out-Null
     Push-Location $Root
     try {
         $env:CGO_ENABLED = "0"
-        go build -trimpath -ldflags "-s -w" -o (Join-Path $BinDir "cmdpilot.exe") ./cmd/cmdpilot
+        & $GoExe build -trimpath -ldflags "-s -w" -o (Join-Path $BinDir "cmdpilot.exe") ./cmd/cmdpilot
         if ($LASTEXITCODE -ne 0) { throw "cmdpilot.exe 构建失败" }
-        go build -trimpath -ldflags "-s -w" -o (Join-Path $BinDir "cmdpilot-clink.exe") ./cmd/cmdpilot-clink
+        & $GoExe build -trimpath -ldflags "-s -w" -o (Join-Path $BinDir "cmdpilot-clink.exe") ./cmd/cmdpilot-clink
         if ($LASTEXITCODE -ne 0) { throw "cmdpilot-clink.exe 构建失败" }
     } finally { Pop-Location }
     Write-OK "构建完成"
