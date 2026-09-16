@@ -128,7 +128,17 @@ companion 进程，永远停不下来。实测：空闲 6 秒内创建 **18 个*
   worker 早已取好的快照，新增只读的 `PeekSuggestion`，不起进程、不阻塞）；
 - 其余情况（光标在行中、无建议）→ 退回 PSReadLine 原生菜单。
   光标校验是必需的：建议是**整行后缀**，插入点在光标处，行中插入会破坏输入。
-- 列表菜单仍留在 PSReadLine 默认键位 **Ctrl+Space / Ctrl+@**，能力未丢。
+- 列表菜单仍留在 PSReadLine 默认键位 **Ctrl+@**，能力未丢。
+
+**→ 不需要绑定**：PSReadLine 默认 `RightArrow` → `ForwardChar`，而 `ForwardChar`
+的语义正是"光标在行尾时接受整条建议"——PSReadLine 自带
+`SamplePSReadLineProfile.ps1` 原文："`ForwardChar` accepts the entire suggestion
+text when the cursor is at the end of the line."，与 Tab 的判据完全一致，
+故 README 承诺的"Tab 或 → 接受"无需额外实现。实测键位：
+`Tab → CmdPilotAcceptOrMenu`、`RightArrow → ForwardChar`、`Ctrl+@ → MenuComplete`。
+注意 PSReadLine **不认 `Ctrl+Space` 这个键名**（`Get-PSReadLineKeyHandler -Key Ctrl+Space`
+报 `Unrecognized key 'Space'`）；物理按 Ctrl+Space 产生的就是 `Ctrl+@`（NUL，0x00），
+实际按下去即可弹出菜单。
 
 ### 3. 宿主 `$Error` 红字——三处"异常当控制流"（提交 `1e8f598`）
 

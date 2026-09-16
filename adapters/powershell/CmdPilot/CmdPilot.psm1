@@ -234,7 +234,8 @@ function Set-CmdPilotTabKey {
         # 原生候选菜单。快照是 worker 早已取好的结果，接受零成本、不起进程、不阻塞
         # （此前 Tab 固定绑 MenuComplete：只弹列表、不落字，对灰色建议等于"无效"，
         #  与本模块 README 承诺的"按 Tab 或 → 接受"不一致）。
-        # 列表菜单仍在 PSReadLine 默认键位上（Ctrl+Space / Ctrl+@）。
+        # 列表菜单仍在 PSReadLine 默认键位上（Ctrl+@；物理按 Ctrl+Space 即产生该键，
+        # 但 PSReadLine 不认 'Ctrl+Space' 这个键名）。
         Set-PSReadLineKeyHandler -Key Tab -BriefDescription 'CmdPilotAcceptOrMenu' -ScriptBlock {
             $psr = Resolve-CmdPilotPSReadLineStatic
             if (-not $psr) { return }
