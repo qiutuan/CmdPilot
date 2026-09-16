@@ -45,11 +45,12 @@ class CmdPilotPredictor : CmdPilotPredictorBase, System.Management.Automation.Su
     # 接受建议即视为执行一次（M5 统计）。
     [void] OnSuggestionAccepted([PredictionClient] $client, [uint32] $session, [string] $acceptedSuggestion) {
         $full = $null
-        [System.Threading.Monitor]::Enter($this.Lock)
+        # 基类状态统一放在 $this.Sync 哈希表（无 Lock/SnapshotFull 成员）。
+        [System.Threading.Monitor]::Enter($this.Sync.lock)
         try {
-            if ($this.SnapshotFull) { $full = $this.SnapshotFull }
+            if ($this.Sync.snapFull) { $full = $this.Sync.snapFull }
         } finally {
-            [System.Threading.Monitor]::Exit($this.Lock)
+            [System.Threading.Monitor]::Exit($this.Sync.lock)
         }
         if (-not $full) { $full = $acceptedSuggestion }
         $dir = ''
