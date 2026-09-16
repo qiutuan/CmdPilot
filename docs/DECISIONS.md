@@ -9,7 +9,7 @@
 |---|---|---|---|
 | 1 | **核心语言选 Go（1.22+，modernc.org/sqlite 纯 Go）** | 免 CGO 交叉编译到 Windows 单二进制、goroutine 天然适配异步 AI、单测/覆盖率工具链成熟；CLI/守护进程/插件 companion 一体 | 全项目 |
 | 2 | **终端接入走官方 API：PSReadLine Predictor + Clink**，不做自制控制台钩子 | 官方内联/列表视图零逆向成本、稳定；Clink 为 CMD 事实标准 | ADR-001 |
-| 3 | **双 API 适配 PowerShell**：PS7.4+/PSReadLine 2.3.4+ 引擎级 Subsystem API，PS5.1/7.0–7.3 经典 ICommandPredictor | 版本矩阵实测：新命名空间类型在旧版本不存在，必须按探测分叉 | 适配层 |
+| 3 | **PowerShell 仅用引擎级 Subsystem API**：PS 7.4+/PSReadLine 2.3.4+ 注册 ICommandPredictor；PS 5.1/7.0–7.3 无任何插件预测 API，退化为 Tab 补全 | 版本矩阵 + 2.2.5 源码/二进制实证：2.2.x 无 ICommandPredictor/RegisterPredictor，且 -PredictionSource Plugin 在 .NET Framework 上抛异常 | 适配层 |
 | 4 | **core 零终端依赖 + companion 进程桥**：终端↔守护进程经 JSON/行协议 | 单守护进程共享补全/统计/AI，适配层薄、可独立测试 | 架构文档 |
 | 5 | **/complete 恒同步返回本地结果，AI 异步 debounce（300ms）+ 1 in-flight + 5min 缓存** | 本地 P95≤10ms 硬指标不被网络污染；AI 失败静默降级 | ADR-002 |
 | 6 | **降级链**：AI 超时(5s)/500/断网/无效 key/畸形响应 → 本地 → 历史前缀 | AI 永不成为单点，终端永不卡输入 | ADR-002 |

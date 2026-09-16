@@ -1,6 +1,6 @@
 # ADR-001：终端接入方案选型
 
-- 状态：已接受
+- 状态：已接受（2026-09-16 修订：修正"经典 API"假设——PS 5.1 无任何插件预测 API）
 - 日期：2026-09-15
 - 决策者：主工程师（自主决策，按最小惊讶原则）
 
@@ -14,8 +14,11 @@ Lua 插件。**明确不做**自制控制台钩子。
 
 ## 理由
 1. PSReadLine ≥2.2 提供官方 ICommandPredictor：引擎级 Subsystem API
-   （PS 7.4+/PSReadLine 2.3.4+）或经典 API（PS 5.1/7.0–7.3），原生内联
-   幽灵文本 + 列表视图，无需逆向。
+   （PS 7.4+/PSReadLine 2.3.4+），原生内联幽灵文本 + 列表视图，无需逆向。
+   （修订：按 2.2.5 二进制与源码实证，"经典 API"（2.2.x 的
+   Microsoft.PowerShell.PSReadLine.ICommandPredictor / RegisterPredictor）
+   并不存在，且 -PredictionSource Plugin 在 .NET Framework 上直接抛异常；
+   故 PS 5.1 无任何插件预测 API，退化为 Tab 补全。）
 2. Clink 是 CMD 事实标准的补全框架，register_generator 注册补全器，
    `clink inject` 即可生效，天然支持 git 等外部工具补全。
 3. 自制 ReadConsoleW 钩子：x86/x64 兼容矩阵、各终端宿主差异、稳定性和

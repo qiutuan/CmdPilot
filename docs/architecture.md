@@ -8,8 +8,8 @@
 ┌─────────────────────────────┐   ┌──────────────────────────────┐
 │  PowerShell 终端             │   │  CMD + Clink                 │
 │  PSReadLine Predictor 插件   │   │  cmdpilot.lua generator      │
-│  (New: Subsystem API /       │   │  (Tab 菜单补全, 无幽灵文本)    │
-│   Legacy: ICommandPredictor) │   │                              │
+│  (PS 7.4+ Subsystem API;     │   │  (Tab 菜单补全, 无幽灵文本)    │
+│   PS 5.1 无插件 API → Tab)   │   │                              │
 └──────────────┬──────────────┘   └───────────────┬──────────────┘
                │ JSON request/output file          │ 行协议 (plain)
                ▼                                  ▼

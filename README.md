@@ -111,7 +111,7 @@ go run ./tools/eval all
 ## 目录结构
 
 ```
-adapters/powershell   PSReadLine Predictor 插件（New + Legacy 双 API）
+adapters/powershell   PSReadLine Predictor 插件（引擎级 Subsystem API，PS 7.4+；旧宿主 Tab 降级）
 adapters/clink        Clink Lua 插件（CMD）
 cmd/cmdpilot          守护进程（常驻 HTTP 服务）
 cmd/cmdpilot-clink    companion 伴侣进程（JSON + 行协议）

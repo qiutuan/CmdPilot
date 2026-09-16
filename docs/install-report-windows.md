@@ -1,7 +1,7 @@
 # CmdPilot Windows 11 安装与测试报告
 
 > 首次在 Windows 真机（Windows 11 Pro for Workstations 10.0.26100，PowerShell 5.1.26100）安装与测试的完整记录。
-> 环境准备：Go 1.27.1（用户级安装），PSReadLine 2.4.5。
+> 环境准备：Go 1.27.1（用户级安装）；PSReadLine 最终为 **2.2.5**（初始装 2.4.5，后按下文实证改为 2.2.5）。
 
 ---
 
@@ -13,9 +13,10 @@
 - **优化点**：README 应补充"免管理员安装 Go"的明确步骤；CI/安装脚本可预检 `go version` 并给出指引。
 
 ### 问题 2：PSReadLine 版本过旧
-- **现象**：PowerShell 适配器的 legacy 路径要求 `PSReadLine >= 2.2.0`，系统自带 2.0.0。
-- **处理**：`Install-Module PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck` → 2.4.5。
+- **现象**：CmdPilot 的 PS 5.1 路径要求 `PSReadLine >= 2.2.0`（Tab 补全依赖其静态 API），系统自带 2.0.0。
+- **处理**：`Install-Module PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck` → 2.4.5；后经实证修正（见"问题 2 补记"）改为安装 **2.2.5**。
 - **优化点**：`install.ps1` 可在写入加载行之前检查 PSReadLine 版本，不足时自动升级或给出命令。
+- **补记（2026-09-16）**：原以为 PS 5.1 可用 PSReadLine 2.2.x 的"经典 ICommandPredictor"插件 API 实现 inline 幽灵文本。按 **2.2.5 二进制与官方源码实证**：该类型/`RegisterPredictor` 并不存在，且 `-PredictionSource Plugin` 在 .NET Framework 上直接抛 `PredictionPluginNotSupported`。结论：**PS 5.1 上任何 PSReadLine 版本都没有插件预测器 API**，inline 幽灵文本仅 PowerShell 7.4+ 可用；PS 5.1 使用 Tab 补全降级（已实测：`Import-Module CmdPilot` 无报错，Tab 返回本地/AI 补全）。
 
 ### 问题 3：机器级 `GOROOT` 指向旧的 Go 安装（潜伏环境 bug）
 - **现象**：所有包构建失败 `compile: version "go1.23.4" does not match go tool version "go1.27.1"`。
