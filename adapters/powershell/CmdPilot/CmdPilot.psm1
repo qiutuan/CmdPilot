@@ -393,12 +393,17 @@ function Test-CmdPilotPredictorApi {
     # ICommandPredictor/RegisterPredictor（2.2.5 二进制与源码实证，且
     # -PredictionSource Plugin 在 .NET Framework 上直接抛异常），2.3+ 的
     # Subsystem 类型仅在 PS 7.4 引擎中存在。故 5.1 / 7.0-7.3 恒为 'none'。
+    # 探测方式修正（2026-09-16 实测）：不能用 [type]::GetType('...') —— 它只查
+    # 调用程序集与核心库，不扫全部已加载程序集；pwsh 7.6.6 下该接口明明存在于
+    # System.Management.Automation.dll 却返回 $null，导致误判 'none'（永远走 Tab
+    # 降级）。改用 PowerShell 类型字面量：解析器扫描全部已加载程序集，
+    # 7.4+ 命中 → 'new'；5.1 / 7.0-7.3 未命中抛"无法找到类型"被捕获 → 'none'。
     try {
-        if ($null -ne [type]::GetType('System.Management.Automation.Subsystem.Prediction.ICommandPredictor')) {
-            return 'new'
-        }
-    } catch { }
-    return 'none'
+        $null = [System.Management.Automation.Subsystem.Prediction.ICommandPredictor]
+        return 'new'
+    } catch {
+        return 'none'
+    }
 }
 
 $script:CmdPilotApiKind = Test-CmdPilotPredictorApi
