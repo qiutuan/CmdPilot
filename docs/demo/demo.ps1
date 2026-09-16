@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   CmdPilot 60 秒演示（PowerShell）：幽灵文本 / Clink Tab / AI / 收藏 / 高频 / 降级。
 .DESCRIPTION

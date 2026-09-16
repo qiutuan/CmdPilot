@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   CmdPilot 一键安装脚本（PowerShell，-Scope CurrentUser，无需管理员）。
 .DESCRIPTION

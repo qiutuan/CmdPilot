@@ -1,4 +1,4 @@
-@{
+﻿@{
     RootModule           = 'CmdPilot.psm1'
     ModuleVersion        = '0.1.0'
     GUID                 = '7f3a1c9e-2d5b-4a6f-9e8d-1c2b3a4d5e6f'

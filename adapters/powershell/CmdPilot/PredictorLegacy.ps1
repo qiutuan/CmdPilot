@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # PredictorLegacy.ps1 - 经典 PSReadLine ICommandPredictor（PSReadLine 2.2.x，
 # PS 5.1 / PS 7.0-7.3）实现。仅由 CmdPilot.psm1 在探测不到引擎级 Subsystem
 # API 时 dot-source（避免在 PS 7.4+ 主机解析失败）。

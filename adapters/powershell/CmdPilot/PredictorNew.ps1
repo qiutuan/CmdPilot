@@ -1,4 +1,4 @@
-#Requires -Version 7.4
+﻿#Requires -Version 7.4
 # PredictorNew.ps1 - PS 7.4+ / PSReadLine 2.3.4+ 引擎级 Subsystem API 实现。
 # 仅由 CmdPilot.psm1 探测到 System.Management.Automation.Subsystem.Prediction
 # 存在时 dot-source（解析时机在探测之后，避免旧主机解析失败）。

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   CmdPilot 完全卸载脚本。移除模块、Clink 插件、PROFILE 加载行、守护进程；
   用户数据（收藏/统计/配置/key）默认保留，-RemoveData 时一并清除。
