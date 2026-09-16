@@ -28,19 +28,26 @@ func newFakeFS() *fakeFS {
 	return &fakeFS{entries: map[string][]string{}, dirs: map[string]bool{}, git: map[string]bool{}}
 }
 
+// fsKey canonicalizes a path so the fake FS works on every platform: the
+// engine builds paths with filepath (backslashes on Windows) while tests pass
+// POSIX-style keys, so both sides are reduced to forward-slash form.
+func fsKey(p string) string { return filepath.ToSlash(filepath.Clean(p)) }
+
 func (f *fakeFS) addDir(dir string, entries []string, dirEntries []string) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	dir = fsKey(dir)
 	f.dirs[dir] = true
 	f.entries[dir] = append(entries, dirEntries...)
 	for _, d := range dirEntries {
-		f.dirs[filepath.Join(dir, d)] = true
+		f.dirs[fsKey(filepath.Join(dir, d))] = true
 	}
 }
 
 func (f *fakeFS) List(dir string) ([]string, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	dir = fsKey(dir)
 	if _, ok := f.dirs[dir]; !ok {
 		return nil, errNoSuchDir
 	}
@@ -50,18 +57,22 @@ func (f *fakeFS) List(dir string) ([]string, error) {
 func (f *fakeFS) IsDir(p string) bool {
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	return f.dirs[p]
+	return f.dirs[fsKey(p)]
 }
 
 func (f *fakeFS) IsGitRepo(dir string) bool {
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	for d := dir; d != "" && d != "." && d != string(filepath.Separator); d = filepath.Dir(d) {
+	for d := fsKey(dir); ; {
 		if f.git[d] {
 			return true
 		}
+		parent := fsKey(filepath.Dir(d))
+		if parent == d || parent == "" || parent == "." {
+			return false
+		}
+		d = parent
 	}
-	return false
 }
 
 var errNoSuchDir = &pathError{}
