@@ -429,6 +429,7 @@ GitHub 认证凭据经 **Windows 凭据管理器（GCM）** 存储，未以明�
 | `fed9f52` | `fix(clink):` 按实测的 Clink 1.9.33 重写 Lua 插件（旧版 API 全部不存在，插件从未生效） |
 | `74d1f17` | `fix(clink):` 伴侣二进制的行模式判定容忍 CRLF，不再因入口判定漏判而报 bad request |
 | `7f07bad` | `docs(ps):` 根因、决策 19/20 与三层验证记录 |
+| `cea9177` | `docs(clink):` CMD 侧"没生效"的三重原因、真实控制台实测方法与结果 |
 
 ---
 
