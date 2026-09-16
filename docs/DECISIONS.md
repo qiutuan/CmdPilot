@@ -27,6 +27,8 @@
 | 18 | **模块内不抛异常**（探测/启用/注销一律走正常分支） | 异常的记录进的是**宿主** `$Error`，与模块 `$Error` 是两份列表（`ReferenceEquals` 实测 False），模块内清不掉；用户会看到红字 | 提交 `1e8f598` |
 | 19 | **预测器回调（`GetSuggestion`）内只允许编译代码**：本体为 `PredictorCore.cs`（`Add-Type` 编译的 `ICommandPredictor`），取建议的慢路径（debounce＋companion 进程＋JSON 解析）留在独立 runspace 的 worker | PSReadLine 渲染内联建议是**同步**的（`Render.cs` → `_predictionTask.Result`），而引擎把回调丢线程池只等 20ms、超时即丢弃结果。PowerShell 类方法每次必踩满：实测 31ms/键 = 20ms 超时 + .NET 定时器 15.6ms 粒度，且 `predictors=0`（结果全被丢弃，等于从未真正显示过）；编译实现 0.42ms、`predictors=1`。真机按键回声 44.5→15.6ms（无模块基线 15.5ms） | 提交 `5a333ed` `da23e45` |
 | 20 | **worker 的 cwd 取自控制台当前位置**（`PredictionClient.CurrentLocation`，随输入**同代**记在 `Register` 里），不用 worker 自己 runspace 的 `Get-Location` | 后者是**进程**工作目录：实测同一会话 console cwd=`%TEMP%\cmdpilot-cwdprobe-xxxx`、进程 cwd=仓库根。cwd 是路径类建议与上下文（`splitPath`/`IsGitRepo`/`TopNByDir`）的入参，用错则 cd 之后路径补全按启动目录算 | 提交 `0cd8c95` |
+| 21 | **CMD 适配层以真机实测 API 为准**：`clink.generator(priority)`+`obj:generate`、`line_state:getline()/:getcursor()`、`rl.gethistory*`、`match_builder:setnosort(true)`；补全词由**裁剪后的** `line_state` 自行推算，不依赖 `getendword` | 旧插件调用的 `clink.script_dir`/`register_generator`/`gethistory`/`getline`/`getpoint`/`getcwd` 在 1.9.33.a4bf0e 上**全部不存在**，脚本加载即报错——这才是"cmd 窗口没生效"的直接原因。裁剪是 Clink 的固有设计：它随后用**完整末尾词**过滤我们返回的匹配（实测 `git co`+Tab→`git config`，而裁剪输入 `git c` 的 rank1 是 `git clone`），所以插件必须按引擎排名交给它过滤，而不是自己去猜末尾词。默认字母表重排序会冲掉引擎排名，故 `setnosort(true)` | 提交 `fed9f52` |
+| 22 | **CMD 插件安装到 `clink info` 报告的 `state` 目录当层**，复制后校验落地（存在性+SHA256） | Clink 只加载脚本目录**当层**的 `*.lua`，任意子目录不加载（`completions\` 是唯一例外且按需加载）——旧安装器写的 `%LOCALAPPDATA%\clink\CmdPilot\` 永远不会被加载，而"复制成功"当时只是打印出来的、没检查结果 | 提交 `787617e` |
 
 ## 二、测试执行摘要（全部可一键复跑：`go run ./tools/eval all`）
 
@@ -41,10 +43,12 @@
 | E2E | **12/12**：启动→建议→上报→统计→推荐→收藏→配置→导出导入→AI test→自检→重启持久→清空保留→无效 AI 降级 | docs/reports/e2e.md |
 | 性能 | 本地补全 P95 达 ≤10ms 硬指标；万条历史延迟；RSS ≤30MB；空闲 CPU≈0%（事件驱动）；AI 慢 1.2s 时首返 ≤500ms 非阻塞 | docs/reports/performance.md |
 | 安装包体积 | Windows amd64 交叉编译：cmdpilot.exe 11.4MB + cmdpilot-clink.exe 10.3MB，gzip 安装包合计 **9.3MB ≤ 20MB** 硬指标达标 | 实测（`GOOS=windows go build -ldflags "-s -w"` + gzip） |
+| CMD 端到端（真实控制台按键注入） | 8/8：`git commi`→`git commit`、`git statu`→`git status`、`git s`→`git status`（引擎 rank1 非字母序第一）+ 5 条循环、`gi`→`git status`、`git ch`→`git checkout`、`git co`→`git config`（弹窗 2 条，clone/clean 被正确筛掉）、`cd do`→`cd docs\`、启动打印启用行 | docs/install-report-windows.md「补记四次」 |
 
 ## 三、本地验证边界（诚实声明）
 
-以下仅能在 Windows 真机/CI runner 验证，本开发环境（Linux 沙箱）未实测：
+以下项需要 Windows 真机/CI runner。带"已实测"的是 2026-09-16 在 Windows 11 真机上
+完成的验证（方法与原始数据见 docs/install-report-windows.md），其余仍待真机/CI：
 
 1. **PS 5.1 与 PS 7.0–7.3 路径**：Windows 真机 pwsh 7.6.6 已实机验证 Subsystem
    API 路径（注册→GetSuggestion 幽灵文本→注销零残留，见 install 报告补记）。
@@ -52,11 +56,17 @@
    7.0–7.3 同 5.1（无引擎级 API），无需旧路径实现。编译核心（`PredictorCore.cs`）
    只在 7.4+ 路径上被 `Add-Type`（探测为 `none` 时 `PredictorNew.ps1` 根本不
    dot-source），故 PS 5.1 既不会编译它、也不会因编译失败受影响。
-2. **Clink 真机交互**：Lua 语法与行协议已本地冒烟；Tab 菜单交互依赖 CI。
+2. **Clink 真机交互**：已在 Windows 真机用**真实控制台按键注入**实测
+   （`FreeConsole`→`AttachConsole`→`WriteConsoleInputW`/`ReadConsoleOutputCharacterW`）：
+   `git commi`→`git commit`、`git s`→`git status`（引擎 rank1 而非字母序第一）、
+   `git co`→`git config`、`gi`→`git status`、`cd do`→`cd docs\`，
+   启动打印启用行、`clink.log` 记 `Loaded 1 Lua scripts`。CLI 侧只剩用户在自己
+   窗口里按一次 Tab 的确认（见 install 报告"补记四次"）。
 3. **DPAPI 加密**：Windows 专属路径（secrets_windows.go），非 Windows 为
    dev 占位；单测覆盖占位路径。
-4. **安装/卸载脚本**：PowerShell 语法人工审查 + 结构对齐模块路径；真机
-   执行依赖 Windows。
+4. **安装/卸载脚本**：**已实测**（Windows 11 + PS 5.1.26100：构建→双模块目录安装→
+   Clink 插件安装+落地校验→幂等写 `$PROFILE`，exit 0）。仓库与两个安装目录的
+   模块文件内容一致（仅 `bin\*.exe` 为安装产物、仓库不跟踪）。
 5. **DPAPI 真机加解密**：交叉编译通过、类型与 x/sys API 对齐；真实
    CryptProtectData 往返依赖 Windows 实测（CI 已含构建，可加冒烟）。
 5. **演示 GIF**：Windows 终端画面无法在 Linux 录制，交付演示脚本
@@ -100,10 +110,31 @@
   `WorkerAlive()` 里 `ReferenceEquals(_current, this)`，旧实例自行退出。
 - worker 的 cwd 曾取自己 runspace 的 `Get-Location`（= 进程工作目录，cd 之后就是错的），
   改为随输入同代记录控制台位置。见决策 20。
+- **CMD 侧"装了但没反应"是三个独立缺陷叠加，且三者都静默**（2026-09-16 真机）：
+  ① 安装器把插件复制到 `%LOCALAPPDATA%\clink\CmdPilot\`——Clink 不递归加载子目录，
+  该文件永远不被读取；② Lua 调用的 `clink.script_dir`/`register_generator`/`gethistory`/
+  `getline`/`getpoint`/`getcwd` 在 1.9.33.a4bf0e 上**全部不存在**，脚本加载即报错；
+  ③ 行协议侧 `io.open("w")` 的 CRLF 让魔数校验失败、`cmd /c` 吃掉首 token 引号、
+  history 多值字段被二次 stuff 并成一条。分别修于 `787617e`/`fed9f52`/`74d1f17`。
+- `clink info --profile x` 写法无效：`--profile` 是**全局选项**（须在动词之前），
+  旧安装器因此把输出第一行 `version : 1.9.33.a4bf0e` 当成了脚本目录名；
+  `clink` 也不在本机 PATH 上，需从 cmd 的 AutoRun 注册表项或常见目录定位。
+- `--profile ~\clink` 里的 `~` **不会被 Clink 展开**（`clink --profile '~\clink' info`
+  → `state : ~\clink`），于是每个 cmd 启动目录下都会新建一个 `~\clink`；真实会话
+  实际使用 `%LOCALAPPDATA%\clink`。安装器改为检测并提示改成绝对路径。
+- 机器级 `GOROOT` 与用户安装的 Go 版本不一致会让所有构建报
+  `compile: version ... does not match go tool version ...`；安装器改为用所选
+  `go.exe` 自身的根覆盖 `GOROOT`。
+- 提示文字里的 `"\$PROFILE"` 不是转义（反斜杠是字面字符、`$PROFILE` 照常展开），
+  三处提示实际打印 `\C:\Users\...`；改用反引号。
 
 ## 五、已知限制
 
 - Clink 无自动建议（幽灵文本）API：CMD 侧以 Tab 菜单补全为最佳替代。
+- CMD 路径补全位置 Clink 原生补全同时生效：`cd do`+Tab 得 `cd docs\` 与原生项的
+  **公共前缀**同文本，实测无法区分归属（详见 install 报告"补记四次"的口径说明）。
+- 弹窗列表里 Tab 循环顺序按 Clink 自己的显示排序，只有**首次** Tab 插入的是引擎
+  rank1；引擎排名的完整呈现依赖 Clink 列表视图的排序策略。
 - AI 补全仅支持 OpenAI 兼容远端协议（按需求，禁本地推理）。
 - 万条历史性能在本地压测通过；超大规模（>10 万条）未专项压测。
 - CI 工作流因当前 PAT 权限以示例入库，需 workflow 权限 token 启用。

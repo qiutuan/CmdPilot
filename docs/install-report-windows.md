@@ -299,6 +299,106 @@ worker 在自己的 runspace 里 `Get-Location` 拿到的是**进程工作目录
 
 ---
 
+## 补记（2026-09-16 四次）：CMD 侧"窗口没生效"的三重原因（安装器 / 适配层 / 协议）
+
+用户的原始问题是"**为什么我的 cmd 窗口没有生效**"。答案是三个独立缺陷叠加：
+安装器把插件复制到了 Clink **从不搜索**的目录；Lua 调用的 API 在真实 Clink 上
+**全部不存在**（脚本加载即报错）；行协议在 CRLF 与 cmd 引号上**静默失败**。
+三者都会表现为"装了但什么都没发生"，而且都不报错。
+
+### 0. 实验方法（可复跑，脚本在 `%TEMP%\cmp-cmdlab`）
+
+- **真实控制台注入**：独立进程 `FreeConsole()` → `AttachConsole(cmd_pid)` →
+  `CreateFileW("CONIN$"/"CONOUT$")` → `WriteConsoleInputW` 注入按键、
+  `ReadConsoleOutputCharacterW` 读回屏幕。Tab=`0x09`、Esc=`0x1B`、Ctrl+C=`0x03`、F2=`0x71`。
+  这样"按 Tab 之后那一行到底变成什么"是**读屏幕**得来的，不是推断。
+- **伴侣调用可见化**：`CMDPILOT_BIN` 指向 `wrap.cmd`，它记录每次调用的参数与请求字段
+  后再转调真身。于是"Tab 有没有真的调用引擎、用什么输入调的"直接可查。
+- **API 探针**：临时 Lua 探针（`clink.generator` + 写 `%TEMP%` 日志）测出生成器契约。
+
+### 1. 适配层：旧 Lua 调的 API 在真实 Clink 上全部不存在（提交 `fed9f52`）
+
+| 旧写法 | 1.9.33.a4bf0e 实际 |
+|---|---|
+| `clink.script_dir` | 不存在 → `debug.getinfo(1,"S").source` |
+| `clink.register_generator(fn, name)` | `clink.generator(priority)` + `obj:generate(line_state, match_builder)` |
+| `clink.getline/getpoint/getcwd` | `line_state:getline()/:getcursor()`；cwd 用 `os.getcwd()` |
+| `clink.gethistory()` | `rl.gethistorycount()` / `rl.gethistoryitems(start, end)`（返回 `{ {line=,time=} }`） |
+| chunk 末尾 `return "提示文字"` | 不再显示，改用 `clink.onbeginedit` + `clink.print` |
+
+即：插件在**脚本加载阶段**就报错，从来没有注册过生成器——这是"完全没反应"的根因。
+
+### 2. 生成器契约的实测细节（已写进 `cmdpilot.lua` 文件头）
+
+- **`line_state` 是被裁剪过的**：探针实测输入 `git commi` 时，第一趟拿到 `line="g"`
+  （`#getline=5`、`getcursor=6`、`getendword=""`、`word[2]={offset=5,length=0}`），
+  第二趟拿到 `"git c"`（= 末尾词首字符之前的整行 + 该字符）。补全词必须自行推算。
+- **过滤用的是真实末尾词**：`git co` + Tab 插入的是 `git config`，而裁剪输入 `git c`
+  的引擎 rank1 是 `git clone` —— 说明 Clink 是拿**完整的末尾词**（`co`）去过滤我们
+  返回的匹配。实测该步弹窗为 `<completion(2)>`，恰是 `commit`/`config` 两条
+  （`clone`/`clean` 以 `cl` 开头，被正确地筛掉）。
+- **默认按字母表重排序，会冲掉引擎排名**：`match_builder:setnosort(true)` 后实测
+  `git s` + Tab 插入 `git status`（引擎 rank1），而不是字母序第一的 `git show`。
+- 弹窗右侧那列（`[completion]`）是 **Clink 自己的 Sources 列**，不是我们的
+  `match.description`；`description` 只在别处生效。
+- **每次 Tab 调伴侣 2–3 次**（裁剪命令词 `g`、裁剪末尾词 `git c`/`git s`/`cd d`、
+  有时整行 `git co`），全部 `trigger=tab`、`rc=0`，**没有每键调用**；同一行的连续
+  Tab（循环）不再产生新调用——Clink 会缓存该行的匹配结果。
+
+### 3. 行协议与进程启动的三个坑（同一提交 + `74d1f17`）
+
+- `io.open(path,"w")` 文本模式把 `\n` 改写成 `\r\n` → 伴侣的 `cmdpilot-req-v1`
+  魔数校验失败（`bad request`，非 0 退出）→ 读写一律 `"wb"/"rb"`。伴侣侧同时把
+  入口判定改成容忍 CRLF（`isLineRequest()`：取首行、去掉尾部 `\r` 再全等比较），
+  并加单测覆盖 lf/crlf/只有魔数/JSON/缩进 JSON/魔数带尾巴六种输入。
+- `os.execute/io.popen` 经 cmd.exe 启动，`cmd /c` 会吃掉首 token 的引号（实测报
+  "文件名、目录名或卷标语法不正确"）→ 整条命令行再包一层：`cmd /c ""exe" args"`。
+- `history` 是唯一的多值字段：**逐条** stuff、条目之间才插入裸 `\x1f`。旧版把整段
+  history 二次 stuff，分隔符被当成内容转义，多条历史并成一条。
+
+### 4. 安装器：插件被复制到 Clink 从不搜索的目录（提交 `787617e` / `f3e7d12` / `9a24a1d`）
+
+- **旧安装器写入 `%LOCALAPPDATA%\clink\CmdPilot\`，这个目录永远不会被加载**。
+  Clink 文档明载：只加载脚本目录**当层**的 `*.lua`，任意子目录不加载
+  （`completions\` 是唯一例外且为按需加载）。现改为按 `clink info` 报告的
+  `state` 目录安装，并在复制后**校验落地结果**（存在性 + SHA256），
+  不再"不看结果就打印成功"。
+- **`clink` 不在 PATH**，且 `clink info --profile x` 写法无效——`--profile` 是
+  **全局选项**（须在动词之前），旧写法把输出第一行 `version : 1.9.33.a4bf0e`
+  当成了目录名。现从 cmd 的 AutoRun 注册表项与常见安装目录定位。
+- **go 不在 PATH**，且机器级 `GOROOT` 指向旧 Go（1.26.0）而用户装的是 1.27.1 →
+  用所选 `go.exe` 自身的根覆盖 `GOROOT`，避免 `compile: version ... does not match`.
+- **`--profile ~\clink` 是相对路径**：Clink **不展开 `--profile` 里的 `~`**
+  （`clink --profile '~\clink' info` → `state : ~\clink`），于是每个 cmd 启动目录下
+  都会新建一个 `~\clink`（仓库根已留下一个 1 字节残留文件）。真实会话实际使用的仍是
+  `%LOCALAPPDATA%\clink`。安装器现在会检测并提示改成绝对路径。
+- 提示文字 `"\$PROFILE"` **不是转义**（反斜杠是字面字符、`$PROFILE` 照样展开），
+  实际打印成 `写入 \C:\Users\...`；改用反引号转义。
+
+### 5. 端到端实测（真实 cmd 控制台，最终部署的二进制）
+
+启动即打印：`CmdPilot 已启用 [hybrid/auto] — Tab 补全（本地库+AI+收藏+频率推荐）…`；
+`clink.log` 记录 `Loaded 1 Lua scripts`。
+
+| 输入 | 按 Tab 后屏幕上的行 |
+|---|---|
+| `git commi` | `git commit` |
+| `git statu` | `git status` |
+| `git s` | `git status`（引擎 rank1，**不是**字母序第一的 `git show`） |
+| `git s` 连按 | → `git show` → `git stash` → `git switch` → `git submodule` → 回到 `git s` → `git status` |
+| `gi` | `git status`（历史来源，1.697） |
+| `git ch` | `git checkout` |
+| `git co` | `git config`；再按 → `git commit` → 回到 `git co`；弹窗 `<completion(2)>` |
+| `cd do` | `cd docs\`（无尾随空格、无重复分隔符）※ |
+
+※ **口径说明（诚实）**：`cd do` 这一步 Clink 原生路径补全同时生效，弹窗 8 条全是
+原生项（`[completion]`：`cd docs\DECISIONS.md`、`cd docs\adr\` …），而 `cd docs\`
+正是它们的**公共前缀**，所以本步**不能单独证明**插件的 `type="dir"` 映射被采纳。
+可确证的是：wrapper 日志显示插件确实被以 `cd d` 调用，响应含 `cd docs\`
+（`kind=path`），插入结果与 `type="dir"` 的预期一致（无空格、分隔符不重复）。
+
+---
+
 ## Git 管理
 
 按功能/模块拆分为 4 个聚焦提交（非一次性大提交），已推送到 `origin/main`：
@@ -323,6 +423,11 @@ GitHub 认证凭据经 **Windows 凭据管理器（GCM）** 存储，未以明�
 | `5a333ed` | `feat(ps):` 新增编译版预测器核心 `PredictorCore.cs` |
 | `da23e45` | `perf(ps):` 回调改走编译核心，消除每键 31ms 超时（长命令卡顿根因） |
 | `0cd8c95` | `fix(ps):` worker 改用控制台当前位置拼请求 |
+| `787617e` | `fix(installer):` Clink 插件改按 `clink info` 的 state 目录安装，并校验落地结果 |
+| `f3e7d12` | `fix(installer):` go 不在 PATH 时按 GOROOT/常见目录定位，并覆盖不匹配的 GOROOT |
+| `9a24a1d` | `fix(installer):` 修正提示文字里 `$PROFILE` 的反斜杠转义（install/uninstall） |
+| `fed9f52` | `fix(clink):` 按实测的 Clink 1.9.33 重写 Lua 插件（旧版 API 全部不存在，插件从未生效） |
+| `74d1f17` | `fix(clink):` 伴侣二进制的行模式判定容忍 CRLF，不再因入口判定漏判而报 bad request |
 | `7f07bad` | `docs(ps):` 根因、决策 19/20 与三层验证记录 |
 
 ---
