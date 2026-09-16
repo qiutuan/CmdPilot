@@ -23,8 +23,10 @@
 | 15 | **DPAPI 实现直接使用 x/sys/windows.DataBlob**；daemon stop 兜底 kill 用 os.Process.Kill（跨平台） | Windows 交叉编译实测发现自定义 dataBlob 类型不兼容、syscall.Kill 在 Windows 不存在，均为真实 bug，已修复并加交叉编译验证 | secrets_windows.go / cli.go |
 | 14 | **token 无 workflow 权限时 CI 以示例文件入库** | GitHub 拒绝 PAT 更新 .github/workflows；获得相应权限后复制即启用 | docs/windows-ci.example.yml |
 | 16 | **Tab = "有内联建议则接受、无则退回原生菜单"，接受动作委托引擎 `AcceptSuggestion`** | 只弹菜单不落字对灰色建议等于无效，与 README 承诺不符。接受必须走引擎 API：它一次覆盖插件建议与**历史**建议（HistoryAndPlugin 下历史建议同步立刻出现），并自带插入语义与状态同步；本模块自己读快照插入等于维护第二份真相，实测必然打架（"看得见幽灵文本但 Tab 无效"，按 Tab 得到 MenuComplete 的 `Display all N possibilities?`） | 提交 `bb40821` → `55f99c3` |
-| 17 | **预测器 worker 每代输入只取一次结果**（`$lastGen` 记账，取前先记账） | 写完快照不改变 `gen`/`pending`，"输入未变"判断会对同一输入无限重取——实测空闲 6 秒起 18 个 companion 进程，是输入延迟的根源；取前记账可避免失败重试风暴 | 提交 `97fd6ec` |
+| 17 | **预测器 worker 每代输入只取一次结果**（`$lastGen` 记账，取前先记账） | 写完快照不改变 `gen`/`pending`，"输入未变"判断会对同一输入无限重取——实测空闲 6 秒起 18 个 companion 进程；取前记账可避免失败重试风暴。**注**：此处曾写作"是输入延迟的根源"，实测（见 19）它只是次要项，每键的主成本是引擎 20ms 超时 | 提交 `97fd6ec` |
 | 18 | **模块内不抛异常**（探测/启用/注销一律走正常分支） | 异常的记录进的是**宿主** `$Error`，与模块 `$Error` 是两份列表（`ReferenceEquals` 实测 False），模块内清不掉；用户会看到红字 | 提交 `1e8f598` |
+| 19 | **预测器回调（`GetSuggestion`）内只允许编译代码**：本体为 `PredictorCore.cs`（`Add-Type` 编译的 `ICommandPredictor`），取建议的慢路径（debounce＋companion 进程＋JSON 解析）留在独立 runspace 的 worker | PSReadLine 渲染内联建议是**同步**的（`Render.cs` → `_predictionTask.Result`），而引擎把回调丢线程池只等 20ms、超时即丢弃结果。PowerShell 类方法每次必踩满：实测 31ms/键 = 20ms 超时 + .NET 定时器 15.6ms 粒度，且 `predictors=0`（结果全被丢弃，等于从未真正显示过）；编译实现 0.42ms、`predictors=1`。真机按键回声 44.5→15.6ms（无模块基线 15.5ms） | 提交 `5a333ed` `da23e45` |
+| 20 | **worker 的 cwd 取自控制台当前位置**（`PredictionClient.CurrentLocation`，随输入**同代**记在 `Register` 里），不用 worker 自己 runspace 的 `Get-Location` | 后者是**进程**工作目录：实测同一会话 console cwd=`%TEMP%\cmdpilot-cwdprobe-xxxx`、进程 cwd=仓库根。cwd 是路径类建议与上下文（`splitPath`/`IsGitRepo`/`TopNByDir`）的入参，用错则 cd 之后路径补全按启动目录算 | 提交 `0cd8c95` |
 
 ## 二、测试执行摘要（全部可一键复跑：`go run ./tools/eval all`）
 
@@ -47,7 +49,9 @@
 1. **PS 5.1 与 PS 7.0–7.3 路径**：Windows 真机 pwsh 7.6.6 已实机验证 Subsystem
    API 路径（注册→GetSuggestion 幽灵文本→注销零残留，见 install 报告补记）。
    PS 5.1 已实测无任何插件预测 API（2.2.5 源码/二进制实证），退化为 Tab；
-   7.0–7.3 同 5.1（无引擎级 API），无需旧路径实现。
+   7.0–7.3 同 5.1（无引擎级 API），无需旧路径实现。编译核心（`PredictorCore.cs`）
+   只在 7.4+ 路径上被 `Add-Type`（探测为 `none` 时 `PredictorNew.ps1` 根本不
+   dot-source），故 PS 5.1 既不会编译它、也不会因编译失败受影响。
 2. **Clink 真机交互**：Lua 语法与行协议已本地冒烟；Tab 菜单交互依赖 CI。
 3. **DPAPI 加密**：Windows 专属路径（secrets_windows.go），非 Windows 为
    dev 占位；单测覆盖占位路径。
@@ -83,6 +87,19 @@
   有两个来源，`PredictionSource=HistoryAndPlugin` 下历史建议同步立刻出现，自建快照
   对不上就退回菜单；改调引擎 `AcceptSuggestion`（无建议时为空操作，用缓冲区前后
   比对区分）后一次覆盖两者。
+- **"输入长命令后窗口变卡、删掉也照样卡"（2026-09-16 实机）**：根因不在命令内容，
+  而在每次按键都要走一遍的预测器回调。引擎等 20ms、PowerShell 类方法必超时——
+  实测 31ms/键（= 20ms 超时 + 15.6ms 定时器粒度）且 `predictors=0`，即每敲/每删
+  一键白等一次超时，且本模块的建议从未真正送达。改为编译核心后按键回声
+  44.5–48.4ms → 15.6ms（无模块基线 15.5ms），无头引擎 n=97 avg 0.121ms
+  `over20=0`，端到端建议 1→4 条真正进入引擎。见决策 19。
+- `PowerShellAsyncResult` 没有 `WaitOne`（`BeginInvoke` 的返回值），旧实现直接调会抛、
+  被 `catch` 吃掉后仍在宿主 `$Error` 留一条红字；改等 `IAsyncResult.AsyncWaitHandle`。
+- 模块重载会让旧实例的 worker 变僵尸（`Import-Module -Force` 后新旧两个 worker 读同
+  一份状态、每输入起两次 companion）：给核心加 `private static _current` 并在
+  `WorkerAlive()` 里 `ReferenceEquals(_current, this)`，旧实例自行退出。
+- worker 的 cwd 曾取自己 runspace 的 `Get-Location`（= 进程工作目录，cd 之后就是错的），
+  改为随输入同代记录控制台位置。见决策 20。
 
 ## 五、已知限制
 

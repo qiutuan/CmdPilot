@@ -204,6 +204,101 @@ text when the cursor is at the end of the line."，与 Tab 的判据完全一致
 
 ---
 
+## 补记（2026-09-16 三次）：长命令之后卡顿的根因——每键 31ms 超时
+
+**现象**（用户原话）："卡顿一般是出现在输入某条很长的命令之后，就算没有执行、
+就算把删掉后也会非常卡，输入和删除的延迟非常高；刚打开的窗口一点都不卡。"
+
+现象本身给了两条线索：**卡的是输入/删除这个动作，与命令是否执行无关**（删掉也卡
+→ 不是命令内容、不是补全结果本身）；**刚打开的窗口不卡**（→ 与"是否已经跑过几次
+回调"有关）。顺着这两条线索定位到预测器回调。
+
+### 1. 根因：引擎只等 20ms，PowerShell 类方法每次必踩满
+
+PSReadLine 渲染内联建议是**同步**的（`Render.cs`：
+
+```
+QueryForSuggestion -> GetPredictionResults -> _predictionTask.Result
+```
+
+），而引擎 `CommandPrediction.PredictInputAsync` 把每个预测器丢到线程池、只等
+**20ms**（`millisecondsTimeout: 20`，默认值），超时即取消、只收
+`IsCompletedSuccessfully` 的任务：
+
+```csharp
+// CommandPrediction.cs（2.4.5）
+var timeout = Task.Delay(millisecondsTimeout);
+foreach (var predictor in predictors) { tasks.Add(Task.Run(() => predictor.GetSuggestion(...))); }
+await Task.WhenAny(Task.WhenAll(tasks), timeout);
+```
+
+PowerShell **类方法**做不到 20ms。同一段 40 次引擎调用（同进程、同输入序列、
+都阻塞在 `.Result` 上）实测：
+
+| 实现 | 每次耗时 | 送达引擎的预测器数 |
+|---|---|---|
+| PowerShell 类 `GetSuggestion` | **31ms** | **0**（结果全被丢弃） |
+| 编译实现 `GetSuggestion` | 0.42ms | 1 |
+
+31ms = 20ms 超时 + .NET 定时器 **15.6ms** 粒度——即每次回调都白等满一个超时。
+每敲一键、每删一键都走一次，于是按键回声实测 **44.5–48.4ms/键**（无模块基线
+15.5ms）。"长命令之后才卡"是因为长输入才让引擎每次都真的走一遍预测；删掉后仍卡，
+是因为卡的是回调本身，而不是命令内容——与现象完全吻合。
+
+**同时暴露的第二个问题**：`predictors=0` 意味着本模块的建议**从未真正送达引擎**。
+此前用户看到的灰色幽灵文本其实来自历史建议（`PredictionSource=HistoryAndPlugin`），
+这也解释了为什么早先"看得见幽灵文本但 Tab 无效"——那份文本根本不是插件的。
+
+### 2. 改法：回调内只留编译代码（提交 `5a333ed` + `da23e45`）
+
+- 预测器本体搬到 `adapters/powershell/CmdPilot/PredictorCore.cs`（`Add-Type` 编译的
+  `ICommandPredictor`），`GetSuggestion` 内只有"锁 + 读快照 + 组装 `SuggestionPackage`"；
+- `PredictorNew.ps1` 退化为加载器 + 后台 worker：编译并幂等加载 `.cs`、工厂函数、
+  以及跑在**独立 runspace** 的 worker（debounce + companion 进程 + JSON 解析——
+  这些慢操作不在回调线程上，慢一点无所谓）；
+- 两侧只通过 `CmdPilotPredictionState` 传数据（纯 .NET 静态成员，从 PowerShell 侧
+  调也是普通静态方法调用）。worker 只持对象引用、**只调实例方法**：新 runspace 里
+  不保证能解析 `Add-Type` 出来的类型名，而方法绑定按对象类型走（实测新 runspace
+  `alive=True gen=0 pending='' errors=0`）；
+- `Import-Module -Force` 后新旧两个 worker 会读同一份状态、每输入起两次 companion
+  进程：核心加 `private static _current` + `WorkerAlive()` 里
+  `ReferenceEquals(_current, this)`，旧实例自行退出；
+- 注册失败时调 `StopWorker()`（构造核心时已把自己记为当前实例，不停掉就是"旧的已退、
+  新的没起"，幽灵文本静默失效）；
+- 抽出 `Enable-CmdPilotTabFallback`：PS 5.1 无 API、核心编译失败两条降级路径共用；
+- `Get-CmdPilotStatus` 增"预测器状态"一行（`calls/hits/published/gen/entries/current`），
+  现场即可判断回调是否真在跑、建议是否真送达。
+
+**附带修掉**：`Stop-CmdPilotWorker` 原等 `BeginInvoke()` 返回值的 `WaitOne()`，但
+`PowerShellAsyncResult` **没有**这个方法——异常被 `catch` 吃掉，却仍在宿主 `$Error`
+里留一条红字（旧 PS 类实现同样有此隐患）；改等 `IAsyncResult.AsyncWaitHandle`。
+
+### 3. 验证（三层，均可复跑）
+
+| 层 | 判据 | 结果 |
+|---|---|---|
+| 核心（进程内） | 97 次引擎调用（逐字符输入一条长命令），阻塞在 `.Result` 上 | **avg 0.121ms、max 1.18ms、`over20=0`**（改动前 31ms/次） |
+| 端到端（真实模块 → worker → companion → 守护进程 → 快照 → 引擎） | 经真实 worker 取回后，引擎侧建议条数 | **1 → 4 条**（改动前恒为 0，全是历史建议） |
+| 真机按键回声（真实控制台） | 逐键注入 `git log --oneline --graph …` 这类长命令，量"键→回显"延迟 | 加载 CmdPilot **15.6ms**、删除 15.3ms、长命令后短命令 15.4ms；**不加载模块 15.5/15.4/15.4ms**（即已回到基线）；改动前 44.5–48.4ms |
+
+宿主 `$Error` 记录：导入 / `Get-CmdPilotStatus` / 禁用 / 重新启用**全为 0**
+（pwsh 7.6.6 与 PS 5.1 均验；PS 5.1 走 `ApiKind=none` 降级，`Tab→CmdPilotAITab`）。
+
+### 4. worker 的 cwd 用的是错的目录（提交 `0cd8c95`）
+
+worker 在自己的 runspace 里 `Get-Location` 拿到的是**进程工作目录**，与控制台当前
+位置无关。实测同一会话：console cwd = `%TEMP%\cmdpilot-cwdprobe-xxxx`，进程 cwd =
+仓库根。cwd 是路径类建议与上下文（`splitPath` / `IsGitRepo` / `TopNByDir`）的入参，
+用错则 `cd` 之后路径补全按启动目录算。
+
+改法：引擎回调是唯一能拿到控制台位置的地方（`PredictionClient.CurrentLocation`），
+故在 `Register` 时与输入**同代**记下，worker 校验过 `WorkerIsCurrent(gen)` 之后再读。
+判据用路径补全：在临时目录放 `uniquename7f3a1c.txt`、把控制台 `cd` 过去、进程 cwd
+留在仓库根——修复后建议含该文件名（**PASS**），把安装目录那份改回
+`(Get-Location).Path` 作对照则为 0（**FAIL**），说明判据能区分、不是假阳性。
+
+---
+
 ## Git 管理
 
 按功能/模块拆分为 4 个聚焦提交（非一次性大提交），已推送到 `origin/main`：
